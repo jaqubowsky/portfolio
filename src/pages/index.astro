@@ -1,7 +1,12 @@
 ---
-import Layout from '@layouts/Layout.astro'
+
+import { Button, Heading, Link } from '@components/shared';
+import Layout from '@layouts/Layout.astro';
 ---
 
 <Layout>
-	hello world
+	<Heading>Hello world</Heading>
+	<Button variant='primary'>Click me</Button>
+	<Button variant='secondary'>Click me</Button>
+	<Link href='/about'>About</Link>
 </Layout>

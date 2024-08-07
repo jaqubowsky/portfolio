@@ -1,0 +1,7 @@
+---
+const {href, class: className} = Astro.props;
+---
+
+<a href={href} class:list={["text-primary dark:text-secondary border-b-2 border-b-transparent hover:border-b-primary transition-colors dark:hover:border-b-secondary", className]}>
+  <slot />
+</a>

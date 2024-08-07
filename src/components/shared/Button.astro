@@ -1,0 +1,19 @@
+---
+import type { JSX } from 'astro/jsx-runtime';
+
+type Props = {
+  variant?: keyof typeof variants;
+} & JSX.IntrinsicElements['button'];
+
+const variants = {
+  primary: 'bg-primary dark:bg-secondary hover:bg-primary/90 dark:hover-bg-secondary/80 text-secondary dark:text-primary ',
+  secondary: 'dark:bg-primary bg-secondary dark:hover:bg-primary/90 hover:bg-secondary/60 dark:text-secondary text-primary ',
+} as const;
+
+const {variant = "primary", ...props} = Astro.props;
+
+---
+
+<button class:list={["py-2 cursor-pointer border inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-muted disabled:pointer-events-none disabled:opacity-50", variants[variant]]} {...props}>
+  <slot />
+</button>
