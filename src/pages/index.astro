@@ -1,12 +1,14 @@
 ---
-
-import { Button, Heading, Link } from '@components/shared';
+import { Flex, Home } from '@components/index';
+import Contact from '@components/organisms/Contact.astro';
+import Skills from '@components/organisms/Skills.astro';
 import Layout from '@layouts/Layout.astro';
 ---
 
 <Layout>
-	<Heading>Hello world</Heading>
-	<Button variant='primary'>Click me</Button>
-	<Button variant='secondary'>Click me</Button>
-	<Link href='/about'>About</Link>
+	<Flex class="flex-col w-full">
+		<Home />
+		<Skills />
+		<Contact />
+	</Flex>
 </Layout>
