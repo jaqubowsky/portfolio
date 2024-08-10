@@ -1,0 +1,19 @@
+---
+import { cn } from "@utils/index";
+import type { JSX } from "astro/jsx-runtime";
+
+type Props = {
+  variant?: keyof typeof variants;
+} & JSX.IntrinsicElements['div'];
+
+const variants = {
+  primary: "bg-popover text-primary",
+  secondary: "bg-primary text-popover",
+} as const;
+
+const { variant = "primary", class: className, ...rest } = Astro.props;
+---
+
+<div class={cn("text-xs font-semibold px-2 py-1 rounded-full", variants[variant], className)} {...rest}>
+  <slot />
+</div>

@@ -1,0 +1,19 @@
+---
+import {Card, Heading} from "@components/index";
+
+type SkillCard = {
+    type: string;
+    items: string[];
+};
+
+const { type, items } = Astro.props as SkillCard;
+---
+
+<Card class="flex gap-6 flex-col">
+    <Heading class="text-3xl" level={3}>{type}</Heading>
+    <ul class="list-inside space-y-2">
+        {items.map((item) => (
+            <li class="text-sm">{item}</li>
+        ))}
+    </ul>
+</Card>
