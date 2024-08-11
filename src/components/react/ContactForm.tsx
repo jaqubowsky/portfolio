@@ -1,7 +1,7 @@
 import { Button, Input, Label, Textarea } from "@components/react";
 import { useCaptcha } from "@hooks/useCaptcha";
+import { cn } from "@utils/cn";
 import { getErrorMessage } from "@utils/error";
-import { cn } from "@utils/index";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_KEY;
 
 type Message = {
   type: "success" | "error";
-  message: string;
+  text?: string;
 };
 
 const PARTICLE_COUNT = 1000;
@@ -39,12 +39,12 @@ const ContactForm = () => {
 
       setMessage({
         type: "success",
-        message: "Message sent successfully. I will get back to you soon.",
+        text: "Message sent successfully. I will get back to you soon.",
       });
     } catch (error) {
       setMessage({
         type: "error",
-        message: getErrorMessage(error, BASE_ERROR_MSG),
+        text: getErrorMessage(error, BASE_ERROR_MSG),
       });
     }
   };
@@ -71,7 +71,7 @@ const ContactForm = () => {
     } catch (error) {
       setMessage({
         type: "error",
-        message: getErrorMessage(error, BASE_ERROR_MSG),
+        text: getErrorMessage(error, BASE_ERROR_MSG),
       });
     } finally {
       setIsFormLoading(false);
@@ -86,7 +86,7 @@ const ContactForm = () => {
   }, [message]);
 
   return (
-    <form className="space-y-6 max-w-lg w-full" onSubmit={onSubmit}>
+    <form className="space-y-4 max-w-lg w-full mt-4" onSubmit={onSubmit}>
       <Label>
         Name
         <Input name="name" type="text" placeholder="ex. John Doe" required />
@@ -122,18 +122,24 @@ const ContactForm = () => {
         />
       </Label>
 
-      {message && (
-        <p
-          className={cn(
-            "text-red-500",
-            message.type === "success" && "text-emerald-500"
-          )}
-        >
-          {message.message}
-        </p>
-      )}
-
-      <Button disabled={isLoading} className="w-full" type="submit">
+      <div
+        className={cn(
+          "flex items-start justify-start transition-all duration-500 ease-in-out",
+          message ? "h-6" : "h-0"
+        )}
+      >
+        {message && (
+          <p
+            className={cn(
+              message.type === "success" && "text-green-600 mb-4",
+              message.type === "error" && "text-red-600 mb-4"
+            )}
+          >
+            {message.text}
+          </p>
+        )}
+      </div>
+      <Button disabled={isLoading} className="w-full " type="submit">
         {isLoading ? "Loading..." : "Submit"}
       </Button>
     </form>
