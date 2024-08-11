@@ -2,7 +2,7 @@ import { Button, Input, Label, Textarea } from "@components/react";
 import { useCaptcha } from "@hooks/useCaptcha";
 import { getErrorMessage } from "@utils/error";
 import { cn } from "@utils/index";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_KEY;
 
@@ -11,6 +11,7 @@ type Message = {
   message: string;
 };
 
+const ONE_SECOND = 1000;
 const BASE_ERROR_MSG = "Failed to send message. Please try again.";
 
 const ContactForm = () => {
@@ -50,10 +51,14 @@ const ContactForm = () => {
     setIsFormLoading(true);
 
     try {
+      const form = e.target as HTMLFormElement;
+
       await handleVerifyCaptcha(async () => {
-        const formData = new FormData(e.target as HTMLFormElement);
+        const formData = new FormData(form);
         await handleSendFormData(formData);
       });
+
+      form.reset();
     } catch (error) {
       setMessage({
         type: "error",
@@ -63,6 +68,13 @@ const ContactForm = () => {
       setIsFormLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!message) return;
+
+    const id = setTimeout(() => setMessage(null), ONE_SECOND * 3);
+    return () => clearTimeout(id);
+  }, [message]);
 
   return (
     <form className="space-y-6 max-w-lg w-full" onSubmit={onSubmit}>
