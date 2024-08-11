@@ -3,15 +3,15 @@ import { IconLink } from '@components/atoms'
 import { Navigation } from '@components/molecules'
 
 const links = [
-  { href: '/about', text: 'About' },
-  { href: '/projects', text: 'Projects' },
-  { href: '/blog', text: 'Blog' },
-  { href: '/contact', text: 'Contact' }
+  { href: '#home', text: 'Home' },
+  { href: '#skills', text: 'Skills' },
+  { href: '#contact', text: 'Contact' },
+  { href: '/blog', text: 'Blog' }
 ] as const
 
 ---
 
 <header class="flex items-center justify-between p-4">
-  <IconLink class="cursor-pointer" href="/" name="mdi:home-outline" size={48} />
+  <IconLink class="cursor-pointer" href="/" name="mdi:code-tags" size={48} />
   <Navigation links={links} />
 </header>

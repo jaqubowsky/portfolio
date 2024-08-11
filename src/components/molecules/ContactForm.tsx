@@ -3,20 +3,24 @@ import { Button, Input, Label, Textarea } from "@components/atoms";
 const ContactForm = () => {
   return (
     <form className="space-y-6 max-w-lg w-full">
-      <div>
-        <Label>Name</Label>
-        <Input type="text" placeholder="Name" />
-      </div>
+      <Label>
+        Name
+        <Input name="name" type="text" placeholder="ex. John Doe" />
+      </Label>
 
-      <div>
-        <Label>Email</Label>
-        <Input type="email" placeholder="Email" />
-      </div>
+      <Label>
+        Email
+        <Input name="email" type="email" placeholder="ex john@doe.com" />
+      </Label>
 
-      <div>
-        <Label>Message</Label>
-        <Textarea placeholder="Message" rows={5} />
-      </div>
+      <Label htmlFor="message">
+        Message
+        <Textarea
+          name="message"
+          placeholder="Hello, i would like to know more about your services."
+          rows={5}
+        />
+      </Label>
 
       <Button className="w-full" type="submit">
         Submit

@@ -4,27 +4,28 @@ import { SkillCard } from "@components/molecules";
 
 const skills = [{
   type: "Frontend",
-  items: ["HTML", "CSS", "JavaScript", "React", "Vue", "Svelte"]
+  items: ["TypeScript", "React", "NextJS", "Astro" ]
 }, {
   type: "Backend",
-  items: ["Node.js", "Express", "Deno", "NestJS", "GraphQL"]
+  items: ["Node.js", "Express", "MongoDB", "Prisma"]
 }, {
-  type: "Database",
-  items: ["MongoDB", "PostgreSQL", "MySQL", "SQLite"]
+  type: "Libraries",
+  items: ["TailwindCSS", "TanStack Query", "TanStack Table", "React Hook Form", "Zustand", "Zod"]
 }, {
-  type: "DevOps",
-  items: ["Docker", "Kubernetes", "CI/CD", "AWS", "Azure"]
+  type: "Design",
+  items: ["Figma", "TailwindCSS", "Bootstrap", "Radix UI"]
 }, {
-  type: "Other",
-  items: ["Git", "REST", "GraphQL", "Agile", "Scrum"]
-}]
+  type: "Tools",
+  items: ["Docker", "AI Integration"]
+}
+] as const;
 ---
 
-<Section class="space-y-2 bg-muted">
+<Section class="space-y-2 bg-muted" id="skills">
     <Badge>Skills</Badge>
     <Heading class="text-4xl">What I Can Do</Heading>
-    <Paragraph>
-        I have a diverse set of skills that allow me to tackle a wide range of web development projects.
+    <Paragraph class="max-w-xl">
+        I have a diverse set of skills that allow me to tackle a wide range of web development projects. There are some of the technologies I have experience with.
     </Paragraph>
 
     <Grid>

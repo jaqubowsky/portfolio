@@ -15,6 +15,6 @@ const {class: className, size, name, href, ...rest} = Astro.props
 
 ---
 
-<Link class={cn("cursor-pointer", className)} {...rest}>
+<Link aria-label={name} class={cn("cursor-pointer", className)} href={href} {...rest}>
   <Icon name={name} size={size}/>
 </Link>

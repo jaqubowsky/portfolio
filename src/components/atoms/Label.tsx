@@ -5,7 +5,7 @@ type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
 const Label = ({ children, className, ...props }: LabelProps) => {
   return (
     <label
-      htmlFor={props.id}
+      {...props}
       className={cn(
         "block text-sm font-medium text-primary mr-auto",
         className
