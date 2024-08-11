@@ -11,7 +11,7 @@ const variants = {
     "dark:bg-primary bg-secondary dark:text-primary-foreground text-secondary-foreground",
 } as const;
 
-export const Button = ({
+const Button = ({
   variant = "primary",
   className,
   children,
@@ -30,3 +30,5 @@ export const Button = ({
     </button>
   );
 };
+
+export default Button;

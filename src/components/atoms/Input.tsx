@@ -2,7 +2,7 @@ import { cn } from "@utils/index";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-export const Input = ({ className, ...props }: InputProps) => {
+const Input = ({ className, ...props }: InputProps) => {
   return (
     <>
       <input
@@ -15,3 +15,5 @@ export const Input = ({ className, ...props }: InputProps) => {
     </>
   );
 };
+
+export default Input;

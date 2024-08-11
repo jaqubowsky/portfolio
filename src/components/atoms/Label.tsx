@@ -2,7 +2,7 @@ import { cn } from "@utils/index";
 
 type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
 
-export const Label = ({ children, className, ...props }: LabelProps) => {
+const Label = ({ children, className, ...props }: LabelProps) => {
   return (
     <label
       htmlFor={props.id}
@@ -15,3 +15,5 @@ export const Label = ({ children, className, ...props }: LabelProps) => {
     </label>
   );
 };
+
+export default Label;

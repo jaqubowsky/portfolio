@@ -2,7 +2,7 @@ import { cn } from "@utils/index";
 
 type Textarea = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export const Textarea = ({ className, ...props }: Textarea) => {
+const Textarea = ({ className, ...props }: Textarea) => {
   return (
     <>
       <textarea
@@ -15,3 +15,5 @@ export const Textarea = ({ className, ...props }: Textarea) => {
     </>
   );
 };
+
+export default Textarea;

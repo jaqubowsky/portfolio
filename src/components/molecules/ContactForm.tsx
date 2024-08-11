@@ -1,6 +1,6 @@
-import { Button, Input, Label, Textarea } from "@components/index";
+import { Button, Input, Label, Textarea } from "@components/atoms";
 
-export const ContactForm = () => {
+const ContactForm = () => {
   return (
     <form className="space-y-6 max-w-lg w-full">
       <div>
@@ -24,3 +24,5 @@ export const ContactForm = () => {
     </form>
   );
 };
+
+export default ContactForm;
