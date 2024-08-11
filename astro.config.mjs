@@ -7,8 +7,14 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  integrations: [tailwind(), icon(), react()],
+  output: "hybrid",
+  integrations: [
+    tailwind(),
+    icon(),
+    react({
+      experimentalReactChildren: true,
+    }),
+  ],
   adapter: node({
     mode: "standalone",
   }),

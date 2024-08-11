@@ -1,0 +1,9 @@
+---
+const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_KEY
+---
+
+
+	<script
+	  type="text/javascript"
+    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+  ></script>

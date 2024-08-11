@@ -1,3 +1,6 @@
+export const prerender = false;
+
+import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
 import nodemailer from "nodemailer";
 
@@ -12,31 +15,26 @@ const transporter = nodemailer.createTransport({
 });
 
 export const POST: APIRoute = async ({ request }) => {
-  if (request.headers.get("Content-Type") !== "application/json") {
-    return new Response(JSON.stringify({ message: "Invalid content type" }), {
-      status: 400,
-    });
-  }
-
-  const data = await request.json();
+  const data = await request.formData();
+  const email = data.get("email") as string;
+  const subject = data.get("subject") as string;
+  const message = data.get("message") as string;
 
   const mailOptions = {
     from: {
       name: "noreply",
       address: import.meta.env.GMAIL_APP_EMAIL,
     },
-    to: data.email,
-    subject: data.subject,
-    text: data.message,
+    to: email,
+    subject: `Message from ${email}: ${subject}`,
+    text: message,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, (error) => {
     if (error) {
-      console.error("Error sending email: ", error);
-    } else {
-      console.log("Email sent: ", info.response);
+      return ServerResponse({ message: "msg_email_failed", status: 500 });
     }
   });
 
-  return new Response(JSON.stringify({ message: "Email sent!" }));
+  return ServerResponse({ message: "msg_email_sent" });
 };

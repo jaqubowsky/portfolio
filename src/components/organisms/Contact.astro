@@ -1,15 +1,14 @@
 ---
 import { Badge, Heading, Paragraph, Section } from "@components/atoms";
-import { ContactForm } from "@components/molecules";
-
+import { ContactForm } from "@components/react";
 ---
 
 <Section class="space-y-2" id="contact">
-    <Badge variant="secondary">Get in touch</Badge>
-    <Heading class="text-4xl">Contact Me</Heading>
-    <Paragraph>
-      I'd love to hear from you! Feel free to reach out with any questions or opportunities.
-    </Paragraph>
+  <Badge variant="secondary">Get in touch</Badge>
+  <Heading class="text-4xl">Contact Me</Heading>
+  <Paragraph>
+    I'd love to hear from you! Feel free to reach out with any questions or opportunities.
+  </Paragraph>
 
-    <ContactForm client:load/>
+  <ContactForm client:load />
 </Section>
