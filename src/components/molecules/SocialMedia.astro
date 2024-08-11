@@ -1,0 +1,15 @@
+---
+import { IconLink } from '@components/atoms';
+
+type Link = {
+  href: string;
+  name: string;
+};
+const { links } = Astro.props;
+---
+
+<ul class="flex space-x-4">
+    {links.map(({href, name}: Link) => (
+      <IconLink href={href} name={name} size={28}/>
+    ))}
+</ul>
