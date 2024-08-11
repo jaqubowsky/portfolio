@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "portfolio",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -19,17 +19,18 @@
     "@types/react-dom": "^18.3.0",
     "astro": "^4.13.1",
     "astro-icon": "^1.1.0",
+    "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "nodemailer": "^6.9.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-google-recaptcha-v3": "^1.10.1",
     "tailwind-merge": "^2.5.0",
     "tailwindcss": "^3.4.8",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.68",
+    "@types/canvas-confetti": "^1.6.4",
     "@types/nodemailer": "^6.4.15"
   }
 }

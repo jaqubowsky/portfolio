@@ -2,6 +2,7 @@ import { Button, Input, Label, Textarea } from "@components/react";
 import { useCaptcha } from "@hooks/useCaptcha";
 import { getErrorMessage } from "@utils/error";
 import { cn } from "@utils/index";
+import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 
 const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_KEY;
@@ -10,6 +11,9 @@ type Message = {
   type: "success" | "error";
   message: string;
 };
+
+const PARTICLE_COUNT = 1000;
+const SPREAD = 6000;
 
 const ONE_SECOND = 1000;
 const BASE_ERROR_MSG = "Failed to send message. Please try again.";
@@ -59,6 +63,11 @@ const ContactForm = () => {
       });
 
       form.reset();
+
+      confetti({
+        particleCount: PARTICLE_COUNT,
+        spread: SPREAD,
+      });
     } catch (error) {
       setMessage({
         type: "error",
@@ -72,7 +81,7 @@ const ContactForm = () => {
   useEffect(() => {
     if (!message) return;
 
-    const id = setTimeout(() => setMessage(null), ONE_SECOND * 3);
+    const id = setTimeout(() => setMessage(null), ONE_SECOND * 5);
     return () => clearTimeout(id);
   }, [message]);
 
