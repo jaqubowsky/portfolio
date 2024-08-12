@@ -1,0 +1,21 @@
+---
+import { Badge, Flex, Heading, Paragraph, Link } from "@components/atoms";
+import { formatDate } from "@utils/date";
+
+const { frontmatter } = Astro.props;
+---
+
+<Flex class="flex-col items-center gap-3">
+  <Badge variant='secondary'>{frontmatter.category}</Badge>
+  <Heading level={1} class="text-5xl text-center">{frontmatter.title}</Heading>
+  <Paragraph class="text-lg">
+    by {frontmatter.author} on {formatDate(frontmatter.pubDate)}
+  </Paragraph>
+  {frontmatter.tags && (
+    <Flex class="flex-wrap gap-2">
+      {frontmatter.tags.map((tag: string) => (
+        <Link key={tag}>{tag}</Link>
+      ))}
+    </Flex>
+  )}
+</Flex>

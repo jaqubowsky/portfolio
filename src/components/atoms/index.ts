@@ -7,5 +7,6 @@ export { default as Heading } from "./Heading.astro";
 export { default as IconLink } from "./IconLink.astro";
 export { default as Link } from "./Link.astro";
 export { default as Paragraph } from "./Paragraph.astro";
-export { default as Section } from "./Section.astro";
+export { default as Prose } from "./Prose.astro";
 export { default as Recaptcha } from "./Recaptcha.astro";
+export { default as Section } from "./Section.astro";

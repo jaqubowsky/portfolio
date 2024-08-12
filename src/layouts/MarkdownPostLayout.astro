@@ -1,0 +1,26 @@
+---
+import { Flex, Prose, Section } from '@components/atoms';
+import { TableOfContents } from '@components/molecules';
+import PostHeader from '@components/molecules/PostHeader.astro';
+import Layout from '@layouts/Layout.astro';
+
+const frontmatter  = Astro.props;
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+
+  <Section class="flex-row">
+    <TableOfContents class="hidden xl:block self-start" headings={frontmatter.headings} withIndentation/>
+
+    <article class="xl:mr-[300px]">
+        <PostHeader frontmatter={frontmatter} />
+        <TableOfContents class="xl:hidden flex-col py-16 justify-center items-center" headings={frontmatter.headings}/>
+        <Flex class="flex-col items-start xl:pt-20">
+          <Prose>
+            <slot />
+          </Prose>
+        </Flex>
+    </article>
+  </Section>
+
+</Layout>
