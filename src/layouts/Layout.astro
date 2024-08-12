@@ -1,7 +1,7 @@
 ---
 import '@styles/global.css';
 
-import { Header, Footer } from '@components/organisms';
+import { Footer, Header } from '@components/organisms';
 import { ViewTransitions } from 'astro:transitions';
 
 const { title, description } = Astro.props;
@@ -24,7 +24,7 @@ const { title, description } = Astro.props;
 	</head>
 	<body class="bg-background dark:bg-foreground text-primary dark:text-secondary">
 		<Header />
-			<main class="flex items-center justify-center">
+			<main class="min-h-screen">
 				<slot />
 			</main>
 			<Footer />
