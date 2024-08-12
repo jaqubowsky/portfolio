@@ -1,9 +1,10 @@
+import node from "@astrojs/node";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
-import node from "@astrojs/node";
+import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +14,9 @@ export default defineConfig({
     icon(),
     react({
       experimentalReactChildren: true,
+    }),
+    mdx({
+      optimize: true,
     }),
   ],
   adapter: node({
