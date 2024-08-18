@@ -25,6 +25,7 @@ const { title, description, tags, image, slug, pubDate } = Astro.props;
       transition:name=`blog-image-${title}`
       width={260}
       height={220}
+      loading="eager"
       class="w-full h-56 object-contain"
       src={image.url}
       alt={image.alt}
