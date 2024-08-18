@@ -1,5 +1,7 @@
 import { Button, Input, Label, Textarea } from "@components/react";
+import ContactFormEmail from "@emails/ContactFormEmail";
 import { useCaptcha } from "@hooks/useCaptcha";
+import { render } from "@react-email/render";
 import { cn } from "@utils/cn";
 import { getErrorMessage } from "@utils/error";
 import confetti from "canvas-confetti";
@@ -59,6 +61,19 @@ const ContactForm = () => {
 
       await handleVerifyCaptcha(async () => {
         const formData = new FormData(form);
+
+        const html = render(
+          <ContactFormEmail
+            name={formData.get("name") as string}
+            email={formData.get("email") as string}
+            subject={formData.get("subject") as string}
+            message={formData.get("message") as string}
+          />,
+          { pretty: true },
+        );
+
+        formData.append("html", html);
+
         await handleSendFormData(formData);
       });
 

@@ -19,9 +19,9 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.formData();
     const email = data.get("email") as string | null;
     const subject = data.get("subject") as string | null;
-    const message = data.get("message") as string | null;
+    const html = data.get("html") as string | null;
 
-    if (!email || !subject || !message) {
+    if (!email || !subject || !html) {
       return ServerResponse({ message: "msg_invalid_input", status: 400 });
     }
 
@@ -30,9 +30,9 @@ export const POST: APIRoute = async ({ request }) => {
         name: "noreply",
         address: import.meta.env.GMAIL_APP_EMAIL,
       },
-      to: email,
-      subject: `Message from ${email}: ${subject}`,
-      text: message,
+      to: import.meta.env.GMAIL_APP_EMAIL,
+      subject,
+      html,
     };
 
     await transporter.sendMail(mailOptions);
