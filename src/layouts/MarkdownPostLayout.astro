@@ -17,9 +17,9 @@ const frontmatter  = Astro.props;
     if (!backToTopBtn) return;
 
     if (window.scrollY > 100) {
-      backToTopBtn.classList.remove('hidden');
+      backToTopBtn.classList.remove('opacity-0');
     } else {
-      backToTopBtn.classList.add('hidden');
+      backToTopBtn.classList.add('opacity-0');
     }
   });
 </script>
@@ -51,7 +51,7 @@ const frontmatter  = Astro.props;
         </Flex>
     </article>
   </Section>
-  <IconAnimatedButton id="backToTopBtn" class='drop-shadow-lg sticky bottom-16 mb-6 right-2 md:bottom-20 self-center md:self-end' iconName="mdi:arrow-up" size={24} onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+  <IconAnimatedButton id="backToTopBtn" class='ease-in-out drop-shadow-lg sticky bottom-16 transition-opacity mb-6 right-2 md:bottom-20 self-center md:self-end opacity-0' iconName="mdi:arrow-up" size={24} onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
     <p class="ml-10" slot="content">Back to Top</p>
   </IconAnimatedButton>
 </Layout>
