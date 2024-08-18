@@ -16,12 +16,12 @@ const { class: className, iconName, size, ...rest } = Astro.props;
 <button
   {...rest}
   class={cn(
-    "border border-primary text-center w-48 rounded-2xl h-14 relative font-sans text-primary text-xl font-semibold group",
+    "border border-primary bg-secondary text-center w-48 rounded-2xl h-[58px] relative text-primary text-xl font-semibold group",
     className,
   )}
 >
   <div
-    class="bg-primary rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[95%] z-10 duration-500"
+    class="bg-primary rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[96%] z-10 duration-500"
   >
     <Icon name={iconName} size={size} class="text-primary-foreground" />
   </div>

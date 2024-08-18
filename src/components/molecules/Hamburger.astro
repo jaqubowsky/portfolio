@@ -41,7 +41,7 @@ const { class: className } = Astro.props;
   });
 </script>
 
-<div
+<button
   id="hamburger"
   class={cn("relative cursor-pointer flex flex-col gap-2", className)}
 >
@@ -60,4 +60,4 @@ const { class: className } = Astro.props;
   >
     <slot />
   </div>
-</div>
+</button>
