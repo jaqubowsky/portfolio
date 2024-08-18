@@ -1,5 +1,5 @@
-import node from "@astrojs/node";
 import react from "@astrojs/react";
+import vercel from "@astrojs/vercel/serverless";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
@@ -17,7 +17,7 @@ export default defineConfig({
       optimize: true,
     }),
   ],
-  adapter: node({
-    mode: "standalone",
+  adapter: vercel({
+    webAnalytics: { enabled: true },
   }),
 });
