@@ -124,15 +124,15 @@ const ContactForm = () => {
 
       <div
         className={cn(
-          "flex items-start justify-start transition-all duration-500 ease-in-out",
-          message ? "h-6" : "h-0",
+          "flex items-start justify-start transition-all duration-500 ease-in-out w-full",
+          message ? "h-12" : "h-0",
         )}
       >
         {message && (
           <p
             className={cn(
-              message.type === "success" && "text-green-600 mb-4",
-              message.type === "error" && "text-red-600 mb-4",
+              message.type === "success" && "text-green-600 mb-6",
+              message.type === "error" && "text-red-600 mb-6",
             )}
           >
             {message.text}
