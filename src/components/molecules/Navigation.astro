@@ -10,7 +10,7 @@ const { links } = Astro.props;
 ---
 
 <nav>
-  <ul class="flex space-x-4">
+  <ul class="flex flex-col md:flex-row gap-4 bg-accent p-4 rounded-md">
     {
       links.map(({ href, text }: Link) => (
         <li>

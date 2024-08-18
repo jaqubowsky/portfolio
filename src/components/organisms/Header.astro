@@ -1,7 +1,7 @@
 ---
 import { IconLink } from "@components/atoms";
 import { Navigation, ThemeToggler } from "@components/molecules";
-import { Icon } from "astro-icon/components";
+import Hamburger from "@components/molecules/Hamburger.astro";
 
 const links = [
   { href: "/#skills", text: "Skills" },
@@ -11,27 +11,17 @@ const links = [
 ---
 
 <header
-  class="flex items-center justify-between p-4 sticky top-0 left-0 shadow-md z-50 bg-accent"
+  class="flex items-center justify-between p-4 sticky top-0 left-0 z-50 bg-accent shadow-md"
 >
   <IconLink class="cursor-pointer" href="/" name="mdi:code-tags" size={48} />
-  <div class="flex items-center justify-between">
-    <button class="lg:hidden flex items-center" id="hamburger-button">
-      <Icon name="mdi:menu" size={32} />
-    </button>
+  <div class="flex items-center justify-between gap-4">
+    <Hamburger class="flex lg:hidden">
+      <Navigation links={links} />
+    </Hamburger>
 
     <nav class="hidden lg:flex gap-3 items-center">
       <Navigation links={links} />
-      <ThemeToggler />
     </nav>
-
-    <div
-      class="lg:hidden fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden"
-      id="mobile-menu"
-    >
-      <div class="flex flex-col items-center justify-center h-full text-white">
-        <Navigation links={links} />
-        <ThemeToggler />
-      </div>
-    </div>
+    <ThemeToggler />
   </div>
 </header>

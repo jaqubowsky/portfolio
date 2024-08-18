@@ -1,0 +1,63 @@
+---
+import { cn } from "@utils/cn";
+
+const { class: className } = Astro.props;
+---
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    const button = document.querySelector("#hamburger");
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+      const slot = button.querySelector(".slot");
+      if (!slot) return;
+
+      slot.classList.toggle("opacity-0");
+      slot.classList.toggle("scale-95");
+    });
+
+    // close on outside click
+    document.addEventListener("click", (event) => {
+      const slot = button.querySelector(".slot");
+      if (!slot) return;
+
+      if (!button.contains(event.target) && !slot.contains(event.target)) {
+        slot.classList.add("opacity-0");
+        slot.classList.add("scale-95");
+      }
+    });
+
+    // close on escape key
+    document.addEventListener("keydown", (event) => {
+      const slot = button.querySelector(".slot");
+      if (!slot) return;
+
+      if (event.key === "Escape") {
+        slot.classList.add("opacity-0");
+        slot.classList.add("scale-95");
+      }
+    });
+  });
+</script>
+
+<div
+  id="hamburger"
+  class={cn("relative cursor-pointer flex flex-col gap-2", className)}
+>
+  <span
+    class="block w-8 h-1 bg-primary transition-all duration-300 transform origin-center"
+  ></span>
+  <span
+    class="line w-8 h-1 bg-primary transition-all duration-300 transform origin-center"
+  ></span>
+  <span
+    class="line w-8 h-1 bg-primary transition-all duration-300 transform origin-center"
+  ></span>
+
+  <div
+    class="slot opacity-0 scale-95 transition-all duration-300 absolute top-10 -right-7 shadow-lg text-center"
+  >
+    <slot />
+  </div>
+</div>

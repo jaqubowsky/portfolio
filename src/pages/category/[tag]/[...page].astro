@@ -46,7 +46,9 @@ const { tag } = Astro.params;
 >
   <Section id="blog" class="gap-12">
     <Flex class="flex-wrap gap-2 flex-col items-start justify-start mt-4">
-      <Heading level={2} class="flex gap-2 text-2xl font-bold"
+      <Heading
+        level={2}
+        class="text-secondary-foreground flex gap-2 text-2xl font-bold"
         >Explore blog posts about: <Paragraph class="text-primary"
           >{tag}</Paragraph
         ></Heading
