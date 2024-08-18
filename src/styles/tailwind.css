@@ -6,6 +6,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.grecaptcha-badge {
+  opacity: 10% !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
