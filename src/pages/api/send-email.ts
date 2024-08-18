@@ -15,26 +15,30 @@ const transporter = nodemailer.createTransport({
 });
 
 export const POST: APIRoute = async ({ request }) => {
-  const data = await request.formData();
-  const email = data.get("email") as string;
-  const subject = data.get("subject") as string;
-  const message = data.get("message") as string;
+  try {
+    const data = await request.formData();
+    const email = data.get("email") as string | null;
+    const subject = data.get("subject") as string | null;
+    const message = data.get("message") as string | null;
 
-  const mailOptions = {
-    from: {
-      name: "noreply",
-      address: import.meta.env.GMAIL_APP_EMAIL,
-    },
-    to: email,
-    subject: `Message from ${email}: ${subject}`,
-    text: message,
-  };
-
-  transporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      return ServerResponse({ message: "msg_email_failed", status: 500 });
+    if (!email || !subject || !message) {
+      return ServerResponse({ message: "msg_invalid_input", status: 400 });
     }
-  });
 
-  return ServerResponse({ message: "msg_email_sent" });
+    const mailOptions = {
+      from: {
+        name: "noreply",
+        address: import.meta.env.GMAIL_APP_EMAIL,
+      },
+      to: email,
+      subject: `Message from ${email}: ${subject}`,
+      text: message,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return ServerResponse({ message: "msg_email_sent" });
+  } catch (error) {
+    return ServerResponse({ message: "msg_email_failed", status: 500 });
+  }
 };
