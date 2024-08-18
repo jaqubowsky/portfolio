@@ -1,8 +1,14 @@
 ---
 import { cn } from "@utils/index";
-const {class: className, ...rest} = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<a {...rest} class={cn("text-primary cursor-pointer font-medium dark:text-secondary border-b-2 border-b-transparent hover:border-b-primary transition-colors dark:hover:border-b-secondary", className)}>
+<a
+  {...rest}
+  class={cn(
+    "text-primary cursor-pointer font-medium border-b-2 border-b-transparent hover:border-b-primary transition-colors",
+    className,
+  )}
+>
   <slot />
 </a>

@@ -1,57 +1,74 @@
 ---
-import { Flex, Prose, Section } from '@components/atoms';
-import { TableOfContents } from '@components/molecules';
-import BlogTags from '@components/molecules/BlogTags.astro';
-import IconAnimatedButton from '@components/molecules/IconAnimatedButton.astro';
-import PostHeader from '@components/molecules/PostHeader.astro';
-import ShareLinks from '@components/molecules/ShareLinks.astro';
-import Layout from '@layouts/Layout.astro';
+import { Flex, Prose, Section } from "@components/atoms";
+import { TableOfContents } from "@components/molecules";
+import BlogTags from "@components/molecules/BlogTags.astro";
+import IconAnimatedButton from "@components/molecules/IconAnimatedButton.astro";
+import PostHeader from "@components/molecules/PostHeader.astro";
+import ShareLinks from "@components/molecules/ShareLinks.astro";
+import Layout from "@layouts/Layout.astro";
 
-const frontmatter  = Astro.props;
-
+const frontmatter = Astro.props;
 ---
 
 <script>
-  window.addEventListener('scroll', () => {
-    const backToTopBtn = document.getElementById('backToTopBtn');
+  window.addEventListener("scroll", () => {
+    const backToTopBtn = document.getElementById("backToTopBtn");
     if (!backToTopBtn) return;
 
     if (window.scrollY > 100) {
-      backToTopBtn.classList.remove('opacity-0');
+      backToTopBtn.classList.remove("opacity-0");
     } else {
-      backToTopBtn.classList.add('opacity-0');
+      backToTopBtn.classList.add("opacity-0");
     }
   });
 </script>
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
-
   <Section class="flex-row pt-20 pb-10">
     <div class="sticky top-28 max-w-sm w-full hidden xl:block self-start">
-      <TableOfContents headings={frontmatter.headings} withIndentation/>
-      <IconAnimatedButton onclick=" window.history.back()" iconName="mdi:arrow-left" size={24} class="mt-5">
+      <TableOfContents headings={frontmatter.headings} withIndentation />
+      <IconAnimatedButton
+        onclick=" window.history.back()"
+        iconName="mdi:arrow-left"
+        size={24}
+        class="mt-5"
+      >
         <Fragment slot="content">Go Back</Fragment>
       </IconAnimatedButton>
     </div>
 
     <article class="xl:mr-[300px] flex flex-col">
-        <PostHeader frontmatter={frontmatter} />
-        <div class="flex py-16 flex-col gap-4 xl:hidden justify-center items-center static">
-          <TableOfContents headings={frontmatter.headings}/>
-          <IconAnimatedButton slideWidth='md' iconName="mdi:arrow-left" class='mr-6' size={24} onclick=" window.history.back()">
-            <Fragment slot="content">Go Back</Fragment>
-          </IconAnimatedButton>
-        </div>
-        <Flex class="flex-col items-start xl:pt-20">
-          <Prose>
-            <slot />
-          </Prose>
-          <BlogTags tags={frontmatter.tags} />
-          <ShareLinks />
-        </Flex>
+      <PostHeader frontmatter={frontmatter} />
+      <div
+        class="flex py-16 flex-col gap-4 xl:hidden justify-center items-center static"
+      >
+        <TableOfContents headings={frontmatter.headings} />
+        <IconAnimatedButton
+          slideWidth="md"
+          iconName="mdi:arrow-left"
+          class="mr-6"
+          size={24}
+          onclick=" window.history.back()"
+        >
+          <Fragment slot="content">Go Back</Fragment>
+        </IconAnimatedButton>
+      </div>
+      <Flex class="flex-col items-start xl:pt-20">
+        <Prose>
+          <slot />
+        </Prose>
+        <BlogTags tags={frontmatter.tags} />
+        <ShareLinks />
+      </Flex>
     </article>
   </Section>
-  <IconAnimatedButton id="backToTopBtn" class='ease-in-out drop-shadow-lg sticky bottom-16 transition-opacity mb-6 right-2 md:bottom-20 self-center md:self-end opacity-0' iconName="mdi:arrow-up" size={24} onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+  <IconAnimatedButton
+    id="backToTopBtn"
+    class="ease-in-out drop-shadow-lg sticky bottom-16 transition-opacity mb-6 right-2 md:bottom-20 self-center md:self-end opacity-0"
+    iconName="mdi:arrow-up"
+    size={24}
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+  >
     <p class="ml-10" slot="content">Back to Top</p>
   </IconAnimatedButton>
 </Layout>

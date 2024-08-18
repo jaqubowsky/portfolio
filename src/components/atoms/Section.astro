@@ -1,9 +1,15 @@
 ---
 import { cn } from "@utils/index";
 
-const {class: className, ...rest} = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<section {...rest} class={cn("flex flex-col gap-2 items-center justify-center w-full py-20 px-6", className)}>
+<section
+  {...rest}
+  class={cn(
+    "flex flex-col gap-2 items-center justify-center w-full py-20 px-6",
+    className,
+  )}
+>
   <slot />
 </section>

@@ -7,10 +7,21 @@ const { frontmatter } = Astro.props;
 ---
 
 <Flex class="flex-col items-center gap-3">
-  <Badge variant='secondary'>{frontmatter.category}</Badge>
-  <Heading transition:name=`blog-heading-${frontmatter.title}` level={1} class="text-5xl text-center">{frontmatter.title}</Heading>
+  <Badge variant="secondary">{frontmatter.category}</Badge>
+  <Heading
+    transition:name=`blog-heading-${frontmatter.title}`
+    level={1}
+    class="text-5xl text-center">{frontmatter.title}</Heading
+  >
   <Paragraph class="text-lg">
     by {frontmatter.author} on {formatDate(frontmatter.pubDate)}
   </Paragraph>
-  <Image transition:name=`blog-image-${frontmatter.title}` height={400} width={400} src={frontmatter.image.url} alt={frontmatter.image.alt} class="w-full h-96 object-cover" />
+  <Image
+    transition:name=`blog-image-${frontmatter.title}`
+    height={400}
+    width={400}
+    src={frontmatter.image.url}
+    alt={frontmatter.image.alt}
+    class="w-full h-96 object-cover"
+  />
 </Flex>

@@ -1,32 +1,31 @@
 ---
-import '@styles/global.css';
+import "@styles/tailwind.css";
 
-import { Footer, Header } from '@components/organisms';
-import { ViewTransitions } from 'astro:transitions';
+import { Footer, Header } from "@components/organisms";
+import { ViewTransitions } from "astro:transitions";
 
 const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="title" content={title} />
-		<meta name="description" content={description} />
-		<title>{title}</title>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
 
-		<ViewTransitions />
-
-	</head>
-	<body class="bg-background dark:bg-foreground text-primary dark:text-secondary min-h-[100svh] flex flex-col">
-		<Header />
-			<main class="flex flex-col">
-				<slot />
-			</main>
-			<Footer />
-		</body>
+    <ViewTransitions />
+  </head>
+  <body class="bg-background text-primary min-h-[100svh] flex flex-col">
+    <Header />
+    <main class="flex flex-col">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

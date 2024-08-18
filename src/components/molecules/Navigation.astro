@@ -1,20 +1,22 @@
 ---
-import { Link } from '@components/atoms';
+import { Link } from "@components/atoms";
 
 type Link = {
   href: string;
   text: string;
 };
 
-const { links }  = Astro.props;
+const { links } = Astro.props;
 ---
 
 <nav>
   <ul class="flex space-x-4">
-    {links.map(({ href, text }: Link) => (
-      <li>
-        <Link href={href}>{text}</Link>
-      </li>
-    ))}
+    {
+      links.map(({ href, text }: Link) => (
+        <li>
+          <Link href={href}>{text}</Link>
+        </li>
+      ))
+    }
   </ul>
 </nav>

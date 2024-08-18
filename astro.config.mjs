@@ -1,6 +1,5 @@
 import node from "@astrojs/node";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
@@ -10,7 +9,6 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   output: "hybrid",
   integrations: [
-    tailwind(),
     icon(),
     react({
       experimentalReactChildren: true,

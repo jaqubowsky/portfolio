@@ -2,12 +2,20 @@
 import { Link } from "@components/atoms";
 import { Icon } from "astro-icon/components";
 
-
-const {prevUrl, nextUrl, currPage, totalPages} = Astro.props;
+const { prevUrl, nextUrl, currPage, totalPages } = Astro.props;
 ---
 
 <nav class="flex gap-6 items-center justify-center" aria-label="Blog pages">
-  <Link aria-disabled={!prevUrl} class="flex gap-2 items-center justify-center aria-disabled:opacity-50 aria-disabled:pointer-events-none" href={prevUrl ?? "/"}><Icon name="mdi:arrow-left" size={24} />Prev</Link>
-  <span class="flex items-center justify-center">{currPage} / {totalPages}</span>
-  <Link aria-disabled={!nextUrl} class="flex gap-2 items-center justify-center aria-disabled:opacity-50 aria-disabled:pointer-events-none" href={nextUrl ?? "/"}>Next<Icon name="mdi:arrow-right" size={24} /></Link>
+  <Link
+    aria-disabled={!prevUrl}
+    class="flex gap-2 items-center justify-center aria-disabled:opacity-50 aria-disabled:pointer-events-none"
+    href={prevUrl ?? "/"}><Icon name="mdi:arrow-left" size={24} />Prev</Link
+  >
+  <span class="flex items-center justify-center">{currPage} / {totalPages}</span
+  >
+  <Link
+    aria-disabled={!nextUrl}
+    class="flex gap-2 items-center justify-center aria-disabled:opacity-50 aria-disabled:pointer-events-none"
+    href={nextUrl ?? "/"}>Next<Icon name="mdi:arrow-right" size={24} /></Link
+  >
 </nav>

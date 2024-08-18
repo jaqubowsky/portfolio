@@ -1,16 +1,37 @@
 ---
-import { IconLink } from '@components/atoms'
-import { Navigation } from '@components/molecules'
+import { IconLink } from "@components/atoms";
+import { Navigation, ThemeToggler } from "@components/molecules";
+import { Icon } from "astro-icon/components";
 
 const links = [
-  { href: '/#skills', text: 'Skills' },
-  { href: '/#contact', text: 'Contact' },
-  { href: '/blog', text: 'Blog' }
-] as const
-
+  { href: "/#skills", text: "Skills" },
+  { href: "/#contact", text: "Contact" },
+  { href: "/blog", text: "Blog" },
+] as const;
 ---
 
-<header class="flex items-center justify-between p-4 sticky top-0 left-0 shadow-md bg-white z-50">
+<header
+  class="flex items-center justify-between p-4 sticky top-0 left-0 shadow-md z-50 bg-accent"
+>
   <IconLink class="cursor-pointer" href="/" name="mdi:code-tags" size={48} />
-  <Navigation links={links} />
+  <div class="flex items-center justify-between">
+    <button class="lg:hidden flex items-center" id="hamburger-button">
+      <Icon name="mdi:menu" size={32} />
+    </button>
+
+    <nav class="hidden lg:flex gap-3 items-center">
+      <Navigation links={links} />
+      <ThemeToggler />
+    </nav>
+
+    <div
+      class="lg:hidden fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden"
+      id="mobile-menu"
+    >
+      <div class="flex flex-col items-center justify-center h-full text-white">
+        <Navigation links={links} />
+        <ThemeToggler />
+      </div>
+    </div>
+  </div>
 </header>

@@ -2,35 +2,47 @@
 import { Badge, Grid, Heading, Paragraph, Section } from "@components/atoms";
 import { SkillCard } from "@components/molecules";
 
-const skills = [{
-  type: "Frontend",
-  items: ["TypeScript", "React", "NextJS", "Astro" ]
-}, {
-  type: "Backend",
-  items: ["Node.js", "Express", "MongoDB", "Prisma"]
-}, {
-  type: "Libraries",
-  items: ["TailwindCSS", "TanStack Query", "TanStack Table", "React Hook Form", "Zustand", "Zod"]
-}, {
-  type: "Design",
-  items: ["Figma", "TailwindCSS", "Bootstrap", "Radix UI"]
-}, {
-  type: "Tools",
-  items: ["Docker", "AI Integration"]
-}
+const skills = [
+  {
+    type: "Frontend",
+    items: ["TypeScript", "React", "NextJS", "Astro"],
+  },
+  {
+    type: "Backend",
+    items: ["Node.js", "Express", "MongoDB", "Prisma"],
+  },
+  {
+    type: "Libraries",
+    items: [
+      "TailwindCSS",
+      "TanStack Query",
+      "TanStack Table",
+      "React Hook Form",
+      "Zustand",
+      "Zod",
+    ],
+  },
+  {
+    type: "Design",
+    items: ["Figma", "TailwindCSS", "Bootstrap", "Radix UI"],
+  },
+  {
+    type: "Tools",
+    items: ["Docker", "AI Integration"],
+  },
 ] as const;
 ---
 
 <Section class="space-y-2 bg-muted" id="skills">
-    <Badge>Skills</Badge>
-    <Heading class="text-4xl">What I Can Do</Heading>
-    <Paragraph class="max-w-xl">
-        I have a diverse set of skills that allow me to tackle a wide range of web development projects. There are some of the technologies I have experience with.
-    </Paragraph>
+  <Badge variant="secondary">Skills</Badge>
+  <Heading class="text-4xl">What I Can Do</Heading>
+  <Paragraph class="max-w-xl">
+    I have a diverse set of skills that allow me to tackle a wide range of web
+    development projects. There are some of the technologies I have experience
+    with.
+  </Paragraph>
 
-    <Grid>
-        {skills.map(({ type, items }) => (
-            <SkillCard type={type} items={items} />
-        ))}
-    </Grid>
+  <Grid>
+    {skills.map(({ type, items }) => <SkillCard type={type} items={items} />)}
+  </Grid>
 </Section>

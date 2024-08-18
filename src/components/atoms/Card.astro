@@ -1,9 +1,15 @@
 ---
 import { cn } from "@utils/index";
 
-const {class: className, ...rest} = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<div class={cn("bg-popover text-popover-foreground px-5 py-4 rounded-md border-2 border-primary-foreground min-w-[300px]", className)} {...rest}>
+<div
+  class={cn(
+    "bg-accent text-popover-foreground px-5 py-4 rounded-md border border-dashed drop-shadow-lg border-primary min-w-[300px]",
+    className,
+  )}
+  {...rest}
+>
   <slot />
 </div>

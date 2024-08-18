@@ -1,28 +1,41 @@
 ---
-import { ButtonLink, Flex, Heading, Paragraph, Section } from '@components/atoms'
-import myImage from '@images/my-photo.png'
-import { Image } from 'astro:assets'
+import {
+  ButtonLink,
+  Flex,
+  Heading,
+  Paragraph,
+  Section,
+} from "@components/atoms";
+import myImage from "@images/my-photo.png";
+import { Image } from "astro:assets";
 ---
 
 <Section class="space-y-2" id="home">
   <Flex class="flex-col md:flex-row">
     <Flex class="flex-col max-w-2xl items-center md:items-start gap-4">
       <Flex class="flex-col gap-1 items-center md:items-start">
-        <Heading class="text-center md:text-left text-5xl">Jakub Nalewajk</Heading>
-        <Heading class="text-muted-foreground text-xl font-semibold" level={2}>Fullstack Developer</Heading>
+        <Heading class="text-center md:text-left text-5xl"
+          >Jakub Nalewajk</Heading
+        >
+        <Heading
+          class="text-secondary-foreground text-xl font-semibold"
+          level={2}>Fullstack Developer</Heading
+        >
       </Flex>
 
-        <Paragraph class="md:text-left max-w-lg">
-       I’m a passionate fullstack developer with a year of experience building scalable web applications. I enjoy crafting elegant solutions and am excited about integrating new technologies, like AI into my apps, to enhance user experiences.
-        </Paragraph>
+      <Paragraph class="md:text-left max-w-lg">
+        I’m a passionate fullstack developer with a year of experience building
+        scalable web applications. I enjoy crafting elegant solutions and am
+        excited about integrating new technologies, like AI into my apps, to
+        enhance user experiences.
+      </Paragraph>
 
-
-        <Flex class="justify-start items-start">
-          <ButtonLink href="#contact">Contact me</ButtonLink>
-          <ButtonLink href="/resume"variant='secondary'>Resume</ButtonLink>
+      <Flex class="justify-start items-start">
+        <ButtonLink href="#contact">Contact me</ButtonLink>
+        <ButtonLink href="/resume" variant="secondary">Resume</ButtonLink>
       </Flex>
     </Flex>
 
-      <Image loading="eager" src={myImage} alt="Me" />
-    </Flex>
+    <Image loading="eager" src={myImage} alt="Me" />
+  </Flex>
 </Section>

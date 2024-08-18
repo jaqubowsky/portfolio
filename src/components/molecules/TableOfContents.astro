@@ -8,26 +8,26 @@ type Heading = {
   depth: number;
   text: string;
   slug: string;
-}
+};
 
 const getIndentation = (depth: number) => {
   switch (depth) {
     case 1:
-      return 'ml-0';
+      return "ml-0";
     case 2:
-      return 'ml-4';
+      return "ml-4";
     case 3:
-      return 'ml-8';
+      return "ml-8";
     case 4:
-      return 'ml-12';
+      return "ml-12";
     case 5:
-      return 'ml-16';
+      return "ml-16";
     case 6:
-      return 'ml-20';
+      return "ml-20";
     default:
-      return 'ml-0';
+      return "ml-0";
   }
-}
+};
 
 const { class: className, withIndentation } = Astro.props;
 ---
@@ -36,11 +36,13 @@ const { class: className, withIndentation } = Astro.props;
   <Heading class="text-2xl" level={2}>Table of Contents</Heading>
   <nav>
     <ul class="mt-2 ml-4">
-      {headings.map((heading: Heading) => (
-        <li class={cn(withIndentation && getIndentation(heading.depth))}>
-          <Link href={`#${heading.slug}`}>{heading.text}</Link>
-        </li>
-      ))}
+      {
+        headings.map((heading: Heading) => (
+          <li class={cn(withIndentation && getIndentation(heading.depth))}>
+            <Link href={`#${heading.slug}`}>{heading.text}</Link>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 </div>

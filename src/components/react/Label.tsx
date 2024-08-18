@@ -8,7 +8,7 @@ const Label = ({ children, className, ...props }: LabelProps) => {
       {...props}
       className={cn(
         "block text-sm font-medium text-primary mr-auto",
-        className
+        className,
       )}
     >
       {children}

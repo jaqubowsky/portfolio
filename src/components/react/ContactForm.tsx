@@ -125,21 +125,21 @@ const ContactForm = () => {
       <div
         className={cn(
           "flex items-start justify-start transition-all duration-500 ease-in-out",
-          message ? "h-6" : "h-0"
+          message ? "h-6" : "h-0",
         )}
       >
         {message && (
           <p
             className={cn(
               message.type === "success" && "text-green-600 mb-4",
-              message.type === "error" && "text-red-600 mb-4"
+              message.type === "error" && "text-red-600 mb-4",
             )}
           >
             {message.text}
           </p>
         )}
       </div>
-      <Button disabled={isLoading} className="w-full " type="submit">
+      <Button disabled={isLoading} className="w-full" type="submit">
         {isLoading ? "Loading..." : "Submit"}
       </Button>
     </form>

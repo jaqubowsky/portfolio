@@ -7,8 +7,8 @@ const Textarea = ({ className, ...props }: Textarea) => {
     <>
       <textarea
         className={cn(
-          "mt-1 block w-full px-3 py-2 border border-muted rounded-md shadow-sm focus:outline-none focus:ring-ring focus:muted sm:text-sm",
-          className
+          "mt-1 block w-full px-3 py-2 border border-muted rounded-md shadow-sm focus:outline-none focus:ring-ring focus:muted sm:text-sm bg-accent",
+          className,
         )}
         {...props}
       ></textarea>

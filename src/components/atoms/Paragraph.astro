@@ -1,9 +1,9 @@
 ---
 import { cn } from "@utils/index";
 
-const {class: className, ...rest} = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<p {...rest} class={cn("text-muted-foreground dark:text-muted text-center", className)}>
+<p {...rest} class={cn("text-secondary-foreground   text-center", className)}>
   <slot />
 </p>
