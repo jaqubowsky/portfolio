@@ -125,7 +125,7 @@ const ContactForm = () => {
       <div
         className={cn(
           "flex items-start justify-start transition-all duration-500 ease-in-out w-full",
-          message ? "h-12" : "h-0",
+          message ? "h-12 sm:h-6" : "h-0",
         )}
       >
         {message && (
