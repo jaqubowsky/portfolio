@@ -22,9 +22,9 @@ const { title, description } = Astro.props;
 		<ViewTransitions />
 
 	</head>
-	<body class="bg-background dark:bg-foreground text-primary dark:text-secondary">
+	<body class="bg-background dark:bg-foreground text-primary dark:text-secondary min-h-[100svh] flex flex-col">
 		<Header />
-			<main class="min-h-screen flex flex-col">
+			<main class="flex flex-col">
 				<slot />
 			</main>
 			<Footer />

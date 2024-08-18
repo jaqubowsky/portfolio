@@ -46,7 +46,7 @@ const frontmatter  = Astro.props;
           <Prose>
             <slot />
           </Prose>
-          <BlogTags frontmatter={frontmatter} />
+          <BlogTags tags={frontmatter.tags} />
           <ShareLinks />
         </Flex>
     </article>

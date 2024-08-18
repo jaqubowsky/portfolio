@@ -112,7 +112,7 @@ const ContactForm = () => {
         />
       </Label>
 
-      <Label htmlFor="message">
+      <Label>
         Message
         <Textarea
           name="message"

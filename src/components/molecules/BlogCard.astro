@@ -17,11 +17,11 @@ const { title, description, tags, image, slug, pubDate } = Astro.props;
           ))}
         </div>
     )}
-    <Image transition:name="blog-image" width={260} height={220} class="w-full h-56 object-contain" src={image.url} alt={image.alt} />
+    <Image transition:name=`blog-image-${title}` width={260} height={220} class="w-full h-56 object-contain" src={image.url} alt={image.alt} />
     <div class="p-6">
       <div class="flex flex-col gap-1">
         <div class="flex flex-col">
-          <Heading level={3} transition:name="blog-heading" class="text-2xl font-bold text-zinc-800">{title}</Heading>
+          <Heading level={3} transition:name=`blog-heading-${title}` class="text-2xl font-bold text-zinc-800">{title}</Heading>
           <Paragraph class="text-zinc-500 text-start">Created on {formatDate(pubDate)}</Paragraph>
         </div>
         <Paragraph class="text-zinc-700 text-start">{description}</Paragraph>
