@@ -1,4 +1,5 @@
 ---
+import { cn } from '@utils/cn';
 import type { JSX } from 'astro/jsx-runtime';
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
@@ -7,11 +8,11 @@ type Props = {
   level?: HeadingLevel;
 } & JSX.IntrinsicElements['h1'];
 
-const { class: className, level = 1 } = Astro.props;
+const { class: className, level = 1, ...rest } = Astro.props;
 
 const HeadingTag = `h${level}`
 ---
 
-<HeadingTag class:list={["font-bold text-primary dark:text-secondary", className]}>
+<HeadingTag class:list={cn("font-bold text-primary dark:text-secondary", className)} {...rest}>
   <slot />
 </HeadingTag>

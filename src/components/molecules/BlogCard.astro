@@ -1,0 +1,30 @@
+---
+import { Badge, Card, Heading, Link, Paragraph } from "@components/atoms";
+import { formatDate } from "@utils/date";
+import { Image } from "astro:assets";
+
+const { title, description, tags, image, slug, pubDate } = Astro.props;
+---
+
+<Link href=`/blog/${slug}` class="max-w-sm min-w-full border-none">
+  <Card class="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-[1.01] ">
+      {tags && (
+        <div class="mt-4 flex gap-1">
+          {tags.slice(0, 3).map((tag: string[]) => (
+              <Badge class="rounded-md truncate" variant="secondary">
+                {tag}
+              </Badge>
+          ))}
+        </div>
+    )}
+    <Image transition:name="blog-image" width={260} height={220} class="w-full h-56 object-contain" src={image.url} alt={image.alt} />
+    <div class="p-6">
+      <div class="flex flex-col gap-1">
+        <div class="flex flex-col">
+          <Heading level={3} transition:name="blog-heading" class="text-2xl font-bold text-zinc-800">{title}</Heading>
+          <Paragraph class="text-zinc-500 text-start">Created on {formatDate(pubDate)}</Paragraph>
+        </div>
+        <Paragraph class="text-zinc-700 text-start">{description}</Paragraph>
+      </div>
+    </div>
+</Card>

@@ -1,0 +1,63 @@
+---
+import { Heading, IconLink, Paragraph } from "@components/atoms";
+
+const URL = Astro.url;
+
+const shareLinks = [
+  {
+    name: "WhatsApp",
+    href: "https://wa.me/?text=",
+    icon: "mdi:whatsapp",
+    linkTitle: `Share this post via WhatsApp`,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/sharer.php?u=",
+    icon: "mdi:facebook",
+    linkTitle: `Share this post on Facebook`,
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com/intent/tweet?url=",
+    icon: "mdi:twitter",
+    linkTitle: `Tweet this post`,
+  },
+  {
+    name: "Telegram",
+    href: "https://t.me/share/url?url=",
+    icon: "mdi:telegram",
+    linkTitle: `Share this post via Telegram`,
+  },
+  {
+    name: "Pinterest",
+    href: "https://pinterest.com/pin/create/button/?url=",
+    icon: "mdi:pinterest",
+    linkTitle: `Share this post on Pinterest`,
+  },
+  {
+    name: "Mail",
+    href: "mailto:?subject=See%20this%20post&body=",
+    icon: "mdi:email",
+    linkTitle: `Share this post via email`,
+  },
+] as const;
+---
+
+<div class="flex flex-col items-start justify-start gap-3 w-full mt-4">
+  <Paragraph class="font-semibold text-center text-xl">Share this post on:</Paragraph>
+  <div class="flex gap-3">
+    {
+      shareLinks.map(social => (
+        <IconLink
+          name={social.icon}
+          size={24}
+          href={`${social.href + URL}`}
+        >
+
+          {social.name}
+          <span class="sr-only">{social.linkTitle}</span>
+        </IconLink>
+      ))
+    }
+  </div>
+</div>

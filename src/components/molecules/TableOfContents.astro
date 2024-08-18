@@ -29,15 +29,10 @@ const getIndentation = (depth: number) => {
   }
 }
 
-const isSectionInView = (section: HTMLElement) => {
-  const bounding = section.getBoundingClientRect();
-  return bounding.top <= 0 && bounding.bottom >= 0;
-}
-
 const { class: className, withIndentation } = Astro.props;
 ---
 
-<div class={cn("sticky top-28 max-w-sm w-full", className)}>
+<div class={cn(className)}>
   <Heading class="text-2xl" level={2}>Table of Contents</Heading>
   <nav>
     <ul class="mt-2 ml-4">
