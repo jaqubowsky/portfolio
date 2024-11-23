@@ -75,13 +75,13 @@ const ContactForm = () => {
         formData.append("html", html);
 
         await handleSendFormData(formData);
-      });
 
-      form.reset();
+        form.reset();
 
-      confetti({
-        particleCount: PARTICLE_COUNT,
-        spread: SPREAD,
+        confetti({
+          particleCount: PARTICLE_COUNT,
+          spread: SPREAD,
+        });
       });
     } catch (error) {
       setMessage({
