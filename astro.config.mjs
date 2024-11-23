@@ -20,5 +20,5 @@ export default defineConfig({
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),
-  site: "jnalewajk.vercel.app",
+  site: "https://jnalewajk.vercel.app",
 });
