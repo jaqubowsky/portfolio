@@ -6,7 +6,6 @@ import {
   Paragraph,
   Section,
 } from "@components/atoms";
-import myImage from "@images/my-photo.png";
 import { Image } from "astro:assets";
 ---
 
@@ -35,6 +34,12 @@ import { Image } from "astro:assets";
       </Flex>
     </Flex>
 
-    <Image loading="eager" src={myImage} alt="Me" />
+    <Image
+      width={400}
+      height={400}
+      loading="eager"
+      src="/images/my-photo.png"
+      alt="Jakub Nalewajk Portrait"
+    />
   </Flex>
 </Section>
