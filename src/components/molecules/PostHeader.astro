@@ -11,9 +11,9 @@ const { frontmatter } = Astro.props;
   <Heading
     transition:name=`blog-heading-${frontmatter.title}`
     level={1}
-    class="text-5xl text-center">{frontmatter.title}</Heading
+    class="text-4xl text-center md:text-5xl">{frontmatter.title}</Heading
   >
-  <Paragraph class="text-lg">
+  <Paragraph class="text-base text-center md:text-lg">
     by {frontmatter.author} on {formatDate(frontmatter.pubDate)}
   </Paragraph>
   <Image

@@ -6,12 +6,14 @@ const links = [
   { href: "https://github.com/jaqubowsky", name: "mdi:github" },
   { href: "https://www.linkedin.com/in/jakub-nalewajk/", name: "mdi:linkedin" },
 ] as const;
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="p-4 bg-muted w-full mt-auto z-50">
   <Flex class="justify-between">
     <Paragraph class="text-sm"
-      >© 2024 Jakub Nalewajk, All Rights Reserved</Paragraph
+      >© {currentYear} Jakub Nalewajk, All Rights Reserved</Paragraph
     >
     <SocialMedia links={links} />
   </Flex>
