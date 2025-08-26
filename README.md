@@ -1,54 +1,110 @@
-# Astro Starter Kit: Basics
+# Personal Portfolio Website
 
-```sh
-npm create astro@latest -- --template basics
+A modern, performant portfolio website built with Astro, featuring a blog system, contact form, and interactive React components. Deployed on Vercel with full TypeScript support.
+
+🌐 **Live Site**: [jnalewajk.me](https://jnalewajk.me)
+
+## ✨ Features
+
+- **🚀 Astro + React Hybrid**: Static site generation with React islands for interactivity
+- **📝 Blog System**: Dynamic blog with MDX support, categories, and tag filtering
+- **📧 Contact Form**: Secure contact form with reCAPTCHA validation and email delivery
+- **🎨 Modern Design**: Clean, responsive design with dark/light theme toggle
+- **⚡ Performance**: Optimized for speed with Vercel analytics integration
+- **🔍 SEO Ready**: Structured data and meta tags for search engine optimization
+- **♿ Accessible**: Built with accessibility best practices
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build/) with SSG
+- **UI Library**: React 19 for interactive components
+- **Styling**: Tailwind CSS with custom design system
+- **Content**: MDX with Astro Content Collections
+- **Form Handling**: React Email + Nodemailer
+- **Security**: Google reCAPTCHA integration
+- **Deployment**: Vercel with serverless functions
+- **Analytics**: Vercel Web Analytics & Speed Insights
+
+## 🏗️ Architecture
+
+### Component Organization
+- **Atomic Design**: Components structured as `atoms/`, `molecules/`, and `organisms/`
+- **Hybrid Approach**: Static Astro components with React islands for interactivity
+- **Type Safety**: Full TypeScript support with strict configuration
+
+### Key Features
+- Content management through Astro Content Collections
+- Secure contact form with spam protection
+- Blog system with pagination and categorization
+- Theme switching with persistent user preference
+- Email templates using React Email components
+
+## 🚀 Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/portfolio.git
+   cd portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Add your reCAPTCHA and Gmail credentials
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+Visit `http://localhost:4321` to view your site.
+
+## 📝 Environment Variables
+
+```env
+PUBLIC_RECAPTCHA_KEY=your_public_recaptcha_key
+RECAPTCHA_KEY=your_private_recaptcha_key
+GMAIL_APP_EMAIL=your_gmail_address
+GMAIL_APP_PASSWORD=your_gmail_app_password
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+| Command | Action |
+|---------|--------|
+| `npm run dev` | Start development server at `localhost:4321` |
+| `npm run build` | Build production site (includes type checking) |
+| `npm run preview` | Preview built site locally |
+| `astro check` | Run TypeScript type checking |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 📁 Project Structure
 
-## 👀 Want to learn more?
+```
+src/
+├── components/          # UI Components
+│   ├── atoms/          # Basic building blocks
+│   ├── molecules/      # Combined components
+│   ├── organisms/      # Complex sections
+│   └── react/          # Interactive React components
+├── content/            # Blog posts and content
+├── emails/             # Email templates
+├── hooks/              # React hooks
+├── layouts/            # Page layouts
+├── pages/              # Routes and API endpoints
+├── styles/             # Global styles
+└── utils/              # Utility functions
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🤝 Contributing
+
+This is a personal portfolio project, but feel free to use it as inspiration for your own portfolio. If you find bugs or have suggestions, please open an issue.
+
+## 📄 License
+
+MIT License - feel free to use this code for your own projects.
