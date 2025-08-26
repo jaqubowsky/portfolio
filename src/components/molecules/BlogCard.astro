@@ -1,15 +1,16 @@
 ---
-import { Badge, Card, Heading, Link, Paragraph } from "@components/atoms";
+import { Badge, Card, Flex, Heading, Link, Paragraph } from "@components/atoms";
 import { formatDate } from "@utils/date";
 import { Image } from "astro:assets";
 
 const { title, description, tags, image, slug, pubDate } = Astro.props;
 ---
 
-<Link href=`/blog/${slug}` class="max-w-sm min-w-full border-none">
-  <Card
-    class="shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-[1.01]"
-  >
+<Link
+  href=`/blog/${slug}`
+  class="max-w-sm min-w-full border-none shadow-sm rounded-lg hover:-translate-y-1 hover:scale-[1.01] transition duration-300 ease-in-out transform cursor-pointer"
+>
+  <Card>
     {
       tags && (
         <div class="mb-3 flex gap-1">
@@ -30,20 +31,16 @@ const { title, description, tags, image, slug, pubDate } = Astro.props;
       src={image.url}
       alt={image.alt}
     />
-    <div class="py-4 px-1">
-      <div class="flex flex-col gap-1">
-        <div class="flex flex-col">
-          <Heading
-            level={3}
-            transition:name=`blog-heading-${title}`
-            class="text-2xl font-bold">{title}</Heading
-          >
-          <Paragraph class="text-start opacity-80"
-            >Created on {formatDate(pubDate)}</Paragraph
-          >
-        </div>
-        <Paragraph class="text-start">{description}</Paragraph>
-      </div>
+    <div class="flex flex-col py-2">
+      <Heading
+        level={3}
+        transition:name=`blog-heading-${title}`
+        class="text-2xl font-bold">{title}</Heading
+      >
+      <Paragraph class="text-start opacity-80"
+        >Created on {formatDate(pubDate)}</Paragraph
+      >
+      <Paragraph class="truncate mt-2">{description}</Paragraph>
     </div>
   </Card>
 </Link>

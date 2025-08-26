@@ -5,6 +5,8 @@ import { defineConfig, envField } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -16,9 +18,11 @@ export default defineConfig({
       optimize: true,
     }),
   ],
+
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),
+
   env: {
     schema: {
       PUBLIC_RECAPTCHA_KEY: envField.string({
@@ -40,5 +44,10 @@ export default defineConfig({
     },
     validateSecrets: true,
   },
+
   site: "https://jnalewajk.me",
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
