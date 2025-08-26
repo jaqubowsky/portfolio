@@ -2,6 +2,7 @@ export const prerender = false;
 
 import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
+import { GMAIL_APP_EMAIL, GMAIL_APP_PASSWORD } from "astro:env/server";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -9,8 +10,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: import.meta.env.GMAIL_APP_EMAIL,
-    pass: import.meta.env.GMAIL_APP_PASSWORD,
+    user: GMAIL_APP_EMAIL,
+    pass: GMAIL_APP_PASSWORD,
   },
 });
 
@@ -28,9 +29,9 @@ export const POST: APIRoute = async ({ request }) => {
     const mailOptions = {
       from: {
         name: "noreply",
-        address: import.meta.env.GMAIL_APP_EMAIL,
+        address: GMAIL_APP_EMAIL,
       },
-      to: import.meta.env.GMAIL_APP_EMAIL,
+      to: GMAIL_APP_EMAIL,
       subject,
       html,
     };

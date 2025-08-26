@@ -2,12 +2,12 @@ export const prerender = false;
 
 import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
+import { RECAPTCHA_KEY } from "astro:env/server";
 
 const RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 const REQUEST_HEADERS = {
   "Content-Type": "application/x-www-form-urlencoded",
 };
-const RECAPTCHA_KEY = import.meta.env.RECAPTCHA_KEY;
 
 export const POST: APIRoute = async ({ request }) => {
   if (request.headers.get("Content-Type") !== "application/json") {

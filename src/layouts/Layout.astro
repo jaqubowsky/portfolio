@@ -1,9 +1,9 @@
 ---
-import "@styles/tailwind.css";
+import "index.css";
 
 import { Footer, Header } from "@components/organisms";
 import SpeedInsights from "@vercel/speed-insights/astro";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 const { title, description } = Astro.props;
 ---
@@ -20,7 +20,7 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <title>{title}</title>
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="bg-background text-primary min-h-[100svh] flex flex-col">
     <SpeedInsights />

@@ -4,10 +4,9 @@ import { useCaptcha } from "@hooks/useCaptcha";
 import { render } from "@react-email/render";
 import { cn } from "@utils/cn";
 import { getErrorMessage } from "@utils/error";
+import { PUBLIC_RECAPTCHA_KEY } from "astro:env/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
-
-const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_KEY;
 
 type Message = {
   type: "success" | "error";
@@ -25,7 +24,7 @@ const ContactForm = () => {
   const [message, setMessage] = useState<Message | null>(null);
 
   const { handleVerifyCaptcha, isLoading: isCaptchaLoading } = useCaptcha({
-    key: RECAPTCHA_SITE_KEY,
+    key: PUBLIC_RECAPTCHA_KEY,
   });
 
   const isLoading = isFormLoading || isCaptchaLoading;
@@ -44,10 +43,7 @@ const ContactForm = () => {
         text: "Message sent successfully. I will get back to you soon.",
       });
     } catch (error) {
-      setMessage({
-        type: "error",
-        text: getErrorMessage(error, BASE_ERROR_MSG),
-      });
+      throw error;
     }
   };
 

@@ -1,8 +1,9 @@
 ---
-const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_KEY;
+import { PUBLIC_RECAPTCHA_KEY } from "astro:env/client";
 ---
 
 <script
+  is:inline
   type="text/javascript"
-  src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+  src={`https://www.google.com/recaptcha/api.js?render=${PUBLIC_RECAPTCHA_KEY}`}
 ></script>

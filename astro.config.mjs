@@ -1,13 +1,12 @@
 import react from "@astrojs/react";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel";
 import icon from "astro-icon";
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
   integrations: [
     icon(),
     react({
@@ -20,5 +19,26 @@ export default defineConfig({
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),
-  site: "https://jnalewajk.vercel.app",
+  env: {
+    schema: {
+      PUBLIC_RECAPTCHA_KEY: envField.string({
+        context: "client",
+        access: "public",
+      }),
+      RECAPTCHA_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      GMAIL_APP_EMAIL: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      GMAIL_APP_PASSWORD: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+    },
+    validateSecrets: true,
+  },
+  site: "https://jnalewajk.me",
 });
