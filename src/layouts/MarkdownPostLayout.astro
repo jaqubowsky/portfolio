@@ -1,5 +1,5 @@
 ---
-import { Flex, Prose, Section } from "@components/atoms";
+import { Prose, Section } from "@components/atoms";
 import { TableOfContents } from "@components/molecules";
 import BlogTags from "@components/molecules/BlogTags.astro";
 import IconAnimatedLink from "@components/molecules/IconAnimatedLink.astro";
@@ -48,15 +48,10 @@ const frontmatter = Astro.props;
     <article class="flex flex-col w-full max-w-2xl gap-y-10">
       <PostHeader frontmatter={frontmatter} />
       <div
-        class="flex flex-col gap-4 xl:hidden justify-center items-center static"
+        class="flex flex-col gap-4 xl:hidden justify-center items-center static max-w-72"
       >
-        <TableOfContents headings={frontmatter.headings} />
-        <IconAnimatedLink
-          iconName="mdi:arrow-left"
-          class="mr-6"
-          size={24}
-          href="/blog"
-        >
+        <TableOfContents headings={frontmatter.headings} class="w-full" />
+        <IconAnimatedLink iconName="mdi:arrow-left" size={24} href="/blog">
           <Fragment slot="content">Go Back</Fragment>
         </IconAnimatedLink>
       </div>
@@ -69,7 +64,7 @@ const frontmatter = Astro.props;
   </Section>
   <IconAnimatedLink
     id="backToTopBtn"
-    class="fixed bottom-20 right-4 ease-in-out opacity-0 transition-opacity"
+    class="fixed bottom-20 right-3 ease-in-out opacity-0 transition-opacity cursor-default"
     iconName="mdi:arrow-up"
     size={24}
     onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
