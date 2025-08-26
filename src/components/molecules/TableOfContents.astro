@@ -35,11 +35,17 @@ const { class: className, withIndentation } = Astro.props;
 <div class={cn(className)}>
   <Heading class="text-2xl" level={2}>Table of Contents</Heading>
   <nav>
-    <ul class="mt-2 ml-4">
+    <ul class="mt-2 ml-4 w-full">
       {
         headings.map((heading: Heading) => (
           <li class={cn(withIndentation && getIndentation(heading.depth))}>
-            <Link href={`#${heading.slug}`}>{heading.text}</Link>
+            <Link
+              href={`#${heading.slug}`}
+              title={heading.text}
+              class="block truncate"
+            >
+              {heading.text}
+            </Link>
           </li>
         ))
       }

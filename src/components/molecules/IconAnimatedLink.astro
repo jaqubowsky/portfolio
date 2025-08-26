@@ -1,0 +1,30 @@
+---
+import { cn } from "@utils/cn";
+import { Icon } from "astro-icon/components";
+import type { JSX } from "astro/jsx-runtime";
+
+type Props = {
+  class?: string;
+  iconName: string;
+  size: number;
+} & JSX.IntrinsicElements["a"];
+
+const { class: className, iconName, size, ...rest } = Astro.props;
+---
+
+<a
+  {...rest}
+  class={cn(
+    "border border-primary bg-secondary text-center w-48 rounded-2xl h-[58px] relative text-primary text-xl font-semibold group cursor-pointer flex items-center px-4",
+    className,
+  )}
+>
+  <div
+    class="bg-primary rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[96%] z-20 duration-500 transition-[width]"
+  >
+    <Icon name={iconName} size={size} class="text-primary-foreground" />
+  </div>
+  <span class="ml-[calc(25%+0.5rem)] z-10 relative truncate transition-colors">
+    <slot name="content" />
+  </span>
+</a>

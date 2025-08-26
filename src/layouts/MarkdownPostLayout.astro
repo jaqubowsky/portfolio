@@ -2,7 +2,7 @@
 import { Flex, Prose, Section } from "@components/atoms";
 import { TableOfContents } from "@components/molecules";
 import BlogTags from "@components/molecules/BlogTags.astro";
-import IconAnimatedButton from "@components/molecules/IconAnimatedButton.astro";
+import IconAnimatedLink from "@components/molecules/IconAnimatedLink.astro";
 import PostHeader from "@components/molecules/PostHeader.astro";
 import ShareLinks from "@components/molecules/ShareLinks.astro";
 import Layout from "@layouts/Layout.astro";
@@ -24,51 +24,56 @@ const frontmatter = Astro.props;
 </script>
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
-  <Section class="flex-row pt-20 pb-10">
-    <div class="sticky top-28 max-w-sm w-full hidden xl:block self-start">
-      <TableOfContents headings={frontmatter.headings} withIndentation />
-      <IconAnimatedButton
-        onclick="window.history.back()"
-        iconName="mdi:arrow-left"
-        size={24}
-        class="mt-5"
-      >
-        <Fragment slot="content">Go Back</Fragment>
-      </IconAnimatedButton>
+  <Section
+    class="relative grid xl:grid-cols-[1fr_auto_1fr] gap-x-4 max-w-7xl mx-auto"
+  >
+    <div class="w-full hidden xl:block h-full">
+      <div class="sticky top-28">
+        <TableOfContents
+          headings={frontmatter.headings}
+          withIndentation
+          class="max-w-56"
+        />
+        <IconAnimatedLink
+          iconName="mdi:arrow-left"
+          size={24}
+          class="mt-5 lg:ml-6 w-48"
+          href="/blog"
+        >
+          <Fragment slot="content">Go Back</Fragment>
+        </IconAnimatedLink>
+      </div>
     </div>
 
-    <article class="xl:mr-[300px] flex flex-col">
+    <article class="flex flex-col w-full max-w-2xl gap-y-10">
       <PostHeader frontmatter={frontmatter} />
       <div
-        class="flex py-16 flex-col gap-4 xl:hidden justify-center items-center static"
+        class="flex flex-col gap-4 xl:hidden justify-center items-center static"
       >
         <TableOfContents headings={frontmatter.headings} />
-        <IconAnimatedButton
-          slideWidth="md"
+        <IconAnimatedLink
           iconName="mdi:arrow-left"
           class="mr-6"
           size={24}
-          onclick=" window.history.back()"
+          href="/blog"
         >
           <Fragment slot="content">Go Back</Fragment>
-        </IconAnimatedButton>
+        </IconAnimatedLink>
       </div>
-      <Flex class="flex-col items-start xl:pt-20">
-        <Prose>
-          <slot />
-        </Prose>
-        <BlogTags tags={frontmatter.tags} />
-        <ShareLinks />
-      </Flex>
+      <Prose>
+        <slot />
+      </Prose>
+      <BlogTags tags={frontmatter.tags} />
+      <ShareLinks />
     </article>
   </Section>
-  <IconAnimatedButton
+  <IconAnimatedLink
     id="backToTopBtn"
-    class="ease-in-out drop-shadow-lg sticky bottom-16 transition-opacity mb-6 right-2 md:bottom-20 self-center md:self-end opacity-0"
+    class="fixed bottom-20 right-4 ease-in-out opacity-0 transition-opacity"
     iconName="mdi:arrow-up"
     size={24}
     onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
   >
-    <p class="ml-10" slot="content">Back to Top</p>
-  </IconAnimatedButton>
+    <p slot="content">Back to Top</p>
+  </IconAnimatedLink>
 </Layout>

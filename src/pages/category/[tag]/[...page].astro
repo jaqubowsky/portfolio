@@ -1,7 +1,7 @@
 ---
 import { Flex, Grid, Heading, Paragraph, Section } from "@components/atoms";
 import BlogCard from "@components/molecules/BlogCard.astro";
-import IconAnimatedButton from "@components/molecules/IconAnimatedButton.astro";
+import IconAnimatedLink from "@components/molecules/IconAnimatedLink.astro";
 import Pagination from "@components/molecules/Pagination.astro";
 import Layout from "@layouts/Layout.astro";
 import type { PaginateFunction } from "astro";
@@ -53,14 +53,14 @@ const { tag } = Astro.params;
           >{tag}</Paragraph
         ></Heading
       >
-      <IconAnimatedButton
-        onclick=" window.history.back()"
+      <IconAnimatedLink
         iconName="mdi:arrow-left"
         size={24}
         class="self-center"
+        href="/blog"
       >
         <Fragment slot="content">Go Back</Fragment>
-      </IconAnimatedButton>
+      </IconAnimatedLink>
     </Flex>
     <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {

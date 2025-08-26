@@ -8,7 +8,7 @@ type Props = {
   size?: number;
   name: string;
   href: string;
-} & JSX.IntrinsicElements["a"];
+} & React.JSX.IntrinsicElements["a"];
 
 const { class: className, size, name, href, ...rest } = Astro.props;
 ---

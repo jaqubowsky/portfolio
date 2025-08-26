@@ -6,7 +6,6 @@ import type { JSX } from "astro/jsx-runtime";
 type Props = {
   class?: string;
   iconName: string;
-  slideWidth?: "xs" | "sm" | "md" | "lg" | "xl";
   size: number;
 } & JSX.IntrinsicElements["button"];
 
@@ -16,7 +15,7 @@ const { class: className, iconName, size, ...rest } = Astro.props;
 <button
   {...rest}
   class={cn(
-    "border border-primary bg-secondary text-center w-48 rounded-2xl h-[58px] relative text-primary text-xl font-semibold group",
+    "border border-primary bg-secondary text-center w-48 rounded-2xl h-[58px] relative text-primary text-xl font-semibold group cursor-pointer",
     className,
   )}
 >
