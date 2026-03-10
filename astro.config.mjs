@@ -33,11 +33,11 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
-      GMAIL_APP_EMAIL: envField.string({
+      RESEND_API_KEY: envField.string({
         context: "server",
         access: "secret",
       }),
-      GMAIL_APP_PASSWORD: envField.string({
+      RESEND_FROM_EMAIL: envField.string({
         context: "server",
         access: "secret",
       }),

@@ -1,19 +1,11 @@
 export const prerender = false;
 
-import { GMAIL_APP_EMAIL, GMAIL_APP_PASSWORD } from "astro:env/server";
+import { RESEND_API_KEY, RESEND_FROM_EMAIL } from "astro:env/server";
 import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: GMAIL_APP_EMAIL,
-    pass: GMAIL_APP_PASSWORD,
-  },
-});
+const resend = new Resend(RESEND_API_KEY);
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -26,17 +18,13 @@ export const POST: APIRoute = async ({ request }) => {
       return ServerResponse({ message: "msg_invalid_input", status: 400 });
     }
 
-    const mailOptions = {
-      from: {
-        name: "noreply",
-        address: GMAIL_APP_EMAIL,
-      },
-      to: GMAIL_APP_EMAIL,
+    await resend.emails.send({
+      from: `Portfolio <${RESEND_FROM_EMAIL}>`,
+      to: RESEND_FROM_EMAIL,
+      replyTo: email,
       subject,
       html,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
 
     return ServerResponse({ message: "msg_email_sent" });
   } catch (_error) {
