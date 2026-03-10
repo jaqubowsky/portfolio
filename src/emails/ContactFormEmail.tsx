@@ -21,12 +21,12 @@ type ContactFormEmailProps = {
 };
 
 const colors = {
-  background: "#1a1b2e",
-  card: "#222338",
-  foreground: "#ede9e0",
-  mutedForeground: "#9a95a0",
-  primary: "#d4864a",
-  border: "#2e2f45",
+  background: "#f5f2ed",
+  card: "#ffffff",
+  foreground: "#1a1b2e",
+  mutedForeground: "#6b6878",
+  primary: "#c47a3a",
+  border: "#e8e4dd",
 };
 
 const ContactFormEmail = ({
@@ -43,11 +43,11 @@ const ContactFormEmail = ({
       </Preview>
       <Body style={{ backgroundColor: colors.background, padding: "40px 16px", fontFamily: "'Outfit', 'Segoe UI', system-ui, sans-serif", margin: 0 }}>
         <Container style={{ backgroundColor: colors.card, borderRadius: "12px", padding: "0", maxWidth: "520px", margin: "0 auto", border: `1px solid ${colors.border}`, overflow: "hidden" }}>
-          <Section style={{ background: `linear-gradient(135deg, ${colors.primary}, #c47a3a)`, padding: "28px 32px" }}>
+          <Section style={{ background: `linear-gradient(135deg, ${colors.primary}, #d4924e)`, padding: "28px 32px" }}>
             <Heading style={{ color: "#fff", fontSize: "22px", fontWeight: "700", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>
               New Message
             </Heading>
-            <Text style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>
+            <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: "13px", margin: 0 }}>
               via jnalewajk.me contact form
             </Text>
           </Section>

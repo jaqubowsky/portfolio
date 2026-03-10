@@ -23,6 +23,8 @@ export default defineConfig({
     mode: "standalone",
   }),
 
+  compressHTML: true,
+
   env: {
     schema: {
       PUBLIC_RECAPTCHA_KEY: envField.string({

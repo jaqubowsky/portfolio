@@ -12,6 +12,6 @@ const { badge, title, description } = Astro.props;
 
 <Flex class="text-center flex-col gap-3 animate-on-scroll">
   <Badge variant="secondary">{badge}</Badge>
-  <Heading class="text-3xl sm:text-4xl">{title}</Heading>
+  <Heading level={2} class="text-3xl sm:text-4xl">{title}</Heading>
   {description && <Paragraph class="max-w-xl text-center">{description}</Paragraph>}
 </Flex>
