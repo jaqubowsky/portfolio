@@ -2,8 +2,28 @@
 import { PUBLIC_RECAPTCHA_KEY } from "astro:env/client";
 ---
 
-<script
-  is:inline
-  type="text/javascript"
-  src={`https://www.google.com/recaptcha/api.js?render=${PUBLIC_RECAPTCHA_KEY}`}
-></script>
+<script is:inline define:vars={{ recaptchaKey: PUBLIC_RECAPTCHA_KEY }}>
+  (function() {
+    var loaded = false;
+    function loadRecaptcha() {
+      if (loaded) return;
+      loaded = true;
+      var s = document.createElement("script");
+      s.src = "https://www.google.com/recaptcha/api.js?render=" + recaptchaKey;
+      document.head.appendChild(s);
+    }
+
+    var contact = document.getElementById("contact");
+    if (contact && "IntersectionObserver" in window) {
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          loadRecaptcha();
+          obs.disconnect();
+        }
+      }, { rootMargin: "200px" });
+      obs.observe(contact);
+    } else {
+      loadRecaptcha();
+    }
+  })();
+</script>

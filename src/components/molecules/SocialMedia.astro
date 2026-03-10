@@ -11,7 +11,9 @@ const { links } = Astro.props;
 <ul class="flex space-x-4">
   {
     links.map(({ href, name }: Link) => (
-      <IconLink href={href} name={name} size={28} />
+      <li>
+        <IconLink href={href} name={name} size={28} />
+      </li>
     ))
   }
 </ul>

@@ -7,7 +7,7 @@ import { Icon } from "astro-icon/components";
 <Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 relative" id="home">
   <Flex class="relative z-10 flex-col md:flex-row md:items-center gap-6 md:gap-8 w-full">
     <Flex class="flex-col items-center md:items-start gap-6 flex-1">
-      <Flex class="gap-2 animate-on-scroll">
+      <Flex class="gap-2 hero-fade" style="animation-delay: 0s">
         <span
           class="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"
         ></span>
@@ -16,7 +16,7 @@ import { Icon } from "astro-icon/components";
         </Paragraph>
       </Flex>
 
-      <Flex class="flex-col gap-2 items-center md:items-start animate-on-scroll stagger-1">
+      <Flex class="flex-col gap-2 items-center md:items-start hero-fade" style="animation-delay: 0.1s">
         <Heading level={1} class="text-center md:text-left text-5xl sm:text-6xl lg:text-7xl tracking-tight">
           <span class="text-gradient">Jakub</span>{" "}Nalewajk
           <span class="block text-lg sm:text-xl text-primary font-semibold font-mono tracking-wide mt-2">
@@ -25,14 +25,14 @@ import { Icon } from "astro-icon/components";
         </Heading>
       </Flex>
 
-      <Paragraph class="md:text-left text-center max-w-lg text-base sm:text-lg leading-relaxed animate-on-scroll stagger-2">
+      <Paragraph class="md:text-left text-center max-w-lg text-base sm:text-lg leading-relaxed hero-fade" style="animation-delay: 0.2s">
         Frontend Developer with 4+ years of experience in the Next.js ecosystem.
         I practice spec-driven development with Claude Code, take full ownership
         of projects from architecture to deployment, and collaborate closely with
         business, backend devs, and designers to ship products that matter.
       </Paragraph>
 
-      <Flex class="justify-start gap-3 animate-on-scroll stagger-3 w-full sm:w-auto flex-col sm:flex-row">
+      <Flex class="justify-start gap-3 hero-fade w-full sm:w-auto flex-col sm:flex-row" style="animation-delay: 0.3s">
         <ButtonLink href="#contact">
           <Icon name="mdi:email-outline" size={18} />
           Get in Touch
@@ -49,14 +49,14 @@ import { Icon } from "astro-icon/components";
       </Flex>
     </Flex>
 
-    <div class="animate-on-scroll stagger-2 shrink-0 w-56 sm:w-72 relative">
+    <div class="hero-fade shrink-0 w-56 sm:w-72 relative" style="animation-delay: 0.2s">
       <video
         id="hero-video"
         autoplay
         loop
         muted
         playsinline
-        preload="auto"
+        preload="metadata"
         disablepictureinpicture
         class="w-full rounded-2xl"
         poster="/images/avatar-poster.webp"
@@ -67,6 +67,7 @@ import { Icon } from "astro-icon/components";
         function initHeroVideo() {
           const video = document.getElementById("hero-video") as HTMLVideoElement;
           if (!video) return;
+          video.load();
           video.play().catch(() => {
             const play = () => { video.play(); document.removeEventListener("click", play); };
             document.addEventListener("click", play, { once: true });
@@ -74,6 +75,7 @@ import { Icon } from "astro-icon/components";
         }
         initHeroVideo();
         document.addEventListener("astro:page-load", initHeroVideo);
+        window.addEventListener("pageshow", (e) => { if (e.persisted) initHeroVideo(); });
       </script>
       <noscript>
         <Image
