@@ -7,9 +7,9 @@ import {
   Heading,
   Hr,
   Html,
+  Link,
   Preview,
   Section,
-  Tailwind,
   Text,
 } from "@react-email/components";
 
@@ -20,6 +20,15 @@ type ContactFormEmailProps = {
   message: string;
 };
 
+const colors = {
+  background: "#1a1b2e",
+  card: "#222338",
+  foreground: "#ede9e0",
+  mutedForeground: "#9a95a0",
+  primary: "#d4864a",
+  border: "#2e2f45",
+};
+
 const ContactFormEmail = ({
   name,
   email,
@@ -27,62 +36,67 @@ const ContactFormEmail = ({
   message,
 }: ContactFormEmailProps) => {
   return (
-    <Tailwind>
-      <Html>
-        <Head />
-        <Preview>
-          {subject} — from {name}
-        </Preview>
-        <Body className="bg-neutral-950 p-6 font-sans">
-          <Container className="bg-neutral-900 rounded-xl p-8 max-w-xl mx-auto border border-neutral-800">
-            <Heading className="text-2xl font-bold text-white mb-1">
+    <Html>
+      <Head />
+      <Preview>
+        {subject} — from {name}
+      </Preview>
+      <Body style={{ backgroundColor: colors.background, padding: "40px 16px", fontFamily: "'Outfit', 'Segoe UI', system-ui, sans-serif", margin: 0 }}>
+        <Container style={{ backgroundColor: colors.card, borderRadius: "12px", padding: "0", maxWidth: "520px", margin: "0 auto", border: `1px solid ${colors.border}`, overflow: "hidden" }}>
+          <Section style={{ background: `linear-gradient(135deg, ${colors.primary}, #c47a3a)`, padding: "28px 32px" }}>
+            <Heading style={{ color: "#fff", fontSize: "22px", fontWeight: "700", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>
               New Message
             </Heading>
-            <Text className="text-neutral-400 text-sm mt-0 mb-6">
+            <Text style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>
               via jnalewajk.me contact form
             </Text>
+          </Section>
 
-            <Hr className="border-neutral-800 my-4" />
+          <Section style={{ padding: "28px 32px" }}>
+            <table cellPadding={0} cellSpacing={0} style={{ width: "100%" }}>
+              <tr>
+                <td style={{ padding: "0 0 16px 0" }}>
+                  <Text style={{ color: colors.mutedForeground, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 4px 0" }}>
+                    From
+                  </Text>
+                  <Text style={{ color: colors.foreground, fontSize: "14px", margin: 0 }}>
+                    {name}
+                  </Text>
+                  <Link href={`mailto:${email}`} style={{ color: colors.primary, fontSize: "13px", textDecoration: "none" }}>
+                    {email}
+                  </Link>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ padding: "0 0 16px 0" }}>
+                  <Text style={{ color: colors.mutedForeground, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 4px 0" }}>
+                    Subject
+                  </Text>
+                  <Text style={{ color: colors.foreground, fontSize: "14px", margin: 0 }}>
+                    {subject}
+                  </Text>
+                </td>
+              </tr>
+            </table>
 
-            <Section className="mb-6">
-              <table cellPadding={0} cellSpacing={0} style={{ width: "100%" }}>
-                <tr>
-                  <td style={{ padding: "6px 0" }}>
-                    <Text className="text-neutral-500 text-xs uppercase tracking-wider m-0">
-                      From
-                    </Text>
-                    <Text className="text-white text-sm m-0 mt-1">
-                      {name} ({email})
-                    </Text>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ padding: "6px 0" }}>
-                    <Text className="text-neutral-500 text-xs uppercase tracking-wider m-0">
-                      Subject
-                    </Text>
-                    <Text className="text-white text-sm m-0 mt-1">
-                      {subject}
-                    </Text>
-                  </td>
-                </tr>
-              </table>
-            </Section>
+            <Hr style={{ borderColor: colors.border, margin: "8px 0 20px 0" }} />
 
-            <Hr className="border-neutral-800 my-4" />
+            <Text style={{ color: colors.mutedForeground, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 8px 0" }}>
+              Message
+            </Text>
+            <Text style={{ color: colors.foreground, fontSize: "14px", lineHeight: "1.7", whiteSpace: "pre-wrap", margin: 0 }}>
+              {message}
+            </Text>
+          </Section>
 
-            <Section>
-              <Text className="text-neutral-500 text-xs uppercase tracking-wider mb-2">
-                Message
-              </Text>
-              <Text className="text-neutral-300 text-sm leading-relaxed whitespace-pre-wrap">
-                {message}
-              </Text>
-            </Section>
-          </Container>
-        </Body>
-      </Html>
-    </Tailwind>
+          <Section style={{ borderTop: `1px solid ${colors.border}`, padding: "16px 32px", textAlign: "center" as const }}>
+            <Text style={{ color: colors.mutedForeground, fontSize: "11px", margin: 0 }}>
+              Jakub Nalewajk — <Link href="https://jnalewajk.me" style={{ color: colors.primary, textDecoration: "none" }}>jnalewajk.me</Link>
+            </Text>
+          </Section>
+        </Container>
+      </Body>
+    </Html>
   );
 };
 
