@@ -13,11 +13,7 @@ const { items, class: className } = Astro.props;
   {
     items.map((item) => (
       <li class="flex gap-3 text-sm text-muted-foreground leading-relaxed">
-        <span class="text-primary mt-1.5 shrink-0">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="currentColor">
-            <circle cx="3" cy="3" r="3" />
-          </svg>
-        </span>
+        <span class="text-primary mt-2 shrink-0 block size-1.5 rounded-full bg-current"></span>
         <span>{item}</span>
       </li>
     ))

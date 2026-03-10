@@ -43,6 +43,42 @@ const frontmatter = Astro.props;
       <Prose>
         <slot />
       </Prose>
+
+      <template id="copy-icon">
+        <Icon name="mdi:content-copy" size={16} />
+      </template>
+      <template id="check-icon">
+        <Icon name="mdi:check" size={16} />
+      </template>
+
+      <script>
+        const copyIcon = document.getElementById("copy-icon") as HTMLTemplateElement;
+        const checkIcon = document.getElementById("check-icon") as HTMLTemplateElement;
+
+        document.querySelectorAll("pre").forEach((pre) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "relative group";
+          pre.parentNode?.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+
+          const button = document.createElement("button");
+          button.className =
+            "absolute right-2 top-2 p-1.5 rounded-md bg-muted/80 text-muted-foreground opacity-0 group-hover:opacity-100 hover:bg-muted hover:text-foreground transition-all cursor-pointer";
+          button.setAttribute("aria-label", "Copy code");
+          button.appendChild(copyIcon.content.cloneNode(true));
+
+          button.addEventListener("click", async () => {
+            const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
+            await navigator.clipboard.writeText(code);
+            button.replaceChildren(checkIcon.content.cloneNode(true));
+            setTimeout(() => {
+              button.replaceChildren(copyIcon.content.cloneNode(true));
+            }, 2000);
+          });
+
+          wrapper.appendChild(button);
+        });
+      </script>
       <BlogTags tags={frontmatter.tags} />
       <ShareLinks />
     </article>
