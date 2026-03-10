@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { Badge, Flex, Heading, Paragraph } from "@components/atoms";
 import { formatDate } from "@utils/date";
 
@@ -18,13 +18,15 @@ const { frontmatter } = Astro.props;
   <Paragraph class="text-base">
     by {frontmatter.author} on {formatDate(frontmatter.pubDate)}
   </Paragraph>
-  <Image
+  <Picture
     transition:name=`blog-image-${frontmatter.title}`
+    formats={["avif", "webp"]}
     loading="eager"
-    height={400}
     width={800}
     src={frontmatter.image.url}
     alt={frontmatter.image.alt}
-    class="w-full h-80 sm:h-96 object-cover rounded-xl"
+    pictureAttributes={{ style: "width: 100%; max-width: 100%;" }}
+    style="width: 100%; max-width: 100%;"
+    class="object-cover rounded-xl"
   />
 </Flex>

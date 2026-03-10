@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { Badge, Flex, GlowCard, Heading, Link, Paragraph } from "@components/atoms";
 import { formatDate } from "@utils/date";
 
@@ -11,12 +11,14 @@ const { title, description, tags, image, slug, pubDate } = Astro.props;
   class="no-underline w-full"
 >
   <GlowCard class="overflow-hidden h-full flex flex-col">
-    <Image
+    <Picture
       transition:name=`blog-image-${title}`
+      formats={["avif", "webp"]}
       width={600}
-      height={300}
       loading="eager"
-      class="!w-full !max-w-full h-auto object-contain"
+      pictureAttributes={{ style: "width: 100%; max-width: 100%;" }}
+      style="width: 100%; max-width: 100%;"
+      class="h-auto object-cover"
       src={image.url}
       alt={image.alt}
     />

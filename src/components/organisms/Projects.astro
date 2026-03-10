@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import {
   Flex,
   GlowCard,
@@ -11,6 +11,9 @@ import {
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
 import { Icon } from "astro-icon/components";
+import jobzImg from "@images/projects/jobz.webp";
+import substatzImg from "@images/projects/substatz.webp";
+import createNextjsImg from "@images/projects/create-nextjs-app.webp";
 
 const projects = [
   {
@@ -21,7 +24,7 @@ const projects = [
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
     github: "https://github.com/jaqubowsky/jobZ",
     live: "https://jobzzz.jnalewajk.me",
-    image: "/images/projects/jobz.webp",
+    image: jobzImg,
   },
   {
     number: "02",
@@ -31,7 +34,7 @@ const projects = [
     tech: ["Next.js", "Prisma", "Stripe", "Sentry", "Docker"],
     github: "https://github.com/jaqubowsky/substatz",
     live: "https://substatz.jnalewajk.me",
-    image: "/images/projects/substatz.webp",
+    image: substatzImg,
   },
   {
     number: "03",
@@ -47,7 +50,7 @@ const projects = [
     ],
     github: "https://github.com/jaqubowsky/create-nextjs-app",
     live: null,
-    image: "/images/projects/create-nextjs-app.webp",
+    image: createNextjsImg,
   },
 ] as const;
 ---
@@ -66,12 +69,14 @@ const projects = [
           <GlowCard class="p-0 overflow-hidden">
             <Flex class="flex-col lg:flex-row items-stretch overflow-hidden">
               <div class="lg:w-2/5 shrink-0 overflow-hidden">
-                <Image
-                  width={600}
-                  height={340}
+                <Picture
                   src={project.image}
+                  formats={["avif", "webp"]}
+                  width={600}
                   alt={`${project.title} preview`}
-                  class="!w-full !max-w-full h-auto lg:h-full object-contain lg:object-cover bg-muted block"
+                  pictureAttributes={{ style: "width: 100%; max-width: 100%; height: 100%;" }}
+                  style="width: 100%; max-width: 100%;"
+                  class="h-auto lg:h-full object-contain lg:object-cover bg-muted block"
                   loading="lazy"
                 />
               </div>
