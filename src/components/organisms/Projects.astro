@@ -64,14 +64,14 @@ const projects = [
       projects.map((project, i) => (
         <div class={`animate-on-scroll stagger-${i + 1}`}>
           <GlowCard class="p-0 overflow-hidden">
-            <Flex class="flex-col lg:flex-row items-stretch">
-              <div class="lg:w-2/5 shrink-0">
+            <Flex class="flex-col lg:flex-row items-stretch overflow-hidden">
+              <div class="lg:w-2/5 shrink-0 overflow-hidden">
                 <Image
                   width={600}
                   height={340}
                   src={project.image}
                   alt={`${project.title} preview`}
-                  class="w-full h-48 lg:h-full object-cover object-center"
+                  class="!w-full !max-w-full h-auto lg:h-full object-contain lg:object-cover bg-muted block"
                   loading="lazy"
                 />
               </div>
