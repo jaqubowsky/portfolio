@@ -18,8 +18,8 @@ const verifyCaptchaToken = async (recaptchaToken: string) => {
 
   if (!response.ok) throw new Error(CAPTCHA_ERROR_MSG);
 
-  const data = await response.json();
-  if (!data?.success) throw new Error(CAPTCHA_ERROR_MSG);
+  const json = await response.json();
+  if (!json?.data?.success) throw new Error(CAPTCHA_ERROR_MSG);
 };
 
 const executeCaptcha = (key: string): Promise<string> => {
