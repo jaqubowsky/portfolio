@@ -54,7 +54,7 @@ const imageURL = new URL(image, Astro.site);
     <meta name="twitter:image" content={imageURL} />
 
     {type === "website" ? (
-      <script type="application/ld+json" set:html={JSON.stringify({
+      <script is:inline type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Jakub Nalewajk",
@@ -62,7 +62,7 @@ const imageURL = new URL(image, Astro.site);
         "description": description,
       })} />
     ) : (
-      <script type="application/ld+json" set:html={JSON.stringify({
+      <script is:inline type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": title,

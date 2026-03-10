@@ -47,6 +47,10 @@ export default defineConfig({
 
   site: "https://jnalewajk.me",
 
+  security: {
+    checkOrigin: false,
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
