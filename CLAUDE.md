@@ -29,13 +29,13 @@ Astro 5 portfolio site (jnalewajk.me) with React 19 islands, deployed on Vercel.
 - `src/pages/blog/[slug]/index.astro` — Individual blog post
 - `src/pages/category/[tag]/[...page].astro` — Tag-filtered paginated blog
 - `src/pages/api/recaptcha.ts` — POST, verifies reCAPTCHA token (SSR, `prerender = false`)
-- `src/pages/api/send-email.ts` — POST, sends email via Nodemailer/Gmail SMTP (SSR, `prerender = false`)
+- `src/pages/api/send-email.ts` — POST, sends email via Resend API (SSR, `prerender = false`)
 
 ### Contact Form Flow
 1. `ContactForm.tsx` submits → `useCaptcha` hook verifies token via `/api/recaptcha`
 2. On success, email HTML is rendered **client-side** using `@react-email/render` with the `ContactFormEmail` template from `src/emails/`
 3. Rendered HTML + form data POSTed to `/api/send-email`
-4. Server sends via Nodemailer (Gmail SMTP, port 465, SSL)
+4. Server sends via Resend API
 5. Success triggers `canvas-confetti` animation
 
 ### Content Collections
@@ -68,15 +68,16 @@ Astro 5 portfolio site (jnalewajk.me) with React 19 islands, deployed on Vercel.
 - `src/utils/responses.ts` — `ServerResponse()` wrapper for API JSON responses
 
 ### Environment Variables
-Required for contact form (validated in `astro.config.mjs` with `validateSecrets: true`):
+Required for contact form (defined in `astro.config.mjs` env schema):
 - `PUBLIC_RECAPTCHA_KEY` (client-side)
 - `RECAPTCHA_KEY` (server-side)
-- `GMAIL_APP_EMAIL` (server-side)
-- `GMAIL_APP_PASSWORD` (server-side)
+- `RESEND_API_KEY` (server-side)
+- `RESEND_FROM_EMAIL` (server-side)
+- `CONTACT_EMAIL` (server-side)
 
 Server env vars are imported from `astro:env/server`, client vars from `astro:env/client`.
 
 ### Deployment
-- Vercel adapter with serverless functions for API routes
-- Vercel Web Analytics and Speed Insights enabled
+- Node.js adapter (standalone) with Dokploy/Traefik on VPS
+- Docker multi-stage build
 - Site URL: `https://jnalewajk.me`

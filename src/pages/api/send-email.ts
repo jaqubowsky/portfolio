@@ -1,6 +1,6 @@
 export const prerender = false;
 
-import { RESEND_API_KEY, RESEND_FROM_EMAIL } from "astro:env/server";
+import { CONTACT_EMAIL, RESEND_API_KEY, RESEND_FROM_EMAIL } from "astro:env/server";
 import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
 import { Resend } from "resend";
@@ -20,7 +20,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     await resend.emails.send({
       from: `Portfolio <${RESEND_FROM_EMAIL}>`,
-      to: RESEND_FROM_EMAIL,
+      to: CONTACT_EMAIL,
       replyTo: email,
       subject,
       html,
