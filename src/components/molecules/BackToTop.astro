@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  id="backToTopBtn"
+  class="fixed bottom-8 right-4 opacity-0 transition-opacity duration-300 bg-card border border-border rounded-lg p-3 shadow-lg hover:bg-muted cursor-pointer"
+  onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+  aria-label="Back to top"
+>
+  <Icon name="mdi:arrow-up" size={20} class="text-foreground" />
+</button>
+
+<script>
+  window.addEventListener("scroll", () => {
+    const backToTopBtn = document.getElementById("backToTopBtn");
+    if (!backToTopBtn) return;
+
+    if (window.scrollY > 100) {
+      backToTopBtn.classList.remove("opacity-0");
+    } else {
+      backToTopBtn.classList.add("opacity-0");
+    }
+  });
+</script>

@@ -1,21 +1,38 @@
 ---
-import { Link } from "@components/atoms";
+import { Flex, Link } from "@components/atoms";
 import { Icon } from "astro-icon/components";
 
 const { prevUrl, nextUrl, currPage, totalPages } = Astro.props;
 ---
 
-<nav class="flex gap-6 items-center justify-center" aria-label="Blog pages">
-  <Link
-    aria-disabled={!prevUrl}
-    class="flex gap-2 items-center justify-center aria-disabled:opacity-50 aria-disabled:pointer-events-none"
-    href={prevUrl ?? "/"}><Icon name="mdi:arrow-left" size={24} />Prev</Link
-  >
-  <span class="flex items-center justify-center">{currPage} / {totalPages}</span
-  >
-  <Link
-    aria-disabled={!nextUrl}
-    class="flex gap-2 items-center justify-center aria-disabled:opacity-50 aria-disabled:pointer-events-none"
-    href={nextUrl ?? "/"}>Next<Icon name="mdi:arrow-right" size={24} /></Link
-  >
+<nav aria-label="Blog pages">
+  <Flex class="gap-4">
+    <Link
+      aria-disabled={!prevUrl}
+      class:list={[
+        "flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium transition-colors hover:bg-muted",
+        !prevUrl && "opacity-40 pointer-events-none",
+      ]}
+      href={prevUrl ?? "/"}
+    >
+      <Icon name="mdi:arrow-left" size={16} />
+      Prev
+    </Link>
+
+    <Flex class="px-4 py-2 rounded-lg bg-card border border-border text-sm font-mono">
+      {currPage} / {totalPages}
+    </Flex>
+
+    <Link
+      aria-disabled={!nextUrl}
+      class:list={[
+        "flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium transition-colors hover:bg-muted",
+        !nextUrl && "opacity-40 pointer-events-none",
+      ]}
+      href={nextUrl ?? "/"}
+    >
+      Next
+      <Icon name="mdi:arrow-right" size={16} />
+    </Link>
+  </Flex>
 </nav>

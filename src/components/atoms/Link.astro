@@ -1,12 +1,13 @@
 ---
 import { cn } from "@utils/index";
+
 const { class: className, ...rest } = Astro.props;
 ---
 
 <a
   {...rest}
   class={cn(
-    "text-primary cursor-pointer font-medium transition-colors hover:underline focus:underline max-w-max",
+    "text-foreground cursor-pointer font-medium transition-colors hover:text-primary focus:text-primary max-w-max",
     className,
   )}
 >

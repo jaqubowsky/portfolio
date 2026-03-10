@@ -1,11 +1,10 @@
-import react from "@astrojs/react";
-import vercel from "@astrojs/vercel";
-import icon from "astro-icon";
-import { defineConfig, envField } from "astro/config";
-
 import mdx from "@astrojs/mdx";
-
+import node from "@astrojs/node";
+import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField } from "astro/config";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,10 +16,11 @@ export default defineConfig({
     mdx({
       optimize: true,
     }),
+    sitemap(),
   ],
 
-  adapter: vercel({
-    webAnalytics: { enabled: true },
+  adapter: node({
+    mode: "standalone",
   }),
 
   env: {
@@ -42,7 +42,7 @@ export default defineConfig({
         access: "secret",
       }),
     },
-    validateSecrets: true,
+    validateSecrets: false,
   },
 
   site: "https://jnalewajk.me",

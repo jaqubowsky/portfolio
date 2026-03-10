@@ -4,17 +4,22 @@ import { SocialMedia } from "@components/molecules";
 
 const links = [
   { href: "https://github.com/jaqubowsky", name: "mdi:github" },
-  { href: "https://www.linkedin.com/in/jakub-nalewajk/", name: "mdi:linkedin" },
+  {
+    href: "https://www.linkedin.com/in/jakub-nalewajk/",
+    name: "mdi:linkedin",
+  },
 ] as const;
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="p-4 bg-muted w-full mt-auto z-50">
-  <Flex class="justify-between">
-    <Paragraph class="text-sm"
-      >© {currentYear} Jakub Nalewajk, All Rights Reserved</Paragraph
-    >
+<footer
+  class="py-8 px-4 sm:px-6 lg:px-8 border-t border-border/50 w-full mt-auto"
+>
+  <Flex class="max-w-[1440px] mx-auto flex-col sm:flex-row justify-between gap-4">
+    <Paragraph class="text-sm">
+      &copy; {currentYear} Jakub Nalewajk
+    </Paragraph>
     <SocialMedia links={links} />
   </Flex>
 </footer>

@@ -1,15 +1,83 @@
 ---
-import { Badge, Heading, Paragraph, Section } from "@components/atoms";
+import {
+  Card,
+  Flex,
+  Heading,
+  IconBox,
+  Link,
+  Paragraph,
+  Section,
+} from "@components/atoms";
+import { SectionHeader } from "@components/molecules";
 import { ContactForm } from "@components/react";
+
+const contactLinks = [
+  {
+    icon: "mdi:email-outline",
+    label: "Email",
+    value: "jakub.nalewajk04@gmail.com",
+    href: "mailto:jakub.nalewajk04@gmail.com",
+  },
+  {
+    icon: "mdi:linkedin",
+    label: "LinkedIn",
+    value: "jakub-nalewajk",
+    href: "https://www.linkedin.com/in/jakub-nalewajk/",
+  },
+  {
+    icon: "mdi:github",
+    label: "GitHub",
+    value: "jaqubowsky",
+    href: "https://github.com/jaqubowsky",
+  },
+] as const;
 ---
 
-<Section class="space-y-2" id="contact">
-  <Badge variant="secondary">Get in touch</Badge>
-  <Heading class="text-4xl">Contact Me</Heading>
-  <Paragraph>
-    I'd love to hear from you! Feel free to reach out with any questions or
-    opportunities.
-  </Paragraph>
+<div class="w-full">
+  <Section class="gap-10" id="contact">
+    <SectionHeader
+      badge="Contact"
+      title="Let's Work Together"
+      description="Have a project in mind or looking for a frontend developer? Drop me a message and I'll get back to you."
+    />
 
-  <ContactForm client:load />
-</Section>
+    <div class="w-full animate-on-scroll stagger-1">
+      <Card class="p-0 overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+          <Flex class="flex-col items-start p-6 sm:p-8 lg:border-r lg:border-border">
+            <Heading level={3} class="text-xl">Send a Message</Heading>
+            <Paragraph class="text-sm">
+              I'll respond within 24 hours.
+            </Paragraph>
+            <ContactForm client:load />
+          </Flex>
+
+          <Flex class="flex-col gap-6 items-start justify-start p-6 sm:p-8 border-t lg:border-t-0 border-border">
+            <Heading level={3} class="text-xl">Reach Out Directly</Heading>
+
+            {
+              contactLinks.map((link) => (
+                <Flex class="gap-4 items-start justify-start">
+                  <IconBox name={link.icon} />
+                  <Flex class="flex-col items-start gap-0.5">
+                    <Paragraph class="text-sm font-semibold text-foreground">
+                      {link.label}
+                    </Paragraph>
+                    <Link
+                      href={link.href}
+                      target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                      rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                      class="text-sm break-all"
+                    >
+                      {link.value}
+                    </Link>
+                  </Flex>
+                </Flex>
+              ))
+            }
+          </Flex>
+        </div>
+      </Card>
+    </div>
+  </Section>
+</div>

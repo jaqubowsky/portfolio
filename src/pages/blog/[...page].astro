@@ -1,23 +1,13 @@
 ---
-import { Flex, Grid, Heading, Link, Section } from "@components/atoms";
-import BlogCard from "@components/molecules/BlogCard.astro";
-import Pagination from "@components/molecules/Pagination.astro";
+import { getCollection } from "astro:content";
+import { Badge, Flex, Grid, Heading, Link, Section } from "@components/atoms";
+import { BlogCard, Pagination } from "@components/molecules";
 import Layout from "@layouts/Layout.astro";
 import type { PaginateFunction } from "astro";
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import { getPostData } from "@utils/posts";
 
 const posts = await getCollection("posts");
-const tags = posts.flatMap((post) => post.data.tags);
-
-const getData = (post: CollectionEntry<"posts">) => {
-  const data = posts.find((p) => p.slug === post.slug);
-
-  return {
-    ...data?.data,
-    slug: post.slug,
-  };
-};
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
 
 export async function getStaticPaths({
   paginate,
@@ -38,32 +28,28 @@ const { page } = Astro.props;
   description="Jakub Nalewajk's blog where he shares his thoughts on software development, productivity, and more."
 >
   <Section id="blog" class="gap-12">
-    <Flex class="flex-wrap gap-2 flex-col items-start justify-start mt-4">
-      <Heading level={2} class="text-3xl font-bold"
-        >Filter out posts by tags:</Heading
-      >
+    <Flex class="flex-wrap gap-4 flex-col items-start justify-start mt-4 w-full animate-on-scroll">
+      <Heading level={2} class="text-3xl sm:text-4xl font-bold">Blog</Heading>
       <Flex class="flex-wrap gap-2 items-start justify-start">
         {
           tags.map((tag: string) => (
-            <Link
-              href={`/category/${tag}`}
-              class="decoration-wavy underline text-xl"
-              key={tag}
-            >
-              #{tag}
+            <Link href={`/category/${tag}`} class="no-underline">
+              <Badge
+                variant="primary"
+                class="cursor-pointer hover:border-primary/50 transition-colors"
+              >
+                #{tag}
+              </Badge>
             </Link>
           ))
         }
       </Flex>
     </Flex>
-    <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {
-        page.data.map((post) => {
-          const data = getData(post);
-          return <BlogCard {...data} />;
-        })
-      }
+
+    <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {page.data.map((post) => <BlogCard {...getPostData(post)} />)}
     </Grid>
+
     <Pagination
       prevUrl={page.url.prev}
       nextUrl={page.url.next}

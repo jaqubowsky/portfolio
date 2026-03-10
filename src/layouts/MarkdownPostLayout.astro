@@ -1,60 +1,45 @@
 ---
-import { Prose, Section } from "@components/atoms";
-import { TableOfContents } from "@components/molecules";
-import BlogTags from "@components/molecules/BlogTags.astro";
-import IconAnimatedLink from "@components/molecules/IconAnimatedLink.astro";
-import PostHeader from "@components/molecules/PostHeader.astro";
-import ShareLinks from "@components/molecules/ShareLinks.astro";
+import { ButtonLink, Flex, Prose, Section } from "@components/atoms";
+import { BackToTop, BlogTags, PostHeader, ShareLinks, TableOfContents } from "@components/molecules";
 import Layout from "@layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 
 const frontmatter = Astro.props;
 ---
 
-<script>
-  window.addEventListener("scroll", () => {
-    const backToTopBtn = document.getElementById("backToTopBtn");
-    if (!backToTopBtn) return;
-
-    if (window.scrollY > 100) {
-      backToTopBtn.classList.remove("opacity-0");
-    } else {
-      backToTopBtn.classList.add("opacity-0");
-    }
-  });
-</script>
-
-<Layout title={frontmatter.title} description={frontmatter.description}>
+<Layout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  image={frontmatter.image?.url}
+  type="article"
+  publishedDate={frontmatter.pubDate}
+>
   <Section
-    class="relative grid xl:grid-cols-[1fr_auto_1fr] gap-x-4 max-w-7xl mx-auto"
+    class="relative grid xl:grid-cols-[1fr_auto_1fr] gap-x-8 max-w-7xl mx-auto"
   >
     <div class="w-full hidden xl:block h-full">
       <div class="sticky top-28">
         <TableOfContents
           headings={frontmatter.headings}
           withIndentation
-          class="max-w-56"
+          class="max-w-60"
         />
-        <IconAnimatedLink
-          iconName="mdi:arrow-left"
-          size={24}
-          class="mt-5 lg:ml-6 w-48"
-          href="/blog"
-        >
-          <Fragment slot="content">Go Back</Fragment>
-        </IconAnimatedLink>
+        <ButtonLink href="/blog" variant="secondary" class="mt-4 ml-1 text-sm w-full max-w-60">
+          <Icon name="mdi:arrow-left" size={16} />
+          Back to Blog
+        </ButtonLink>
       </div>
     </div>
 
     <article class="flex flex-col w-full max-w-2xl gap-y-10">
       <PostHeader frontmatter={frontmatter} />
-      <div
-        class="flex flex-col gap-4 xl:hidden justify-center items-center static max-w-72"
-      >
+      <Flex class="flex-col gap-4 xl:hidden static items-start">
         <TableOfContents headings={frontmatter.headings} class="w-full" />
-        <IconAnimatedLink iconName="mdi:arrow-left" size={24} href="/blog">
-          <Fragment slot="content">Go Back</Fragment>
-        </IconAnimatedLink>
-      </div>
+        <ButtonLink href="/blog" variant="secondary" class="text-sm self-start">
+          <Icon name="mdi:arrow-left" size={16} />
+          Back to Blog
+        </ButtonLink>
+      </Flex>
       <Prose>
         <slot />
       </Prose>
@@ -62,13 +47,6 @@ const frontmatter = Astro.props;
       <ShareLinks />
     </article>
   </Section>
-  <IconAnimatedLink
-    id="backToTopBtn"
-    class="fixed bottom-20 right-3 ease-in-out opacity-0 transition-opacity cursor-default"
-    iconName="mdi:arrow-up"
-    size={24}
-    onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-  >
-    <p slot="content">Back to Top</p>
-  </IconAnimatedLink>
+
+  <BackToTop />
 </Layout>

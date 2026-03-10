@@ -5,6 +5,7 @@ import {
   Container,
   Head,
   Heading,
+  Hr,
   Html,
   Preview,
   Section,
@@ -29,34 +30,52 @@ const ContactFormEmail = ({
     <Tailwind>
       <Html>
         <Head />
-        <Preview>New Contact Form Submission</Preview>
-        <Body className="bg-gray-100 p-4">
-          <Container className="bg-white rounded-lg p-6 max-w-xl mx-auto shadow-lg">
-            <Heading className="text-xl font-bold text-gray-900 mb-4">
-              New Contact Form Submission
+        <Preview>
+          {subject} — from {name}
+        </Preview>
+        <Body className="bg-neutral-950 p-6 font-sans">
+          <Container className="bg-neutral-900 rounded-xl p-8 max-w-xl mx-auto border border-neutral-800">
+            <Heading className="text-2xl font-bold text-white mb-1">
+              New Message
             </Heading>
-            <Section className="mb-4">
-              <Text className="text-gray-800">
-                You have received a new message from the contact form on your
-                website:
-              </Text>
+            <Text className="text-neutral-400 text-sm mt-0 mb-6">
+              via jnalewajk.me contact form
+            </Text>
+
+            <Hr className="border-neutral-800 my-4" />
+
+            <Section className="mb-6">
+              <table cellPadding={0} cellSpacing={0} style={{ width: "100%" }}>
+                <tr>
+                  <td style={{ padding: "6px 0" }}>
+                    <Text className="text-neutral-500 text-xs uppercase tracking-wider m-0">
+                      From
+                    </Text>
+                    <Text className="text-white text-sm m-0 mt-1">
+                      {name} ({email})
+                    </Text>
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ padding: "6px 0" }}>
+                    <Text className="text-neutral-500 text-xs uppercase tracking-wider m-0">
+                      Subject
+                    </Text>
+                    <Text className="text-white text-sm m-0 mt-1">
+                      {subject}
+                    </Text>
+                  </td>
+                </tr>
+              </table>
             </Section>
-            <Section className="mb-4">
-              <Text className="text-gray-600">
-                <strong>Name:</strong> {name}
+
+            <Hr className="border-neutral-800 my-4" />
+
+            <Section>
+              <Text className="text-neutral-500 text-xs uppercase tracking-wider mb-2">
+                Message
               </Text>
-              <Text className="text-gray-600">
-                <strong>Email:</strong> {email}
-              </Text>
-              <Text className="text-gray-600">
-                <strong>Subject:</strong> {subject}
-              </Text>
-            </Section>
-            <Section className="mb-4">
-              <Heading className="text-lg font-semibold text-gray-800 mb-2">
-                Message:
-              </Heading>
-              <Text className="text-gray-700 whitespace-pre-wrap">
+              <Text className="text-neutral-300 text-sm leading-relaxed whitespace-pre-wrap">
                 {message}
               </Text>
             </Section>

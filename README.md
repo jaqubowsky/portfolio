@@ -1,110 +1,72 @@
-# Personal Portfolio Website
+# Portfolio — Jakub Nalewajk
 
-A modern, performant portfolio website built with Astro, featuring a blog system, contact form, and interactive React components. Deployed on Vercel with full TypeScript support.
+> Frontend Developer portfolio with an MDX blog, reCAPTCHA-protected contact form, and React 19 islands for interactivity. Static-first with Astro 5, deployed on Vercel.
 
-🌐 **Live Site**: [jnalewajk.me](https://jnalewajk.me)
+**[Live Demo](https://jnalewajk.me)**
 
-## ✨ Features
+![Portfolio Banner](./public/og-image.png)
 
-- **🚀 Astro + React Hybrid**: Static site generation with React islands for interactivity
-- **📝 Blog System**: Dynamic blog with MDX support, categories, and tag filtering
-- **📧 Contact Form**: Secure contact form with reCAPTCHA validation and email delivery
-- **🎨 Modern Design**: Clean, responsive design with dark/light theme toggle
-- **⚡ Performance**: Optimized for speed with Vercel analytics integration
-- **🔍 SEO Ready**: Structured data and meta tags for search engine optimization
-- **♿ Accessible**: Built with accessibility best practices
+---
 
-## 🛠️ Tech Stack
+## What it does
 
-- **Framework**: [Astro](https://astro.build/) with SSG
-- **UI Library**: React 19 for interactive components
-- **Styling**: Tailwind CSS with custom design system
-- **Content**: MDX with Astro Content Collections
-- **Form Handling**: React Email + Nodemailer
-- **Security**: Google reCAPTCHA integration
-- **Deployment**: Vercel with serverless functions
-- **Analytics**: Vercel Web Analytics & Speed Insights
+- **Portfolio sections** — hero with animated avatar, experience timeline, project showcase with live demos, categorized skills grid, and a working contact form
+- **Blog system** — MDX-powered posts with pagination, tag filtering, table of contents with active heading tracking, and share links
+- **Contact form** — client-side reCAPTCHA v3 verification, React Email template rendering, server-side Gmail SMTP delivery, and confetti animation on success
+- **Theme system** — dark/light toggle with OKLCH color tokens, persistent preference, and smooth transitions
 
-## 🏗️ Architecture
-
-### Component Organization
-- **Atomic Design**: Components structured as `atoms/`, `molecules/`, and `organisms/`
-- **Hybrid Approach**: Static Astro components with React islands for interactivity
-- **Type Safety**: Full TypeScript support with strict configuration
-
-### Key Features
-- Content management through Astro Content Collections
-- Secure contact form with spam protection
-- Blog system with pagination and categorization
-- Theme switching with persistent user preference
-- Email templates using React Email components
-
-## 🚀 Quick Start
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/portfolio.git
-   cd portfolio
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Add your reCAPTCHA and Gmail credentials
-   ```
-
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-Visit `http://localhost:4321` to view your site.
-
-## 📝 Environment Variables
-
-```env
-PUBLIC_RECAPTCHA_KEY=your_public_recaptcha_key
-RECAPTCHA_KEY=your_private_recaptcha_key
-GMAIL_APP_EMAIL=your_gmail_address
-GMAIL_APP_PASSWORD=your_gmail_app_password
-```
-
-## 🧞 Commands
-
-| Command | Action |
-|---------|--------|
-| `npm run dev` | Start development server at `localhost:4321` |
-| `npm run build` | Build production site (includes type checking) |
-| `npm run preview` | Preview built site locally |
-| `astro check` | Run TypeScript type checking |
-
-## 📁 Project Structure
+## Architecture
 
 ```
 src/
-├── components/          # UI Components
-│   ├── atoms/          # Basic building blocks
-│   ├── molecules/      # Combined components
-│   ├── organisms/      # Complex sections
-│   └── react/          # Interactive React components
-├── content/            # Blog posts and content
-├── emails/             # Email templates
-├── hooks/              # React hooks
-├── layouts/            # Page layouts
-├── pages/              # Routes and API endpoints
-├── styles/             # Global styles
-└── utils/              # Utility functions
+├── components/
+│   ├── atoms/                # Basic UI elements (Badge, Card, IconBox, Heading, etc.)
+│   ├── molecules/            # Composed elements (SectionHeader, BlogCard, BackToTop)
+│   ├── organisms/            # Full sections (Home, Experience, Projects, Skills, Contact)
+│   └── react/                # Interactive React islands (ContactForm, form inputs)
+├── content/posts/            # MDX blog posts with Zod-validated frontmatter
+├── emails/                   # React Email templates (ContactFormEmail)
+├── hooks/                    # React hooks (useCaptcha)
+├── layouts/                  # Page layouts (Layout, MarkdownPostLayout)
+├── pages/
+│   ├── api/                  # SSR endpoints: reCAPTCHA verification, email sending
+│   ├── blog/                 # Paginated blog listing + individual post pages
+│   └── category/             # Tag-filtered paginated blog
+├── styles/                   # Tailwind v4 CSS-based config with OKLCH design tokens
+└── utils/                    # Shared helpers (cn, formatDate, getPostData, ServerResponse)
 ```
 
-## 🤝 Contributing
+Components follow **Atomic Design** — atoms are primitive UI elements, molecules compose atoms, organisms compose molecules into full page sections. Each level has a barrel `index.ts` for clean imports. Pages only import organisms and layouts.
 
-This is a personal portfolio project, but feel free to use it as inspiration for your own portfolio. If you find bugs or have suggestions, please open an issue.
+## Key technical decisions
 
-## 📄 License
+- **Astro 5 with React 19 islands** — static generation for all content pages, selective hydration (`client:load`) only for the contact form to minimize client-side JavaScript
+- **Tailwind CSS v4 with CSS-based config** — no `tailwind.config` file; all design tokens defined as CSS custom properties in OKLCH color space with `@custom-variant` for dark mode
+- **Content Collections with MDX** — type-safe blog posts with Zod schema validation (title, description, category enum, draft boolean, tags, image), draft filtering in `getStaticPaths`
+- **Contact form pipeline** — `useCaptcha` hook verifies token via `/api/recaptcha`, React Email renders HTML client-side, `/api/send-email` delivers via Nodemailer (Gmail SMTP, port 465, SSL)
+- **Atomic Design with barrel exports** — strict atoms/molecules/organisms hierarchy with `index.ts` per directory; shared patterns extracted into reusable components (`SectionHeader`, `IconBox`, `BackToTop`)
 
-MIT License - feel free to use this code for your own projects.
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Astro 5 (SSG + SSR for API routes) |
+| Language | TypeScript (strict) |
+| UI | React 19, Tailwind CSS 4, Astro components |
+| Content | MDX, Astro Content Collections, Zod |
+| Email | React Email + Nodemailer (Gmail SMTP) |
+| Security | Google reCAPTCHA v3 |
+| Linting | Biome |
+| Deployment | Vercel (serverless functions, Web Analytics, Speed Insights) |
+
+## Getting started
+
+```bash
+git clone https://github.com/jaqubowsky/portfolio.git
+cd portfolio
+npm install
+cp .env.example .env      # fill in required values
+npm run dev                # start dev server at localhost:4321
+```
+
+Requires Node.js 18+.

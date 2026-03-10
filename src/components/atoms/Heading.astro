@@ -13,6 +13,6 @@ const { class: className, level = 1, ...rest } = Astro.props;
 const HeadingTag = `h${level}`;
 ---
 
-<HeadingTag class:list={cn("font-bold text-primary  ", className)} {...rest}>
+<HeadingTag class:list={cn("font-bold text-foreground", className)} {...rest}>
   <slot />
 </HeadingTag>

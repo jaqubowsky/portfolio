@@ -1,8 +1,8 @@
 export const prerender = false;
 
+import { GMAIL_APP_EMAIL, GMAIL_APP_PASSWORD } from "astro:env/server";
 import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
-import { GMAIL_APP_EMAIL, GMAIL_APP_PASSWORD } from "astro:env/server";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -39,7 +39,7 @@ export const POST: APIRoute = async ({ request }) => {
     await transporter.sendMail(mailOptions);
 
     return ServerResponse({ message: "msg_email_sent" });
-  } catch (error) {
+  } catch (_error) {
     return ServerResponse({ message: "msg_email_failed", status: 500 });
   }
 };

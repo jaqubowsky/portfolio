@@ -1,7 +1,13 @@
-export { default as BackBlogButton } from "./IconAnimatedButton.astro";
+export { default as BackToTop } from "./BackToTop.astro";
+export { default as BlogCard } from "./BlogCard.astro";
+export { default as BlogTags } from "./BlogTags.astro";
+export { default as Hamburger } from "./Hamburger.astro";
 export { default as Navigation } from "./Navigation.astro";
-export { default as SkillCard } from "./SkillCard.astro";
+export { default as Pagination } from "./Pagination.astro";
+export { default as PostHeader } from "./PostHeader.astro";
+export { default as Recaptcha } from "./Recaptcha.astro";
+export { default as SectionHeader } from "./SectionHeader.astro";
+export { default as ShareLinks } from "./ShareLinks.astro";
 export { default as SocialMedia } from "./SocialMedia.astro";
 export { default as TableOfContents } from "./TableOfContents.astro";
 export { default as ThemeToggler } from "./ThemeToggler.astro";
-export { default as Hamburger } from "./Hamburger.astro";

@@ -1,45 +1,90 @@
 ---
-import {
-  ButtonLink,
-  Flex,
-  Heading,
-  Paragraph,
-  Section,
-} from "@components/atoms";
 import { Image } from "astro:assets";
+import { ButtonLink, Flex, Heading, Paragraph, Section } from "@components/atoms";
+import { Icon } from "astro-icon/components";
 ---
 
-<Section class="space-y-2" id="home">
-  <Flex class="flex-col md:flex-row">
-    <Flex class="flex-col max-w-2xl items-center md:items-start gap-4">
-      <Flex class="flex-col gap-1 items-center md:items-start">
-        <Heading class="text-center md:text-left text-5xl"
-          >Jakub Nalewajk</Heading
-        >
-        <Heading
-          class="text-secondary-foreground text-xl font-semibold"
-          level={2}>Fullstack Developer</Heading
-        >
+<Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 relative" id="home">
+  <Flex class="relative z-10 flex-col md:flex-row md:items-center gap-6 md:gap-8 w-full">
+    <Flex class="flex-col items-center md:items-start gap-6 flex-1">
+      <Flex class="gap-2 animate-on-scroll">
+        <span
+          class="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"
+        ></span>
+        <Paragraph class="text-sm font-medium font-mono">
+          Available for work
+        </Paragraph>
       </Flex>
 
-      <Paragraph class="md:text-left max-w-lg">
-        I’m a passionate fullstack developer with a year of experience building
-        scalable web applications. I enjoy crafting elegant solutions and am
-        excited about integrating new technologies, like AI into my apps, to
-        enhance user experiences.
+      <Flex class="flex-col gap-2 items-center md:items-start animate-on-scroll stagger-1">
+        <Heading class="text-center md:text-left text-5xl sm:text-6xl lg:text-7xl tracking-tight">
+          <span class="text-gradient">Jakub</span>{" "}Nalewajk
+        </Heading>
+        <Paragraph class="text-lg sm:text-xl text-primary font-semibold font-mono tracking-wide">
+          Frontend Developer
+        </Paragraph>
+      </Flex>
+
+      <Paragraph class="md:text-left text-center max-w-lg text-base sm:text-lg leading-relaxed animate-on-scroll stagger-2">
+        Frontend Developer with 4+ years of experience in the Next.js ecosystem.
+        I practice spec-driven development with Claude Code, take full ownership
+        of projects from architecture to deployment, and collaborate closely with
+        business, backend devs, and designers to ship products that matter.
       </Paragraph>
 
-      <Flex class="justify-start items-start">
-        <ButtonLink href="#contact">Contact me</ButtonLink>
+      <Flex class="justify-start gap-3 flex-wrap animate-on-scroll stagger-3">
+        <ButtonLink href="#contact">
+          <Icon name="mdi:email-outline" size={18} />
+          Get in Touch
+        </ButtonLink>
+        <ButtonLink
+          href="/jakub-nalewajk-cv.pdf"
+          variant="secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon name="mdi:download" size={18} />
+          Download CV
+        </ButtonLink>
       </Flex>
     </Flex>
 
-    <Image
-      width={400}
-      height={400}
-      loading="eager"
-      src="/images/my-photo.png"
-      alt="Jakub Nalewajk Portrait"
-    />
+    <div class="animate-on-scroll stagger-2 shrink-0 w-56 sm:w-72 relative">
+      <video
+        id="hero-video"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+        class="w-full rounded-2xl"
+        poster="/images/avatar-poster.webp"
+      >
+        <source src="/images/avatar.mp4" type="video/mp4" />
+      </video>
+      <script>
+        function initHeroVideo() {
+          const video = document.getElementById("hero-video") as HTMLVideoElement;
+          if (!video) return;
+          video.play().catch(() => {
+            const play = () => { video.play(); document.removeEventListener("click", play); };
+            document.addEventListener("click", play, { once: true });
+          });
+        }
+        initHeroVideo();
+        document.addEventListener("astro:page-load", initHeroVideo);
+      </script>
+      <noscript>
+        <Image
+          width={400}
+          height={533}
+          loading="eager"
+          src="/images/my-photo.webp"
+          alt="Jakub Nalewajk"
+          class="w-full rounded-2xl"
+        />
+      </noscript>
+    </div>
   </Flex>
 </Section>

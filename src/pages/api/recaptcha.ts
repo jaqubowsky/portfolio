@@ -1,8 +1,8 @@
 export const prerender = false;
 
+import { RECAPTCHA_KEY } from "astro:env/server";
 import { ServerResponse } from "@utils/responses";
 import type { APIRoute } from "astro";
-import { RECAPTCHA_KEY } from "astro:env/server";
 
 const RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 const REQUEST_HEADERS = {

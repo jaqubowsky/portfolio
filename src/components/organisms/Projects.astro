@@ -1,0 +1,128 @@
+---
+import { Image } from "astro:assets";
+import {
+  Flex,
+  GlowCard,
+  Heading,
+  Link,
+  Paragraph,
+  Section,
+  Tag,
+} from "@components/atoms";
+import { SectionHeader } from "@components/molecules";
+import { Icon } from "astro-icon/components";
+
+const projects = [
+  {
+    number: "01",
+    title: "jobZ",
+    description:
+      "AI-powered job matching platform that scrapes Polish job boards and ranks offers against your profile using vector embeddings and cross-encoder re-ranking.",
+    tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
+    github: "https://github.com/jaqubowsky/jobZ",
+    live: "https://jobzzz.jnalewajk.me",
+    image: "/images/projects/jobz.webp",
+  },
+  {
+    number: "02",
+    title: "SubStatZ",
+    description:
+      "Subscription management application that allows users to track and manage their subscriptions. Using Stripe for payments, Sentry for error tracking.",
+    tech: ["Next.js", "Prisma", "Stripe", "Sentry", "Docker"],
+    github: "https://github.com/jaqubowsky/substatz",
+    live: "https://substatz.jnalewajk.me",
+    image: "/images/projects/substatz.webp",
+  },
+  {
+    number: "03",
+    title: "NextJS Scaffolding Template",
+    description:
+      "Production-ready template with Better Auth (Google OAuth), Stripe payments, Sentry monitoring. Docker multi-stage builds, automated CI/CD with GitHub Actions.",
+    tech: [
+      "Next.js 15",
+      "Drizzle ORM",
+      "Better Auth",
+      "Docker",
+      "GitHub Actions",
+    ],
+    github: "https://github.com/jaqubowsky/create-nextjs-app",
+    live: null,
+    image: "/images/projects/create-nextjs-app.webp",
+  },
+] as const;
+---
+
+<Section class="gap-10" id="projects">
+  <SectionHeader
+    badge="Projects"
+    title="Things I've Built"
+    description="Side projects where I experiment with new tech and solve real problems."
+  />
+
+  <Flex class="flex-col gap-6 w-full">
+    {
+      projects.map((project, i) => (
+        <div class={`animate-on-scroll stagger-${i + 1}`}>
+          <GlowCard class="p-0 overflow-hidden">
+            <Flex class="flex-col lg:flex-row items-stretch">
+              <div class="lg:w-2/5 shrink-0">
+                <Image
+                  width={600}
+                  height={340}
+                  src={project.image}
+                  alt={`${project.title} preview`}
+                  class="w-full h-48 lg:h-full object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
+              <Flex class="flex-col gap-3 p-6 sm:p-8 flex-1 items-start">
+                <Flex class="items-start justify-between w-full">
+                  <Flex class="gap-3 items-center justify-start">
+                    <span class="text-3xl font-bold text-gradient opacity-60 font-mono hidden sm:inline">
+                      {project.number}
+                    </span>
+                    <Heading level={3} class="text-2xl">
+                      {project.title}
+                    </Heading>
+                  </Flex>
+                  <Flex class="gap-2 shrink-0">
+                    <Link
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="p-1"
+                      aria-label={`${project.title} GitHub`}
+                    >
+                      <Icon name="mdi:github" size={20} />
+                    </Link>
+                    {project.live && (
+                      <Link
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="p-1"
+                        aria-label={`${project.title} live demo`}
+                      >
+                        <Icon name="mdi:open-in-new" size={20} />
+                      </Link>
+                    )}
+                  </Flex>
+                </Flex>
+
+                <Paragraph class="text-sm leading-relaxed">
+                  {project.description}
+                </Paragraph>
+
+                <Flex class="flex-wrap gap-1.5 justify-start mt-auto">
+                  {project.tech.map((t) => (
+                    <Tag variant="mono">{t}</Tag>
+                  ))}
+                </Flex>
+              </Flex>
+            </Flex>
+          </GlowCard>
+        </div>
+      ))
+    }
+  </Flex>
+</Section>

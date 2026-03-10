@@ -1,0 +1,25 @@
+---
+import { cn } from "@utils/index";
+
+type Props = {
+  items: readonly string[];
+  class?: string;
+};
+
+const { items, class: className } = Astro.props;
+---
+
+<ul class={cn("space-y-3", className)}>
+  {
+    items.map((item) => (
+      <li class="flex gap-3 text-sm text-muted-foreground leading-relaxed">
+        <span class="text-primary mt-1.5 shrink-0">
+          <svg width="6" height="6" viewBox="0 0 6 6" fill="currentColor">
+            <circle cx="3" cy="3" r="3" />
+          </svg>
+        </span>
+        <span>{item}</span>
+      </li>
+    ))
+  }
+</ul>

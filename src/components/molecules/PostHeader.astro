@@ -1,28 +1,30 @@
 ---
+import { Image } from "astro:assets";
 import { Badge, Flex, Heading, Paragraph } from "@components/atoms";
 import { formatDate } from "@utils/date";
-import { Image } from "astro:assets";
 
 const { frontmatter } = Astro.props;
 ---
 
-<Flex class="flex-col items-center gap-3">
+<Flex class="flex-col items-start gap-4">
   <Badge variant="secondary">{frontmatter.category}</Badge>
   <Heading
     transition:name=`blog-heading-${frontmatter.title}`
     level={1}
-    class="text-4xl text-center md:text-5xl">{frontmatter.title}</Heading
+    class="text-3xl sm:text-4xl md:text-5xl leading-tight"
   >
-  <Paragraph class="text-base text-center md:text-lg">
+    {frontmatter.title}
+  </Heading>
+  <Paragraph class="text-base">
     by {frontmatter.author} on {formatDate(frontmatter.pubDate)}
   </Paragraph>
   <Image
     transition:name=`blog-image-${frontmatter.title}`
     loading="eager"
     height={400}
-    width={400}
+    width={800}
     src={frontmatter.image.url}
     alt={frontmatter.image.alt}
-    class="w-full h-96 object-cover"
+    class="w-full h-80 sm:h-96 object-cover rounded-xl"
   />
 </Flex>

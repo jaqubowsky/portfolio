@@ -1,22 +1,11 @@
 ---
-import { Flex, Grid, Heading, Paragraph, Section } from "@components/atoms";
-import BlogCard from "@components/molecules/BlogCard.astro";
-import IconAnimatedLink from "@components/molecules/IconAnimatedLink.astro";
-import Pagination from "@components/molecules/Pagination.astro";
+import { getCollection } from "astro:content";
+import { ButtonLink, Flex, Grid, Heading, Section } from "@components/atoms";
+import { BlogCard, Pagination } from "@components/molecules";
 import Layout from "@layouts/Layout.astro";
 import type { PaginateFunction } from "astro";
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
-
-const posts = await getCollection("posts");
-const getData = (post: CollectionEntry<"posts">) => {
-  const data = posts.find((p) => p.slug === post.slug);
-
-  return {
-    ...data?.data,
-    slug: post.slug,
-  };
-};
+import { Icon } from "astro-icon/components";
+import { getPostData } from "@utils/posts";
 
 export async function getStaticPaths({
   paginate,
@@ -41,35 +30,24 @@ const { tag } = Astro.params;
 ---
 
 <Layout
-  title="Blog - Jakub Nalewajk"
-  description="Jakub Nalewajk's blog where he shares his thoughts on software development, productivity, and more."
+  title={`${tag} - Blog - Jakub Nalewajk`}
+  description={`Blog posts about ${tag} by Jakub Nalewajk.`}
 >
   <Section id="blog" class="gap-12">
-    <Flex class="flex-wrap gap-2 flex-col items-start justify-start mt-4">
-      <Heading
-        level={2}
-        class="text-secondary-foreground flex gap-2 text-2xl font-bold"
-        >Explore blog posts about: <Paragraph class="text-primary"
-          >{tag}</Paragraph
-        ></Heading
-      >
-      <IconAnimatedLink
-        iconName="mdi:arrow-left"
-        size={24}
-        class="self-center"
-        href="/blog"
-      >
-        <Fragment slot="content">Go Back</Fragment>
-      </IconAnimatedLink>
+    <Flex class="flex-wrap gap-4 flex-col items-start justify-start mt-4 w-full animate-on-scroll">
+      <ButtonLink href="/blog" variant="secondary" class="text-sm">
+        <Icon name="mdi:arrow-left" size={16} />
+        Back to Blog
+      </ButtonLink>
+      <Heading level={2} class="text-3xl sm:text-4xl font-bold">
+        Posts tagged <span class="text-primary">#{tag}</span>
+      </Heading>
     </Flex>
-    <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {
-        page.data.map((post) => {
-          const data = getData(post);
-          return <BlogCard {...data} />;
-        })
-      }
+
+    <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {page.data.map((post) => <BlogCard {...getPostData(post)} />)}
     </Grid>
+
     <Pagination
       prevUrl={page.url.prev}
       nextUrl={page.url.next}

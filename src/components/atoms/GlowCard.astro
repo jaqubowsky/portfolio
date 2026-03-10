@@ -1,0 +1,16 @@
+---
+import { cn } from "@utils/index";
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div
+  class={cn(
+    "bg-card text-card-foreground rounded-xl border border-border transition-all duration-400 hover:shadow-[0_0_30px_-5px_oklch(0.75_0.15_45/0.15)] hover:border-primary/30 hover:-translate-y-1",
+    className,
+  )}
+  style="transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);"
+  {...rest}
+>
+  <slot />
+</div>

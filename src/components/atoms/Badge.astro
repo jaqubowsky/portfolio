@@ -7,8 +7,8 @@ type Props = {
 } & JSX.IntrinsicElements["div"];
 
 const variants = {
-  primary: "bg-popover text-primary",
-  secondary: "bg-primary text-popover",
+  primary: "bg-card text-primary border border-border",
+  secondary: "bg-primary/10 text-primary",
 } as const;
 
 const { variant = "primary", class: className, ...rest } = Astro.props;
@@ -16,7 +16,7 @@ const { variant = "primary", class: className, ...rest } = Astro.props;
 
 <div
   class={cn(
-    "text-xs font-semibold uppercase px-2 py-1 rounded-full",
+    "text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full",
     variants[variant],
     className,
   )}

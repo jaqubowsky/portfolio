@@ -1,46 +1,53 @@
 ---
-import { Badge, Card, Flex, Heading, Link, Paragraph } from "@components/atoms";
-import { formatDate } from "@utils/date";
 import { Image } from "astro:assets";
+import { Badge, Flex, GlowCard, Heading, Link, Paragraph } from "@components/atoms";
+import { formatDate } from "@utils/date";
 
 const { title, description, tags, image, slug, pubDate } = Astro.props;
 ---
 
 <Link
   href=`/blog/${slug}`
-  class="max-w-sm min-w-full border-none shadow-sm rounded-lg hover:-translate-y-1 hover:scale-[1.01] transition duration-300 ease-in-out transform cursor-pointer"
+  class="no-underline w-full"
 >
-  <Card>
-    {
-      tags && (
-        <div class="mb-3 flex gap-1">
-          {tags.slice(0, 3).map((tag: string[]) => (
-            <Badge class="rounded-md truncate" variant="secondary">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      )
-    }
+  <GlowCard class="overflow-hidden h-full flex flex-col">
     <Image
       transition:name=`blog-image-${title}`
-      width={260}
-      height={220}
+      width={600}
+      height={300}
       loading="eager"
-      class="w-full max-h-52 object-cover"
+      class="w-full h-48 object-cover"
       src={image.url}
       alt={image.alt}
     />
-    <div class="flex flex-col py-2">
+    <Flex class="flex-col py-5 px-5 flex-1 gap-3 items-start">
+      {
+        tags && (
+          <Flex class="flex-wrap gap-1.5 justify-start">
+            {tags.map((tag: string) => (
+              <Badge class="rounded-md text-[10px]" variant="secondary">
+                {tag}
+              </Badge>
+            ))}
+          </Flex>
+        )
+      }
+
       <Heading
         level={3}
         transition:name=`blog-heading-${title}`
-        class="text-2xl font-bold">{title}</Heading
+        class="text-xl font-bold leading-snug"
       >
-      <Paragraph class="text-start opacity-80"
-        >Created on {formatDate(pubDate)}</Paragraph
-      >
-      <Paragraph class="truncate mt-2">{description}</Paragraph>
-    </div>
-  </Card>
+        {title}
+      </Heading>
+
+      <Paragraph class="text-sm leading-relaxed line-clamp-3">
+        {description}
+      </Paragraph>
+
+      <Paragraph class="text-xs opacity-60 mt-auto">
+        {formatDate(pubDate)}
+      </Paragraph>
+    </Flex>
+  </GlowCard>
 </Link>

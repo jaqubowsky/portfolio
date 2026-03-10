@@ -6,10 +6,7 @@ const Label = ({ children, className, ...props }: LabelProps) => {
   return (
     <label
       {...props}
-      className={cn(
-        "block text-sm font-medium text-primary mr-auto",
-        className,
-      )}
+      className={cn("block text-sm font-medium text-foreground w-full", className)}
     >
       {children}
     </label>

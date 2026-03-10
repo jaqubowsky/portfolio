@@ -1,17 +1,20 @@
 ---
-import { Flex, Recaptcha } from "@components/atoms";
-import { Contact, Home, Skills } from "@components/organisms";
+import { Flex } from "@components/atoms";
+import { Recaptcha } from "@components/molecules";
+import { Contact, Experience, Home, Projects, Skills } from "@components/organisms";
 import Layout from "@layouts/Layout.astro";
 ---
 
 <Layout
-  title="Jakub Nalewajk - Software Engineer"
-  description="Jakub Nalewajk is a fullstack developer with a year of experience building scalable web applications. He enjoys crafting elegant solutions and is excited about integrating new technologies, like AI into his apps, to enhance user experiences."
+  title="Jakub Nalewajk - Frontend Developer"
+  description="Frontend Developer with 4+ years of experience building fast web apps in the Next.js ecosystem. Specializing in architectural decisions, spec-driven development, and scalable frontend systems."
 >
   <Recaptcha />
 
   <Flex class="flex-col w-full">
     <Home />
+    <Experience />
+    <Projects />
     <Skills />
     <Contact />
   </Flex>
