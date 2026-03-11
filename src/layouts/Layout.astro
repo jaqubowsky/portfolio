@@ -34,10 +34,14 @@ const imageURL = new URL(image, Astro.site);
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href="/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="dns-prefetch" href="https://umami.jnalewajk.me" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="author" content="Jakub Nalewajk" />
+    <meta name="keywords" content="Jakub Nalewajk, Nalewajk, Frontend Developer, React, Next.js, TypeScript, portfolio, web developer" />
     <title>{title}</title>
 
     <meta property="og:type" content={type} />
@@ -58,10 +62,38 @@ const imageURL = new URL(image, Astro.site);
     {type === "website" ? (
       <script is:inline type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Jakub Nalewajk",
-        "url": Astro.site?.toString(),
-        "description": description,
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": `${Astro.site?.toString()}#website`,
+            "name": "Jakub Nalewajk",
+            "url": Astro.site?.toString(),
+            "description": description,
+          },
+          {
+            "@type": "Person",
+            "@id": `${Astro.site?.toString()}#person`,
+            "name": "Jakub Nalewajk",
+            "givenName": "Jakub",
+            "familyName": "Nalewajk",
+            "url": Astro.site?.toString(),
+            "image": `${Astro.site?.toString()}og-image.png`,
+            "jobTitle": "Frontend Developer",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "CodeYourBrand",
+            },
+            "alumniOf": {
+              "@type": "EducationalOrganization",
+              "name": "WSB Merito University",
+            },
+            "knowsAbout": ["Next.js", "React", "TypeScript", "TailwindCSS", "Nx", "Turborepo"],
+            "sameAs": [
+              "https://github.com/jaqubowsky",
+              "https://www.linkedin.com/in/jakub-nalewajk/",
+            ],
+          },
+        ],
       })} />
     ) : (
       <script is:inline type="application/ld+json" set:html={JSON.stringify({
@@ -74,6 +106,7 @@ const imageURL = new URL(image, Astro.site);
         ...(publishedDate && { "datePublished": publishedDate.toISOString() }),
         "author": {
           "@type": "Person",
+          "@id": `${Astro.site?.toString()}#person`,
           "name": "Jakub Nalewajk",
           "url": Astro.site?.toString(),
         },
