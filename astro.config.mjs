@@ -95,7 +95,7 @@ export default defineConfig({
         access: 'secret',
       }),
     },
-    validateSecrets: true,
+    validateSecrets: false,
   },
 
   site: SITE,
