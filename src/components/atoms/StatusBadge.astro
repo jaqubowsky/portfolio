@@ -1,0 +1,28 @@
+---
+import { cn } from "@utils/index";
+import type { JSX } from "astro/jsx-runtime";
+
+type Props = {
+  href: string;
+  label?: string;
+} & JSX.IntrinsicElements["a"];
+
+const { href, label = "All systems operational", class: className, ...rest } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={cn(
+    "inline-flex items-center gap-2 px-3 py-1 rounded-full border border-muted-foreground/20 bg-muted/50 text-muted-foreground text-xs font-mono tracking-wide no-underline hover:bg-muted transition-colors",
+    className,
+  )}
+  {...rest}
+>
+  <span class="relative flex h-2 w-2">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500/50 opacity-75"></span>
+    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+  </span>
+  {label}
+</a>

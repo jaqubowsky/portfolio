@@ -1,5 +1,5 @@
 ---
-import { ButtonLink, Flex, Heading, Paragraph, Section } from "@components/atoms";
+import { ButtonLink, Flex, Heading, Paragraph, Section, StatusBadge } from "@components/atoms";
 import { Icon } from "astro-icon/components";
 ---
 
@@ -7,6 +7,7 @@ import { Icon } from "astro-icon/components";
   <Flex class="relative z-10 flex-col md:flex-row md:items-center gap-6 md:gap-8 w-full">
     <Flex class="flex-col items-center md:items-start gap-6 flex-1">
       <Flex class="flex-col gap-2 items-center md:items-start hero-fade">
+        <StatusBadge href="https://status.jnalewajk.me" data-umami-event="status-page" />
         <Heading level={1} class="text-center md:text-left text-5xl sm:text-6xl lg:text-7xl tracking-tight">
           <span class="text-gradient">Jakub</span>{" "}Nalewajk
           <span class="block text-lg sm:text-xl text-primary font-semibold font-mono tracking-wide mt-2">

@@ -2,9 +2,15 @@
 
 > Frontend Developer portfolio with an MDX blog, reCAPTCHA-protected contact form, and React 19 islands for interactivity. Static-first with Astro 5, deployed on Vercel.
 
-**[Live Demo](https://jnalewajk.me)**
+**[Live Demo](https://jnalewajk.me)** | **[Status Page](https://status.jnalewajk.me)**
 
 ![Portfolio Banner](./public/og-image.png)
+
+### Lighthouse Scores
+
+| Performance | Accessibility | Best Practices | SEO |
+|:-----------:|:------------:|:--------------:|:---:|
+| 98 | 100 | 100 | 100 |
 
 ---
 
