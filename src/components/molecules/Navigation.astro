@@ -1,5 +1,6 @@
 ---
 import { Link } from "@components/atoms";
+import { cn } from "@utils/cn";
 
 type NavLink = {
   href: string;
@@ -7,21 +8,40 @@ type NavLink = {
 };
 
 const { links } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+function isActive(href: string): boolean {
+  if (href.includes("#")) return false;
+
+  const cleanHref = href.replace(/\/$/, "") || "/";
+  if (cleanHref === "/") return currentPath === "/";
+
+  return currentPath.startsWith(cleanHref);
+}
 ---
 
 <nav>
   <ul class="flex flex-col lg:flex-row gap-2 lg:gap-1 p-2 lg:p-0 bg-transparent items-center">
     {
-      links.map(({ href, text }: NavLink) => (
-        <li>
-          <Link
-            href={href}
-            class="block px-4 py-3 lg:px-3 lg:py-2 text-2xl lg:text-sm text-foreground lg:text-muted-foreground rounded-md hover:text-primary lg:hover:text-foreground lg:hover:bg-muted/50 no-underline transition-colors"
-          >
-            {text}
-          </Link>
-        </li>
-      ))
+      links.map(({ href, text }: NavLink) => {
+        const active = isActive(href);
+
+        return (
+          <li>
+            <Link
+              href={href}
+              class={cn(
+                "block px-4 py-3 lg:px-3 lg:py-2 text-2xl lg:text-sm rounded-md no-underline transition-colors",
+                active
+                  ? "text-primary lg:text-primary lg:bg-primary/10"
+                  : "text-foreground lg:text-muted-foreground hover:text-primary lg:hover:text-foreground lg:hover:bg-muted/50"
+              )}
+            >
+              {text}
+            </Link>
+          </li>
+        );
+      })
     }
   </ul>
 </nav>

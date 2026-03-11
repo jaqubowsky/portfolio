@@ -6,8 +6,10 @@ import { Footer, Header } from "@components/organisms";
 import {
   getSeoData,
   getBreadcrumbJsonLd,
+  getFaqJsonLd,
   AUTHOR,
   type BreadcrumbItem,
+  type FaqItem,
 } from "@utils/seo";
 import { DEFAULT_LOCALE, LOCALES } from "@i18n/config";
 
@@ -20,6 +22,8 @@ interface Props {
   alternateHref?: string;
   noindex?: boolean;
   breadcrumbs?: BreadcrumbItem[];
+  faqItems?: readonly FaqItem[];
+  keywords?: string;
 }
 
 const seo = getSeoData({ url: Astro.url, site: Astro.site, ...Astro.props });
@@ -30,8 +34,11 @@ const {
   publishedDate,
   noindex = false,
   breadcrumbs,
+  faqItems,
+  keywords,
 } = Astro.props;
 const breadcrumbJsonLd = breadcrumbs ? getBreadcrumbJsonLd(breadcrumbs) : null;
+const faqJsonLd = faqItems ? getFaqJsonLd(faqItems) : null;
 ---
 
 <!doctype html>
@@ -63,7 +70,7 @@ const breadcrumbJsonLd = breadcrumbs ? getBreadcrumbJsonLd(breadcrumbs) : null;
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="description" content={description} />
     <meta name="author" content="Jakub Nalewajk" />
-    <meta name="keywords" content={seo.strings.meta.keywords} />
+    <meta name="keywords" content={keywords ?? seo.strings.meta.keywords} />
     <title>{title}</title>
 
     <meta property="og:type" content={type} />
@@ -89,6 +96,9 @@ const breadcrumbJsonLd = breadcrumbs ? getBreadcrumbJsonLd(breadcrumbs) : null;
     <script is:inline type="application/ld+json" set:html={JSON.stringify(seo.jsonLd)} />
     {breadcrumbJsonLd && (
       <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+    )}
+    {faqJsonLd && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
     )}
 
     {import.meta.env.PROD && (

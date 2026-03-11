@@ -1,0 +1,79 @@
+---
+import {
+  ButtonLink,
+  Flex,
+  GlowCard,
+  Heading,
+  Paragraph,
+  Section,
+} from "@components/atoms";
+import { SectionHeader } from "@components/molecules";
+import { Picture } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import { t, getLocale } from "@i18n";
+import desktopImg from "@images/case-studies/case-study-desktop.png";
+
+const locale = getLocale(Astro.currentLocale);
+const strings = t(locale);
+const { project } = strings.caseStudy;
+---
+
+<Section class="gap-10" id="case-study">
+  <SectionHeader
+    badge={strings.caseStudy.badge}
+    title={strings.caseStudy.title}
+    description={strings.caseStudy.description}
+  />
+
+  <div class="w-full max-w-4xl animate-on-scroll">
+    <GlowCard class="overflow-hidden">
+      <div class="relative">
+        <Picture
+          formats={["avif", "webp"]}
+          src={desktopImg}
+          alt={`${project.name} - ${project.subtitle}`}
+          class="w-full"
+          width={900}
+        />
+      </div>
+
+      <div class="p-6 sm:p-8 flex flex-col gap-6">
+        <Flex class="flex-col sm:flex-row sm:items-start items-center sm:justify-between gap-3">
+          <Flex class="flex-col gap-0 items-center sm:items-start">
+            <Heading level={3} class="text-xl sm:text-2xl font-bold leading-tight">
+              {project.name}
+            </Heading>
+            <Paragraph class="text-sm text-primary font-semibold">
+              {project.subtitle}
+            </Paragraph>
+          </Flex>
+          <Flex class="items-center gap-2 text-sm text-muted-foreground shrink-0">
+            <Icon name="mdi:clock-outline" size={16} />
+            <span>{project.timelineLabel}: <strong class="text-foreground">{project.timeline}</strong></span>
+          </Flex>
+        </Flex>
+
+        <Paragraph class="text-sm sm:text-base leading-relaxed">
+          {project.solution}
+        </Paragraph>
+
+        <div class="grid grid-cols-3 gap-3 sm:gap-4">
+          {project.results.map((result) => (
+            <Flex class="flex-col items-center text-center gap-0 py-3 sm:py-4 rounded-lg bg-muted/50">
+              <span class="text-2xl sm:text-3xl font-bold text-gradient">{result.value}</span>
+              <span class="text-xs sm:text-sm text-muted-foreground">{result.label}</span>
+            </Flex>
+          ))}
+        </div>
+
+        <Flex class="flex-wrap gap-2">
+          {project.tech.map((t) => (
+            <span class="text-xs px-2.5 py-1 rounded-md bg-secondary text-secondary-foreground font-mono">
+              {t}
+            </span>
+          ))}
+        </Flex>
+      </div>
+    </GlowCard>
+  </div>
+</Section>

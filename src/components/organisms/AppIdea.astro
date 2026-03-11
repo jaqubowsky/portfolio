@@ -1,0 +1,67 @@
+---
+import {
+  ButtonLink,
+  Flex,
+  Heading,
+  Paragraph,
+  Section,
+} from "@components/atoms";
+import { SectionHeader } from "@components/molecules";
+import { Icon } from "astro-icon/components";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.currentLocale);
+const strings = t(locale);
+const { appIdea } = strings.servicesPage;
+---
+
+<Section class="gap-10" id="app-idea">
+  <SectionHeader
+    badge={appIdea.badge}
+    title={appIdea.title}
+    description={appIdea.description}
+  />
+
+  <div class="flex flex-col gap-10 w-full max-w-2xl">
+    {appIdea.items.map((item, i) => (
+      <div class={`animate-on-scroll stagger-${i + 1} relative`}>
+        <div class="flex flex-col gap-0 rounded-xl border border-border overflow-hidden">
+          <div class="p-5 sm:p-6 bg-muted/30 border-b border-border/50">
+            <Flex class="gap-3 items-start">
+              <div class="shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                <Icon name="mdi:emoticon-sad-outline" size={18} class="text-primary/70" />
+              </div>
+              <Paragraph class="text-sm sm:text-base leading-relaxed italic text-muted-foreground">
+                "{item.problem}"
+              </Paragraph>
+            </Flex>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 w-7 h-7 rounded-full bg-primary flex items-center justify-center shadow-sm">
+              <Icon name="mdi:arrow-down" size={16} class="text-primary-foreground" />
+            </div>
+          </div>
+
+          <div class="p-5 sm:p-6 bg-muted/30">
+            <Flex class="gap-3 items-start">
+              <div class="shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                <Icon name="mdi:check-bold" size={18} class="text-primary/70" />
+              </div>
+              <Paragraph class="text-sm sm:text-base leading-relaxed font-medium">
+                {item.solution}
+              </Paragraph>
+            </Flex>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <Flex class="justify-center animate-on-scroll">
+    <ButtonLink href="#contact" data-umami-event="app-idea-cta">
+      <Icon name="mdi:lightbulb-outline" size={18} />
+      {appIdea.cta}
+    </ButtonLink>
+  </Flex>
+</Section>

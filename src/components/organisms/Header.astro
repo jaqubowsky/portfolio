@@ -7,7 +7,7 @@ import {
   ThemeToggler,
 } from "@components/molecules";
 import { Icon } from "astro-icon/components";
-import { getLocale, t, getLocalizedPathname } from "@i18n";
+import { getLocale, t, getLocalizedPathname, getLocalizedRoute } from "@i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = getLocale(Astro.currentLocale);
@@ -22,14 +22,14 @@ const links = [
     href: getLocalizedPathname("/#projects", locale),
     text: strings.nav.projects,
   },
-  {
-    href: getLocalizedPathname("/#services", locale),
-    text: strings.nav.services,
-  },
   { href: getLocalizedPathname("/#skills", locale), text: strings.nav.skills },
   {
     href: getLocalizedPathname("/#contact", locale),
     text: strings.nav.contact,
+  },
+  {
+    href: getLocalizedRoute("/services", locale),
+    text: strings.nav.services,
   },
   { href: getRelativeLocaleUrl(locale, "/blog"), text: strings.nav.blog },
 ] as const;

@@ -18,7 +18,7 @@ const { variant = "primary", class: className, ...rest } = Astro.props;
 
 <a
   class={cn(
-    "py-2.5 cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+    "py-2.5 cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&>svg]:shrink-0",
     variants[variant],
     className,
   )}

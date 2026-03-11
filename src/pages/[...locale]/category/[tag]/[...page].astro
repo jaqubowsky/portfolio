@@ -65,7 +65,7 @@ const breadcrumbs = [
 
 <Layout
   title={`${tag} - ${strings.meta.blogTitle}`}
-  description={`${strings.blog.postsTagged} ${tag} — Jakub Nalewajk.`}
+  description={`${strings.blog.postsTagged} ${tag} - Jakub Nalewajk.`}
   noindex={page.currentPage > 1}
   breadcrumbs={breadcrumbs}
 >
@@ -76,7 +76,7 @@ const breadcrumbs = [
         {strings.blog.backToBlog}
       </ButtonLink>
       <Heading level={2} class="text-3xl sm:text-4xl font-bold">
-        {strings.blog.postsTagged} <span class="text-primary">#{tag}</span>
+        {strings.blog.postsTagged}&nbsp;<span class="text-primary">#{tag}</span>
       </Heading>
     </Flex>
 

@@ -1,0 +1,67 @@
+---
+import {
+  ButtonLink,
+  Flex,
+  Heading,
+  Paragraph,
+  Section,
+} from "@components/atoms";
+import { Recaptcha } from "@components/molecules";
+import { AppIdea, CaseStudy, Contact, Faq, Process, Services } from "@components/organisms";
+import Layout from "@layouts/Layout.astro";
+import { t, getAlternateRoute, getLocalizedRoute } from "@i18n";
+import type { Locale } from "@i18n/config";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const strings = t(locale);
+const { servicesPage } = strings;
+
+const siteUrl = Astro.site?.toString() ?? "https://jnalewajk.me";
+
+const breadcrumbs = [
+  { name: strings.nav.home, url: siteUrl },
+  { name: strings.nav.services, url: new URL(getLocalizedRoute("/services", locale), siteUrl).toString() },
+];
+---
+
+<Layout
+  title={servicesPage.metaTitle}
+  description={servicesPage.metaDescription}
+  alternateHref={getAlternateRoute("/services", locale)}
+  breadcrumbs={breadcrumbs}
+  faqItems={servicesPage.faq.items}
+  keywords={servicesPage.metaKeywords}
+>
+  <Recaptcha />
+
+  <Flex class="flex-col w-full">
+    <Section class="gap-6 pt-28 sm:pt-36 pb-12">
+      <div class="max-w-3xl text-center flex flex-col gap-4">
+        <Heading level={1} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient animate-on-scroll">
+          {servicesPage.heroTitle}
+        </Heading>
+        <Paragraph class="text-base sm:text-lg text-muted-foreground leading-relaxed animate-on-scroll">
+          {servicesPage.heroDescription}
+        </Paragraph>
+        <Flex class="justify-center animate-on-scroll">
+          <ButtonLink href="#contact" data-umami-event="services-hero-cta">
+            <Icon name="mdi:email-outline" size={18} />
+            {servicesPage.heroCta}
+          </ButtonLink>
+        </Flex>
+      </div>
+    </Section>
+
+    <Services />
+    <AppIdea />
+    <CaseStudy />
+    <Process />
+    <Faq />
+    <Contact description={servicesPage.contactDescription} source={servicesPage.contactSource} />
+  </Flex>
+</Layout>

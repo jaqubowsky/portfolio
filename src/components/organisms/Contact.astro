@@ -12,8 +12,19 @@ import { SectionHeader } from "@components/molecules";
 import { ContactForm } from "@components/react";
 import { t, getLocale } from "@i18n";
 
+interface Props {
+  description?: string;
+  source?: string;
+}
+
+const { description, source } = Astro.props;
+
 const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
+
+const formTranslations = source
+  ? { ...strings.contactForm, subject: source }
+  : strings.contactForm;
 
 const contactLinks = [
   {
@@ -42,7 +53,7 @@ const contactLinks = [
     <SectionHeader
       badge={strings.contact.badge}
       title={strings.contact.title}
-      description={strings.contact.description}
+      description={description ?? strings.contact.description}
     />
 
     <div class="w-full animate-on-scroll stagger-1">
@@ -53,7 +64,7 @@ const contactLinks = [
             <Paragraph class="text-sm">
               {strings.contact.responseTime}
             </Paragraph>
-            <ContactForm client:visible translations={strings.contactForm} />
+            <ContactForm client:visible translations={formTranslations} />
           </Flex>
 
           <Flex class="flex-col gap-6 items-start justify-start p-6 sm:p-8 border-t lg:border-t-0 border-border">

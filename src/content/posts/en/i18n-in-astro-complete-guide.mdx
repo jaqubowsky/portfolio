@@ -1,21 +1,17 @@
 ---
-title: "i18n in Astro 5 — Complete Guide to Multilingual Sites"
+title: 'i18n in Astro 5 - Complete Guide to Multilingual Sites'
 pubDate: 2026-03-11
-description: "A practical guide to adding internationalization (i18n) to an Astro 5 site — routing, translations, content collections, SEO, language switching, and browser detection."
-author: "Jakub Nalewajk"
-image:
-  {
-    url: "../../../assets/images/blog/i18n-in-astro-guide-cover.webp",
-    alt: "i18n in Astro 5",
-  }
-category: "tutorial"
-tags: ["astro", "i18n", "typescript", "seo"]
+description: 'A practical guide to adding internationalization (i18n) to an Astro 5 site - routing, translations, content collections, SEO, language switching, and browser detection.'
+author: 'Jakub Nalewajk'
+image: { url: '../../../assets/images/blog/i18n-in-astro-guide-cover.webp', alt: 'i18n in Astro 5' }
+category: 'tutorial'
+tags: ['astro', 'i18n', 'typescript', 'seo']
 draft: false
-lang: "en"
-translationKey: "i18n-astro-guide"
+lang: 'en'
+translationKey: 'i18n-astro-guide'
 ---
 
-Adding multiple languages to an Astro site sounds simple until you realize it touches routing, content, SEO, and UI all at once. After building full i18n support for my portfolio (Polish + English), I want to share the pattern that worked — no external i18n libraries, just Astro's built-in features and a few utility functions.
+Adding multiple languages to an Astro site sounds simple until you realize it touches routing, content, SEO, and UI all at once. After building full i18n support for my portfolio (Polish + English), I want to share the pattern that worked - no external i18n libraries, just Astro's built-in features and a few utility functions.
 
 This guide covers the full setup: config, translations, routing, content collections, language switching, SEO, and browser-based locale detection.
 
@@ -77,9 +73,28 @@ export const LOCALE_BCP47: Record<Locale, string> = {
   pl: 'pl-PL',
   en: 'en-US',
 }
+
+/**
+ * Localized pathnames for pages with different slugs per locale.
+ * Inspired by the pathnames config from next-intl.
+ * Key = internal route identifier, value = path per locale (or string if identical).
+ */
+export const PATHNAMES = {
+  '/': '/',
+  '/blog': '/blog',
+  '/services': {
+    pl: '/uslugi',
+    en: '/services',
+  },
+  '/blog/deploying-astro-on-dokploy': {
+    pl: '/blog/wdrazanie-astro-na-dokploy',
+    en: '/blog/deploying-astro-on-dokploy',
+  },
+  // ... more translated pages and posts
+} as const satisfies Record<string, string | Record<Locale, string>>
 ```
 
-Every locale-related decision in the app references this file. Adding a third language means adding it here and providing translations — nothing else changes structurally.
+Every locale-related decision in the app references this file. `PATHNAMES` serves as the single source of truth for pages with different URLs per locale - both static subpages (like `/uslugi` vs `/en/services`) and blog posts. Adding a new translated page = one line in `PATHNAMES`.
 
 ## Step 2: Astro i18n Config
 
@@ -112,23 +127,23 @@ Each locale gets its own TypeScript file with all UI strings:
 // src/i18n/translations/pl.ts
 export default {
   meta: {
-    title: "Jakub Nalewajk — Programista Frontend",
-    description: "Programista frontend z Pułtuska...",
-    keywords: "programista, frontend, React...",
-    blogTitle: "Blog - Jakub Nalewajk",
-    blogDescription: "Blog o programowaniu...",
+    title: 'Jakub Nalewajk - Programista Frontend',
+    description: 'Programista frontend z Pułtuska...',
+    keywords: 'programista, frontend, React...',
+    blogTitle: 'Blog - Jakub Nalewajk',
+    blogDescription: 'Blog o programowaniu...',
   },
   nav: {
-    home: "Strona główna",
-    experience: "Doświadczenie",
-    projects: "Projekty",
-    contact: "Kontakt",
-    blog: "Blog",
+    home: 'Strona główna',
+    experience: 'Doświadczenie',
+    projects: 'Projekty',
+    contact: 'Kontakt',
+    blog: 'Blog',
   },
   hero: {
-    jobTitle: "Frontend Developer",
-    description: "Programista frontend z doświadczeniem...",
-    cta: "Napisz do mnie",
+    jobTitle: 'Frontend Developer',
+    description: 'Programista frontend z doświadczeniem...',
+    cta: 'Napisz do mnie',
   },
   // ... all other UI sections
 } as const
@@ -138,8 +153,8 @@ export default {
 // src/i18n/translations/en.ts
 export default {
   meta: {
-    title: "Jakub Nalewajk — Frontend Developer",
-    description: "Frontend Developer from Poland...",
+    title: 'Jakub Nalewajk - Frontend Developer',
+    description: 'Frontend Developer from Poland...',
     // ...
   },
   // ... same structure as pl.ts
@@ -154,7 +169,7 @@ import pl from './pl'
 export const translations = { pl, en } as const
 ```
 
-The `as const` assertion gives you full type safety — TypeScript knows exactly what keys and values exist. If you add a key to one language, the type system will remind you to add it to the other.
+The `as const` assertion gives you full type safety - TypeScript knows exactly what keys and values exist. If you add a key to one language, the type system will remind you to add it to the other.
 
 ## Step 4: Utility Functions
 
@@ -162,7 +177,7 @@ These helpers power all i18n logic across the site:
 
 ```typescript
 // src/i18n/utils.ts
-import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES, type Locale } from './config'
+import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES, PATHNAMES, type Locale } from './config'
 import { translations } from './translations'
 
 export type Translations = (typeof translations)[Locale]
@@ -203,11 +218,44 @@ export function getLocalizedPathname(path: string, locale: Locale): string {
 
 // Remove locale prefix from a path
 const localePrefixRegex = new RegExp(
-  `^\\/(${LOCALES.filter((l) => l !== DEFAULT_LOCALE).join('|')})(?=\\/|$)`,
+  `^\\/(${LOCALES.filter((l) => l !== DEFAULT_LOCALE).join('|')})(?=\\/|$)`
 )
 
 export function stripLocaleFromPath(path: string): string {
   return path.replace(localePrefixRegex, '') || '/'
+}
+
+// Resolve a PATHNAMES key to a full localized URL
+export function getLocalizedRoute(key: keyof typeof PATHNAMES, locale: Locale): string {
+  const entry = PATHNAMES[key]
+  const path = typeof entry === 'string' ? entry : entry[locale]
+  return getLocalizedPathname(path, locale)
+}
+
+// Get the alternate locale's URL for a PATHNAMES key
+export function getAlternateRoute(key: keyof typeof PATHNAMES, locale: Locale): string {
+  const alt = getAlternateLocales(locale)[0]
+  return getLocalizedRoute(key, alt)
+}
+
+// Build a sitemap hreflang map from PATHNAMES
+export function buildHreflangMap(siteUrl: string) {
+  const map = new Map<string, { url: string; lang: string }[]>()
+
+  for (const entry of Object.values(PATHNAMES)) {
+    if (typeof entry === 'string') continue
+
+    const links = LOCALES.map((l) => ({
+      url: `${siteUrl}${getLocalizedPathname(entry[l], l)}`,
+      lang: LOCALE_BCP47[l],
+    }))
+
+    for (const link of links) {
+      map.set(link.url, links)
+    }
+  }
+
+  return map
 }
 
 // Format dates using the locale's conventions
@@ -220,11 +268,13 @@ export function formatDate(date: Date | string, locale: Locale = DEFAULT_LOCALE)
 }
 ```
 
-The `getLocale()` function accepts both a `URL` object (for use in plain utility functions like `seo.ts`) and a string (for use with `Astro.currentLocale` in components). In `.astro` components, prefer `getLocale(Astro.currentLocale)` over `getLocale(Astro.url)` — it uses Astro's built-in locale detection which is more reliable.
+The `getLocale()` function accepts both a `URL` object (for use in plain utility functions like `seo.ts`) and a string (for use with `Astro.currentLocale` in components). In `.astro` components, prefer `getLocale(Astro.currentLocale)` over `getLocale(Astro.url)` - it uses Astro's built-in locale detection which is more reliable.
+
+The three new helpers - `getLocalizedRoute()`, `getAlternateRoute()`, and `buildHreflangMap()` - all operate on `PATHNAMES` from the config. This means localized URL management is centralized: you define the path mapping once in `PATHNAMES`, and every part of the app (navigation, hreflang tags, sitemap) derives the correct URLs from that single source.
 
 For building localized URLs, Astro provides `getRelativeLocaleUrl()` from `astro:i18n` which respects your config automatically. Use our custom `getLocalizedPathname()` only for URLs with hash fragments (like `/#experience`) since `getRelativeLocaleUrl()` incorrectly appends a trailing slash to the fragment.
 
-The key insight is `getLocaleParam()` — it returns `undefined` for the default locale. This works with Astro's `[...locale]` rest parameter: `undefined` produces `/` while `'en'` produces `/en/`.
+The key insight is `getLocaleParam()` - it returns `undefined` for the default locale. This works with Astro's `[...locale]` rest parameter: `undefined` produces `/` while `'en'` produces `/en/`.
 
 ## Step 5: Locale-Aware Routing
 
@@ -258,6 +308,7 @@ const strings = t(locale)
 ```
 
 This generates two pages:
+
 - `/index.html` (Polish, `locale` param is `undefined`)
 - `/en/index.html` (English, `locale` param is `'en'`)
 
@@ -286,6 +337,79 @@ const { locale, page } = Astro.props
 ---
 ```
 
+## Pages with Different Slugs per Locale
+
+Some pages need entirely different URLs per language. For example, your services page might live at `/uslugi` in Polish and `/en/services` in English. Since these are different slugs, the `[...locale]` rest parameter alone cannot handle them - you need separate page files.
+
+First, define the mapping in `PATHNAMES` (already done in Step 1):
+
+```typescript
+export const PATHNAMES = {
+  '/services': {
+    pl: '/uslugi',
+    en: '/services',
+  },
+  // ...
+}
+```
+
+Then create two page files - one for each locale's slug:
+
+```astro
+---
+// src/pages/uslugi.astro (Polish version)
+import Layout from '@layouts/Layout.astro'
+import { t, getAlternateRoute } from '@i18n'
+
+const locale = 'pl'
+const strings = t(locale)
+const alternateHref = getAlternateRoute('/services', locale)
+---
+
+<Layout title={strings.services.title} alternateHref={alternateHref}>
+  <!-- Polish services content -->
+</Layout>
+```
+
+```astro
+---
+// src/pages/[...locale]/services.astro (English version)
+import Layout from '@layouts/Layout.astro'
+import { LOCALES } from '@i18n/config'
+import { t, getLocaleParam, getAlternateRoute } from '@i18n'
+import type { InferGetStaticPropsType } from 'astro'
+
+export function getStaticPaths() {
+  return LOCALES.filter((l) => l !== 'pl').map((locale) => ({
+    params: { locale: getLocaleParam(locale) },
+    props: { locale },
+  }))
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
+const { locale } = Astro.props
+const strings = t(locale)
+const alternateHref = getAlternateRoute('/services', locale)
+---
+
+<Layout title={strings.services.title} alternateHref={alternateHref}>
+  <!-- English services content -->
+</Layout>
+```
+
+In navigation, use `getLocalizedRoute()` to always point to the correct URL:
+
+```astro
+---
+import { getLocalizedRoute } from '@i18n'
+---
+<a href={getLocalizedRoute('/services', locale)}>
+  {strings.nav.services}
+</a>
+```
+
+The `getAlternateRoute()` call generates the correct hreflang URL for the other locale, and `getLocalizedRoute()` resolves the right path for any locale - all derived from the single `PATHNAMES` definition.
+
 ## Step 6: Multilingual Content Collections
 
 Blog posts are organized by locale in the file system:
@@ -304,9 +428,9 @@ Each post has a `lang` field and an optional `translationKey` to link translatio
 
 ```yaml
 ---
-title: "Moja droga w programowaniu"
-lang: "pl"
-translationKey: "my-programming-journey"
+title: 'Moja droga w programowaniu'
+lang: 'pl'
+translationKey: 'my-programming-journey'
 # ... other frontmatter
 ---
 ```
@@ -339,10 +463,7 @@ Filtering posts by locale is straightforward:
 
 ```typescript
 // src/utils/posts.ts
-export const getPostsForLocale = (
-  posts: CollectionEntry<'posts'>[],
-  locale: Locale,
-) =>
+export const getPostsForLocale = (posts: CollectionEntry<'posts'>[], locale: Locale) =>
   posts
     .filter((p) => p.data.lang === locale && !p.data.draft)
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -478,13 +599,13 @@ export const POST: APIRoute = async ({ cookies, request }) => {
 }
 ```
 
-We use `navigator.sendBeacon()` in the click handler because it fires asynchronously without blocking navigation — the cookie is set server-side while the browser navigates to the new URL.
+We use `navigator.sendBeacon()` in the click handler because it fires asynchronously without blocking navigation - the cookie is set server-side while the browser navigates to the new URL.
 
 The key trick for blog posts: since translated posts have different slugs (like `/blog/moja-droga/` vs `/en/blog/my-journey/`), the component reads the `hreflang` link from `<head>` to get the real translated URL instead of just swapping the locale prefix.
 
 ### Caveat: Browser Back Button
 
-There's a subtle UX issue with the default `<a>` navigation — switching language pushes a new entry to the browser history. So when a user reads a blog post, switches to English, and hits the back button, they go back to the Polish version instead of the previous page.
+There's a subtle UX issue with the default `<a>` navigation - switching language pushes a new entry to the browser history. So when a user reads a blog post, switches to English, and hits the back button, they go back to the Polish version instead of the previous page.
 
 The fix is to use `window.location.replace()` instead of normal navigation. This **replaces** the current history entry rather than adding a new one:
 
@@ -541,13 +662,13 @@ const strings = t(DEFAULT_LOCALE)
 
 This approach is much better than the client-side alternative:
 
-- **No double page load** — the redirect happens before any HTML is sent
-- **No Lighthouse penalty** — the client-side approach cost ~1.5 seconds in redirect time
+- **No double page load** - the redirect happens before any HTML is sent
+- **No Lighthouse penalty** - the client-side approach cost ~1.5 seconds in redirect time
 - **`Astro.preferredLocale`** properly parses `Accept-Language` with quality values (e.g. `en-US,en;q=0.9,pl;q=0.8`), unlike naive `navigator.language` parsing
 
-The `[...locale]/index.astro` page still generates the prerendered `/en/` page via `getStaticPaths`, but skips the default locale since `/` is now handled by the SSR `index.astro`. The SSR overhead is minimal — no database or API calls, just template rendering.
+The `[...locale]/index.astro` page still generates the prerendered `/en/` page via `getStaticPaths`, but skips the default locale since `/` is now handled by the SSR `index.astro`. The SSR overhead is minimal - no database or API calls, just template rendering.
 
-## Step 10: SEO — Hreflang and Sitemap
+## Step 10: SEO - Hreflang and Sitemap
 
 Your layout should include `hreflang` links for every locale:
 
@@ -561,31 +682,16 @@ Your layout should include `hreflang` links for every locale:
 <link rel="alternate" hreflang="x-default" href={seo.hreflangUrls[DEFAULT_LOCALE]} />
 ```
 
-For the sitemap, configure `@astrojs/sitemap` with i18n support. The sitemap plugin's `i18n` option automatically adds hreflang links for pages that share the same path structure (like `/` and `/en/`). But blog posts have **different slugs per language** — `/blog/moja-droga-w-programowaniu/` vs `/en/blog/my-programming-journey/` — so the plugin can't match them automatically. You need to manually map these pairs and inject hreflang links via the `serialize` hook:
+For the sitemap, configure `@astrojs/sitemap` with i18n support. The sitemap plugin's `i18n` option automatically adds hreflang links for pages that share the same path structure (like `/` and `/en/`). But pages and blog posts with **different slugs per language** - `/blog/moja-droga-w-programowaniu/` vs `/en/blog/my-programming-journey/` - cannot be matched automatically by the plugin. Instead of manually maintaining a list of translated URL pairs, we use `buildHreflangMap()` which generates the map directly from `PATHNAMES` - the single source of truth:
 
 ```javascript
 // astro.config.mjs
 import sitemap from '@astrojs/sitemap'
-import { DEFAULT_LOCALE, LOCALE_BCP47 } from './src/i18n/config'
+import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES } from './src/i18n/config'
+import { buildHreflangMap } from './src/i18n/utils'
 
-// Blog posts have different slugs per language, so @astrojs/sitemap
-// can't auto-detect they are translations of each other.
-// We manually map each [pl, en] pair so the sitemap includes
-// proper hreflang links for search engines.
-const translatedPosts = [
-  ['/blog/wdrazanie-astro-na-dokploy/', '/en/blog/deploying-astro-on-dokploy/'],
-  ['/blog/moja-droga-w-programowaniu/', '/en/blog/my-programming-journey/'],
-]
-
-const postHreflangMap = new Map()
-for (const [plPath, enPath] of translatedPosts) {
-  const links = [
-    { url: `${SITE}${plPath}`, lang: 'pl-PL' },
-    { url: `${SITE}${enPath}`, lang: 'en-US' },
-  ]
-  postHreflangMap.set(`${SITE}${plPath}`, links)
-  postHreflangMap.set(`${SITE}${enPath}`, links)
-}
+const SITE = 'https://jnalewajk.me'
+const hreflangMap = buildHreflangMap(SITE)
 
 export default defineConfig({
   integrations: [
@@ -595,7 +701,7 @@ export default defineConfig({
         locales: LOCALE_BCP47,
       },
       serialize(item) {
-        const links = postHreflangMap.get(item.url)
+        const links = hreflangMap.get(item.url)
         if (links) item.links = links
         return item
       },
@@ -604,15 +710,18 @@ export default defineConfig({
 })
 ```
 
+Every entry in `PATHNAMES` that has per-locale paths is automatically included in the sitemap hreflang map. When you add a new translated page or post, you only update `PATHNAMES` - the sitemap picks it up with no extra configuration.
+
 ## Summary
 
 The pattern boils down to a few principles:
 
-1. **One config file** defines all locale data — add a language in one place
-2. **`[...locale]` rest params** handle routing — `undefined` for default, locale string for others
+1. **One config file** defines all locale data - add a language in one place
+2. **`[...locale]` rest params** handle routing - `undefined` for default, locale string for others
 3. **Translation files** are plain TypeScript objects with `as const` for type safety
 4. **Content collections** use `lang` field for filtering and `translationKey` for linking translations
-5. **Hreflang links** in `<head>` serve double duty — SEO and language switcher navigation
+5. **Hreflang links** in `<head>` serve double duty - SEO and language switcher navigation
 6. **Browser detection** runs once and respects the user's cookie preference
+7. **`PATHNAMES`** is the single source of truth for localized URLs - navigation, hreflang, and sitemap all derive from it
 
 No external i18n library needed. The whole system is about 200 lines of utility code, fully type-safe, and works with Astro's static generation out of the box.

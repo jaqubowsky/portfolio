@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, envField } from 'astro/config'
 import icon from 'astro-icon'
 import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES } from './src/i18n/config'
+import { buildHreflangMap } from './src/i18n/utils'
 
 const SITE = 'https://jnalewajk.me'
 
@@ -14,21 +15,7 @@ const legacyRedirects = {
   '/blog/my-programming-journey/': '/en/blog/my-programming-journey/',
 }
 
-const translatedPosts = [
-  ['/blog/wdrazanie-astro-na-dokploy/', '/en/blog/deploying-astro-on-dokploy/'],
-  ['/blog/moja-droga-w-programowaniu/', '/en/blog/my-programming-journey/'],
-  ['/blog/i18n-w-astro-kompletny-poradnik/', '/en/blog/i18n-in-astro-complete-guide/'],
-]
-
-const postHreflangMap = new Map()
-for (const [plPath, enPath] of translatedPosts) {
-  const links = [
-    { url: `${SITE}${plPath}`, lang: 'pl-PL' },
-    { url: `${SITE}${enPath}`, lang: 'en-US' },
-  ]
-  postHreflangMap.set(`${SITE}${plPath}`, links)
-  postHreflangMap.set(`${SITE}${enPath}`, links)
-}
+const hreflangMap = buildHreflangMap(SITE)
 
 // https://astro.build/config
 export default defineConfig({
@@ -46,7 +33,7 @@ export default defineConfig({
         locales: LOCALE_BCP47,
       },
       serialize(item) {
-        const links = postHreflangMap.get(item.url)
+        const links = hreflangMap.get(item.url)
         if (links) item.links = links
 
         return item

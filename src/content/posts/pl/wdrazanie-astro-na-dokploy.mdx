@@ -1,18 +1,18 @@
 ---
-title: "Wdrażanie Astro 5 na Dokploy"
+title: 'Wdrażanie Astro 5 na Dokploy'
 pubDate: 2026-03-10
 description: "Przewodnik krok po kroku do self-hostingu strony Astro 5 SSR na VPS za pomocą Dokploy z certyfikatem Let's Encrypt SSL."
-author: "Jakub Nalewajk"
+author: 'Jakub Nalewajk'
 image:
   {
-    url: "../../../assets/images/blog/deploying-astro-on-dokploy-cover.webp",
-    alt: "Wdrażanie Astro na Dokploy",
+    url: '../../../assets/images/blog/deploying-astro-on-dokploy-cover.webp',
+    alt: 'Wdrażanie Astro na Dokploy',
   }
-category: "tutorial"
-tags: ["astro", "docker", "self-hosting", "dokploy", "traefik"]
+category: 'tutorial'
+tags: ['astro', 'docker', 'self-hosting', 'dokploy', 'traefik']
 draft: false
-lang: "pl"
-translationKey: "deploying-astro-dokploy"
+lang: 'pl'
+translationKey: 'deploying-astro-dokploy'
 ---
 
 Większość poradników o Astro mówi ci, żebyś wdrożył na Vercel i tyle. A co jeśli chcesz mieć kontrolę nad swoją infrastrukturą, nie być przywiązanym do jednego dostawcy i móc uruchamiać wiele aplikacji na jednym VPS? Dlatego przeniosłem swoje portfolio z Vercel na self-hosted setup z Dokploy.
@@ -23,10 +23,10 @@ W tym poradniku przeprowadzę cię przez proces wdrażania strony Astro 5 z SSR 
 
 Vercel jest świetny do wdrożeń, ale self-hosting daje ci:
 
-- **Kontrolę nad kosztami** — jeden VPS może obsługiwać wiele aplikacji zamiast płacenia za każdy projekt
-- **Pełną kontrolę nad infrastrukturą** — żadnych niespodzianek, limitów ani vendor lock-in
-- **Szansę na naukę** — zrozumienie Dockera, reverse proxy i sieci czyni cię lepszym developerem
-- **Prywatność** — twoje dane zostają na twoim serwerze
+- **Kontrolę nad kosztami** - jeden VPS może obsługiwać wiele aplikacji zamiast płacenia za każdy projekt
+- **Pełną kontrolę nad infrastrukturą** - żadnych niespodzianek, limitów ani vendor lock-in
+- **Szansę na naukę** - zrozumienie Dockera, reverse proxy i sieci czyni cię lepszym developerem
+- **Prywatność** - twoje dane zostają na twoim serwerze
 
 Uruchamiam swoje portfolio, dwie aplikacje Next.js i serwer bazy danych na jednym VPS za €7/miesiąc.
 
@@ -50,14 +50,14 @@ npm install @astrojs/node
 Zaktualizuj swój `astro.config.mjs`:
 
 ```js
-import node from "@astrojs/node";
+import node from '@astrojs/node'
 
 export default defineConfig({
   adapter: node({
-    mode: "standalone",
+    mode: 'standalone',
   }),
   // ... reszta konfiguracji
-});
+})
 ```
 
 Tryb `standalone` tworzy samodzielny serwer, który możesz uruchomić za pomocą `node ./dist/server/entry.mjs`.
@@ -93,9 +93,9 @@ CMD ["node", "./dist/server/entry.mjs"]
 
 Kluczowe decyzje:
 
-- **Wieloetapowy build** — etap `deps` cachuje `node_modules`, etap `build` kompiluje, a etap `runtime` zawiera tylko to, co potrzebne do uruchomienia
-- **`HOST=0.0.0.0`** — krytyczne. Bez tego serwer nasłuchuje tylko na localhost wewnątrz kontenera i Traefik nie może do niego dotrzeć
-- **`PORT=3000`** — dopasuj to do konfiguracji domeny w Dokploy
+- **Wieloetapowy build** - etap `deps` cachuje `node_modules`, etap `build` kompiluje, a etap `runtime` zawiera tylko to, co potrzebne do uruchomienia
+- **`HOST=0.0.0.0`** - krytyczne. Bez tego serwer nasłuchuje tylko na localhost wewnątrz kontenera i Traefik nie może do niego dotrzeć
+- **`PORT=3000`** - dopasuj to do konfiguracji domeny w Dokploy
 
 Nie zapomnij o `.dockerignore`:
 
@@ -146,10 +146,10 @@ W sekcji **Domains**:
 
 W swoim dostawcy DNS (ja używam Cloudflare) skieruj domenę na VPS:
 
-| Typ | Nazwa | Zawartość | Proxy |
-|-----|-------|-----------|-------|
-| A | @ | twoje.ip.vps | DNS only |
-| CNAME | www | twojadomena.com | DNS only |
+| Typ   | Nazwa | Zawartość       | Proxy    |
+| ----- | ----- | --------------- | -------- |
+| A     | @     | twoje.ip.vps    | DNS only |
+| CNAME | www   | twojadomena.com | DNS only |
 
 **Ważne**: Użyj **DNS only** (szara chmurka w Cloudflare), nie Proxied. Traefik obsługuje SSL przez Let's Encrypt, a proxy Cloudflare powodowałoby konflikty certyfikatów.
 
@@ -191,7 +191,7 @@ http:
     www-to-non-www:
       redirectRegex:
         regex: "^https?://www\\.jnalewajk\\.me/(.*)"
-        replacement: "https://jnalewajk.me/${1}"
+        replacement: 'https://jnalewajk.me/${1}'
         permanent: true
   services:
     app-service:
@@ -208,6 +208,7 @@ Middleware `compress` włącza kompresję gzip/Brotli, a `www-to-non-www` obsłu
 To częsty problem z Astro i Dockerem. Są dwa typy zmiennych:
 
 **Build-time** (potrzebne podczas `npm run build`):
+
 - Zmienne `PUBLIC_*`, które są wstawiane do JavaScript po stronie klienta
 - Muszą być przekazane jako `ARG` w Dockerfile
 
@@ -221,6 +222,7 @@ RUN npm run build
 W Dokploy ustaw je w sekcji **Build Arguments**, nie Environment Variables.
 
 **Runtime** (potrzebne gdy serwer działa):
+
 - Sekrety po stronie serwera jak klucze API
 - Idą do sekcji **Environment Variables** Dokploy i są wstrzykiwane do kontenera w runtime
 
@@ -235,9 +237,9 @@ Kliknij **Deploy** w Dokploy. Wykona:
 
 Sprawdź logi budowania pod kątem błędów. Częste problemy:
 
-- **Build nie działa** — brakujące build args dla zmiennych `PUBLIC_*`
-- **Kontener startuje, ale 502** — zły port lub `HOST` nie ustawiony na `0.0.0.0`
-- **SSL nie działa** — DNS jeszcze się nie propagował lub używasz trybu proxy Cloudflare
+- **Build nie działa** - brakujące build args dla zmiennych `PUBLIC_*`
+- **Kontener startuje, ale 502** - zły port lub `HOST` nie ustawiony na `0.0.0.0`
+- **SSL nie działa** - DNS jeszcze się nie propagował lub używasz trybu proxy Cloudflare
 
 ## Krok 8: Auto-Deploy
 
@@ -254,16 +256,16 @@ Jeśli twoja aplikacja wysyła emaile (jak formularz kontaktowy), pamiętaj, że
 Rozwiązanie: użyj serwisu emailowego opartego na API jak **Resend** zamiast SMTP. Używa HTTPS (port 443), który nigdy nie jest blokowany.
 
 ```ts
-import { Resend } from "resend";
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 await resend.emails.send({
-  from: "noreply@twojadomena.com",
-  to: "ty@gmail.com",
-  subject: "Formularz kontaktowy",
+  from: 'noreply@twojadomena.com',
+  to: 'ty@gmail.com',
+  subject: 'Formularz kontaktowy',
   html: renderedHtml,
-});
+})
 ```
 
 ## Efekt końcowy

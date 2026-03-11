@@ -17,6 +17,7 @@
     "@astrojs/node": "^10.0.0",
     "@astrojs/react": "^5.0.0",
     "@astrojs/sitemap": "^3.7.1",
+    "@iconify/react": "^6.0.2",
     "@react-email/components": "1.0.8",
     "@react-email/render": "2.0.4",
     "@tailwindcss/postcss": "^4.2.1",

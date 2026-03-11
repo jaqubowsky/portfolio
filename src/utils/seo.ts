@@ -272,3 +272,24 @@ export function getBreadcrumbJsonLd(items: BreadcrumbItem[]) {
     })),
   };
 }
+
+export type FaqItem = {
+  readonly question: string;
+  readonly answer: string;
+  readonly link?: { readonly href: string; readonly text: string };
+};
+
+export function getFaqJsonLd(items: readonly FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}

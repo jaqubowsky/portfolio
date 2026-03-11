@@ -1,0 +1,22 @@
+---
+import { Section } from "@components/atoms";
+import { SectionHeader } from "@components/molecules";
+import FaqAccordion from "@components/react/FaqAccordion";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.currentLocale);
+const strings = t(locale);
+const { faq } = strings.servicesPage;
+---
+
+<Section class="gap-10" id="faq">
+  <SectionHeader
+    badge={faq.badge}
+    title={faq.title}
+    description={faq.description}
+  />
+
+  <div class="animate-on-scroll w-full flex justify-center">
+    <FaqAccordion client:visible items={faq.items} />
+  </div>
+</Section>

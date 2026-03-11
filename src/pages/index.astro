@@ -1,18 +1,7 @@
 ---
-import { Flex } from "@components/atoms";
-import { Recaptcha } from "@components/molecules";
-import {
-  Contact,
-  Experience,
-  Home,
-  Projects,
-  Services,
-  Skills,
-  Stats,
-} from "@components/organisms";
-import Layout from "@layouts/Layout.astro";
+import HomePage from "@components/templates/HomePage.astro";
 import { DEFAULT_LOCALE } from "@i18n/config";
-import { t, getLocale } from "@i18n";
+import { getLocale } from "@i18n";
 
 export const prerender = false;
 
@@ -33,23 +22,6 @@ if (!preferred) {
     return Astro.redirect(`/${match}`, 302);
   }
 }
-
-const strings = t(DEFAULT_LOCALE);
 ---
 
-<Layout
-  title={strings.meta.title}
-  description={strings.meta.description}
->
-  <Recaptcha />
-
-  <Flex class="flex-col w-full">
-    <Home />
-    <Stats />
-    <Experience />
-    <Projects />
-    <Services />
-    <Skills />
-    <Contact />
-  </Flex>
-</Layout>
+<HomePage locale={DEFAULT_LOCALE} />

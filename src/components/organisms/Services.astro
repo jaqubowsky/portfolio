@@ -1,7 +1,5 @@
 ---
 import {
-  ButtonLink,
-  Card,
   Flex,
   GlowCard,
   Grid,
@@ -11,7 +9,6 @@ import {
   Section,
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
-import { Icon } from "astro-icon/components";
 import { t, getLocale } from "@i18n";
 
 const locale = getLocale(Astro.currentLocale);
@@ -44,56 +41,4 @@ const strings = t(locale);
       ))
     }
   </Grid>
-
-  <Flex class="flex-col gap-5 w-full">
-    <Flex class="text-center flex-col gap-1 animate-on-scroll">
-      <Heading level={3} class="text-lg sm:text-xl font-semibold text-muted-foreground">
-        {strings.services.processTitle}
-      </Heading>
-    </Flex>
-
-    <div class="relative w-full">
-      <div class="hidden lg:block absolute top-7 left-[calc(12.5%+20px)] right-[calc(12.5%+20px)] h-0.5 bg-border" aria-hidden="true">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary/40 via-primary/20 to-primary/40" />
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-        {
-          strings.services.steps.map((step, i) => (
-            <div class={`animate-on-scroll stagger-${i + 1}`}>
-              <Flex class="flex-col items-center text-center gap-3">
-                <div class="relative z-10 w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-md">
-                  <span class="text-lg font-bold text-primary-foreground font-mono">{i + 1}</span>
-                </div>
-                <Heading level={3} class="text-base font-semibold">
-                  {step.title}
-                </Heading>
-                <Paragraph class="text-sm leading-relaxed text-muted-foreground">
-                  {step.description}
-                </Paragraph>
-              </Flex>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-
-    <div class="animate-on-scroll max-w-2xl mx-auto w-full">
-      <Card class="p-5 border-primary/20 bg-primary/5">
-        <Flex class="gap-3 items-center justify-center flex-col sm:flex-row text-center sm:text-left">
-          <Icon name="mdi:lightning-bolt" size={24} class="text-primary shrink-0" />
-          <Paragraph class="text-sm font-medium">
-            {strings.services.processDescription}
-          </Paragraph>
-        </Flex>
-      </Card>
-    </div>
-
-    <Flex class="justify-center animate-on-scroll">
-      <ButtonLink href="#contact" data-umami-event="services-cta">
-        <Icon name="mdi:email-outline" size={18} />
-        {strings.services.cta}
-      </ButtonLink>
-    </Flex>
-  </Flex>
 </Section>

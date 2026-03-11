@@ -1,18 +1,18 @@
 ---
-title: "Deploying Astro 5 on Dokploy"
+title: 'Deploying Astro 5 on Dokploy'
 pubDate: 2026-03-10
 description: "A step-by-step guide to self-hosting an Astro 5 SSR site on your VPS using Dokploy with Let's Encrypt SSL."
-author: "Jakub Nalewajk"
+author: 'Jakub Nalewajk'
 image:
   {
-    url: "../../../assets/images/blog/deploying-astro-on-dokploy-cover.webp",
-    alt: "Deploying Astro on Dokploy",
+    url: '../../../assets/images/blog/deploying-astro-on-dokploy-cover.webp',
+    alt: 'Deploying Astro on Dokploy',
   }
-category: "tutorial"
-tags: ["astro", "docker", "self-hosting", "dokploy", "traefik"]
+category: 'tutorial'
+tags: ['astro', 'docker', 'self-hosting', 'dokploy', 'traefik']
 draft: false
-lang: "en"
-translationKey: "deploying-astro-dokploy"
+lang: 'en'
+translationKey: 'deploying-astro-dokploy'
 ---
 
 Most Astro tutorials tell you to deploy to Vercel and that is it. What if you want to be in control of your infrastructure, not be tied to one vendor and be able to run many apps on one VPS? That is why I moved my portfolio from Vercel to a self-hosted setup with Dokploy.
@@ -23,10 +23,10 @@ In this guide I will walk you through the process of deploying an Astro 5 site w
 
 Vercel is great for deploys but self-hosting gives you:
 
-- **Control over costs** — one VPS can run many apps instead of paying for each project
-- **Full control over your infrastructure** — no surprises, no limits, no vendor lock-in
-- **A chance to learn** — understanding Docker, reverse proxies and networking makes you a better developer
-- **Privacy** — your data stays on your machine
+- **Control over costs** - one VPS can run many apps instead of paying for each project
+- **Full control over your infrastructure** - no surprises, no limits, no vendor lock-in
+- **A chance to learn** - understanding Docker, reverse proxies and networking makes you a better developer
+- **Privacy** - your data stays on your machine
 
 I am running my portfolio, two Next.js apps and a database server all on a single €7/month VPS.
 
@@ -50,14 +50,14 @@ npm install @astrojs/node
 Update your `astro.config.mjs`:
 
 ```js
-import node from "@astrojs/node";
+import node from '@astrojs/node'
 
 export default defineConfig({
   adapter: node({
-    mode: "standalone",
+    mode: 'standalone',
   }),
   // ... rest of your config
-});
+})
 ```
 
 The `standalone` mode creates a self-contained server that you can run with `node ./dist/server/entry.mjs`.
@@ -93,9 +93,9 @@ CMD ["node", "./dist/server/entry.mjs"]
 
 Key decisions here:
 
-- **Multi-stage build** — the `deps` stage caches `node_modules`, the `build` stage compiles and the `runtime` stage only contains what is needed to run
-- **`HOST=0.0.0.0`** — critical. Without this the server only listens on localhost inside the container and Traefik cannot reach it
-- **`PORT=3000`** — match this with your Dokploy domain config
+- **Multi-stage build** - the `deps` stage caches `node_modules`, the `build` stage compiles and the `runtime` stage only contains what is needed to run
+- **`HOST=0.0.0.0`** - critical. Without this the server only listens on localhost inside the container and Traefik cannot reach it
+- **`PORT=3000`** - match this with your Dokploy domain config
 
 Do not forget the `.dockerignore`:
 
@@ -146,10 +146,10 @@ In the **Domains** section:
 
 In your DNS provider (I use Cloudflare) point your domain to your VPS:
 
-| Type | Name | Content | Proxy |
-|------|------|---------|-------|
-| A | @ | your.vps.ip | DNS only |
-| CNAME | www | yourdomain.com | DNS only |
+| Type  | Name | Content        | Proxy    |
+| ----- | ---- | -------------- | -------- |
+| A     | @    | your.vps.ip    | DNS only |
+| CNAME | www  | yourdomain.com | DNS only |
 
 **Important**: Use **DNS only** (grey cloud in Cloudflare), not Proxied. Traefik handles SSL via Let's Encrypt and Cloudflare's proxy would cause certificate conflicts.
 
@@ -191,7 +191,7 @@ http:
     www-to-non-www:
       redirectRegex:
         regex: "^https?://www\\.jnalewajk\\.me/(.*)"
-        replacement: "https://jnalewajk.me/${1}"
+        replacement: 'https://jnalewajk.me/${1}'
         permanent: true
   services:
     app-service:
@@ -208,6 +208,7 @@ The `compress` middleware enables gzip/Brotli compression and the `www-to-non-ww
 This is a common problem with Astro and Docker. There are two types of env vars:
 
 **Build-time** (needed during `npm run build`):
+
 - `PUBLIC_*` vars that get inlined into client-side JavaScript
 - These need to be passed as `ARG` in your Dockerfile
 
@@ -221,6 +222,7 @@ RUN npm run build
 In Dokploy set these in the **Build Arguments** section, not Environment Variables.
 
 **Runtime** (needed when the server runs):
+
 - Server-side secrets like API keys
 - These go in Dokploy's **Environment Variables** section and are injected into the container at runtime
 
@@ -235,9 +237,9 @@ Hit **Deploy** in Dokploy. It will:
 
 Check the build logs for any errors. Common problems:
 
-- **Build fails** — missing build args for `PUBLIC_*` env vars
-- **Container starts but 502** — wrong port or `HOST` not set to `0.0.0.0`
-- **SSL not working** — DNS not propagated yet or using Cloudflare proxy mode
+- **Build fails** - missing build args for `PUBLIC_*` env vars
+- **Container starts but 502** - wrong port or `HOST` not set to `0.0.0.0`
+- **SSL not working** - DNS not propagated yet or using Cloudflare proxy mode
 
 ## Step 8: Set Up Auto-Deploy
 
@@ -254,16 +256,16 @@ If your app sends emails (like a contact form) be aware that many VPS providers 
 The fix: use an API-based email service like **Resend** instead of SMTP. It uses HTTPS (port 443) which is never blocked.
 
 ```ts
-import { Resend } from "resend";
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 await resend.emails.send({
-  from: "noreply@yourdomain.com",
-  to: "you@gmail.com",
-  subject: "Contact form",
+  from: 'noreply@yourdomain.com',
+  to: 'you@gmail.com',
+  subject: 'Contact form',
   html: renderedHtml,
-});
+})
 ```
 
 ## Final Result
