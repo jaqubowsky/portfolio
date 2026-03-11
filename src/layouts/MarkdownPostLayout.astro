@@ -43,7 +43,7 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
 >
   <Section
-    class="relative grid xl:grid-cols-[1fr_auto_1fr] gap-x-8 max-w-7xl mx-auto"
+    class="relative grid xl:grid-cols-[1fr_auto_1fr] justify-items-center gap-x-8 max-w-7xl mx-auto"
   >
     <div class="w-full hidden xl:block h-full">
       <div class="sticky top-28">
@@ -59,7 +59,7 @@ const breadcrumbs = [
       </div>
     </div>
 
-    <article class="flex flex-col w-full max-w-2xl gap-y-10">
+    <article class="flex flex-col w-full min-w-0 max-w-2xl gap-y-10">
       <PostHeader frontmatter={frontmatter} />
       <Flex class="flex-col gap-4 xl:hidden static items-start">
         <TableOfContents headings={frontmatter.headings} class="w-full" />
