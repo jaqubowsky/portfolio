@@ -16,7 +16,7 @@ import substatzImg from "@images/projects/substatz.webp";
 import createNextjsImg from "@images/projects/create-nextjs-app.webp";
 import { t, getLocale } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 
 const projects = [

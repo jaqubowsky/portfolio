@@ -6,7 +6,8 @@ import Layout from "@layouts/Layout.astro";
 import type { PaginateFunction } from "astro";
 import { Icon } from "astro-icon/components";
 import { getPostData, getPostsForLocale } from "@utils/posts";
-import { t, getLocalizedPathname, getLocaleParam } from "@i18n";
+import { t, getLocaleParam } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { LOCALES } from "@i18n/config";
 import type { InferGetStaticPropsType } from "astro";
 
@@ -46,16 +47,16 @@ const siteUrl = Astro.site?.toString() ?? "";
 const breadcrumbs = [
   {
     name: strings.nav.home,
-    url: new URL(getLocalizedPathname("/", locale), siteUrl).toString(),
+    url: new URL(getRelativeLocaleUrl(locale, "/"), siteUrl).toString(),
   },
   {
     name: "Blog",
-    url: new URL(getLocalizedPathname("/blog", locale), siteUrl).toString(),
+    url: new URL(getRelativeLocaleUrl(locale, "/blog"), siteUrl).toString(),
   },
   {
     name: `#${tag}`,
     url: new URL(
-      getLocalizedPathname(`/category/${tag}`, locale),
+      getRelativeLocaleUrl(locale, `/category/${tag}`),
       siteUrl,
     ).toString(),
   },
@@ -70,7 +71,7 @@ const breadcrumbs = [
 >
   <Section id="blog" class="gap-12">
     <Flex class="flex-wrap gap-4 flex-col items-start justify-start mt-4 w-full animate-on-scroll">
-      <ButtonLink href={getLocalizedPathname("/blog", locale)} variant="secondary" class="text-sm">
+      <ButtonLink href={getRelativeLocaleUrl(locale, "/blog")} variant="secondary" class="text-sm">
         <Icon name="mdi:arrow-left" size={16} />
         {strings.blog.backToBlog}
       </ButtonLink>

@@ -2,7 +2,7 @@
 import { IconLink, Paragraph } from "@components/atoms";
 import { t, getLocale } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 const url = Astro.url;
 

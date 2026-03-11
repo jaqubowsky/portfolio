@@ -1,10 +1,16 @@
 ---
 import { Flex, Link } from "@components/atoms";
-import { Hamburger, LanguageSwitcher, Navigation, ThemeToggler } from "@components/molecules";
+import {
+  Hamburger,
+  LanguageSwitcher,
+  Navigation,
+  ThemeToggler,
+} from "@components/molecules";
 import { Icon } from "astro-icon/components";
 import { getLocale, t, getLocalizedPathname } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 
 const links = [
@@ -25,14 +31,14 @@ const links = [
     href: getLocalizedPathname("/#contact", locale),
     text: strings.nav.contact,
   },
-  { href: getLocalizedPathname("/blog", locale), text: strings.nav.blog },
+  { href: getRelativeLocaleUrl(locale, "/blog"), text: strings.nav.blog },
 ] as const;
 ---
 
 <header
   class="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 sticky top-0 left-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50"
 >
-  <Link href={getLocalizedPathname("/", locale)} class="no-underline font-bold text-lg tracking-tight">
+  <Link href={getRelativeLocaleUrl(locale, "/")} class="no-underline font-bold text-lg tracking-tight">
     Jakub<span class="text-primary">.</span>
   </Link>
 

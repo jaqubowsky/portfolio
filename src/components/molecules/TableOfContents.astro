@@ -3,7 +3,7 @@ import { Heading, Link } from "@components/atoms";
 import { cn } from "@utils/cn";
 import { t, getLocale } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 const { headings } = Astro.props;
 

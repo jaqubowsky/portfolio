@@ -2,11 +2,12 @@
 import { ButtonLink, Flex, Heading, Section } from "@components/atoms";
 import Layout from "@layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import { t, getLocale, getLocalizedPathname } from "@i18n";
+import { t, getLocale } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 export const prerender = false;
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 ---
 
@@ -49,7 +50,7 @@ const strings = t(locale);
       <Heading level={2} class="text-xl sm:text-2xl">
         {strings.notFound.subtitle}
       </Heading>
-      <ButtonLink href={getLocalizedPathname("/", locale)}>
+      <ButtonLink href={getRelativeLocaleUrl(locale, "/")}>
         <Icon name="mdi:arrow-left" size={18} />
         {strings.notFound.backHome}
       </ButtonLink>

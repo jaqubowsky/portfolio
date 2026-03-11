@@ -1,10 +1,5 @@
-import {
-  getAlternateLocales,
-  getLocale,
-  getLocalizedPathname,
-  stripLocaleFromPath,
-  t,
-} from "@i18n";
+import { getAlternateLocales, getLocale, stripLocaleFromPath, t } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import {
   LOCALE_HTML_LANG,
   LOCALE_OG,
@@ -17,6 +12,7 @@ export const AUTHOR = {
   givenName: "Jakub",
   familyName: "Nalewajk",
   image: "/og-image.png",
+  telephone: "+48-XXX-XXX-XXX",
   employer: "CodeYourBrand",
   university: "WSB Merito University",
   techSkills: [
@@ -173,7 +169,16 @@ function getJsonLd(options: JsonLdOptions) {
           "@id": `${siteUrl}#service`,
           name: seo.serviceName,
           url: siteUrl,
+          image: new URL(AUTHOR.image, siteUrl).toString(),
+          telephone: AUTHOR.telephone,
+          priceRange: "$$",
           provider: { "@id": `${siteUrl}#person` },
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: AUTHOR.address.locality,
+            addressRegion: AUTHOR.address.region,
+            addressCountry: AUTHOR.address.country,
+          },
           areaServed: [
             { "@type": "City", name: AUTHOR.address.locality },
             { "@type": "AdministrativeArea", name: AUTHOR.address.region },
@@ -240,7 +245,7 @@ function getHreflangUrls(options: HreflangOptions): Record<Locale, string> {
     urls[alternateLocales[0]] = new URL(alternateHref, siteUrl).toString();
   } else {
     for (const l of LOCALES) {
-      urls[l] = new URL(getLocalizedPathname(basePath, l), siteUrl).toString();
+      urls[l] = new URL(getRelativeLocaleUrl(l, basePath), siteUrl).toString();
     }
   }
 

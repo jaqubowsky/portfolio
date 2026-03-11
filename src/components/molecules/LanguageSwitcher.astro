@@ -2,16 +2,16 @@
 import {
   getAlternateLocales,
   getLocale,
-  getLocalizedPathname,
   stripLocaleFromPath,
   LOCALE_LABELS,
 } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 
 const [targetLocale] = getAlternateLocales(locale);
 const basePath = stripLocaleFromPath(Astro.url.pathname);
-const href = getLocalizedPathname(basePath, targetLocale);
+const href = getRelativeLocaleUrl(targetLocale, basePath);
 ---
 
 <a
@@ -31,13 +31,15 @@ const href = getLocalizedPathname(basePath, targetLocale);
       const hreflangLink = document.querySelector<HTMLLinkElement>(
         `link[rel="alternate"][hreflang="${targetLocale}"]`,
       );
+
       if (hreflangLink?.href) {
         link.href = new URL(hreflangLink.href).pathname;
       }
 
       link.addEventListener("click", () => {
-        const secure = location.protocol === "https:" ? "; secure" : "";
-        document.cookie = `preferred-locale=${targetLocale}; path=/; max-age=31536000; samesite=lax${secure}`;
+        if (targetLocale) {
+          navigator.sendBeacon("/api/set-language", targetLocale);
+        }
       });
     }
   }

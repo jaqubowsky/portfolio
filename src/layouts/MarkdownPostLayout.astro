@@ -9,9 +9,10 @@ import {
 } from "@components/molecules";
 import Layout from "@layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import { t, getLocale, getLocalizedPathname } from "@i18n";
+import { t, getLocale } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 const frontmatter = Astro.props;
 
@@ -19,11 +20,11 @@ const siteUrl = Astro.site?.toString() ?? "";
 const breadcrumbs = [
   {
     name: strings.nav.home,
-    url: new URL(getLocalizedPathname("/", locale), siteUrl).toString(),
+    url: new URL(getRelativeLocaleUrl(locale, "/"), siteUrl).toString(),
   },
   {
     name: "Blog",
-    url: new URL(getLocalizedPathname("/blog", locale), siteUrl).toString(),
+    url: new URL(getRelativeLocaleUrl(locale, "/blog"), siteUrl).toString(),
   },
   {
     name: frontmatter.title,
@@ -51,7 +52,7 @@ const breadcrumbs = [
           withIndentation
           class="max-w-60"
         />
-        <ButtonLink href={getLocalizedPathname("/blog", locale)} variant="secondary" class="mt-4 ml-1 text-sm w-full max-w-60">
+        <ButtonLink href={getRelativeLocaleUrl(locale, "/blog")} variant="secondary" class="mt-4 ml-1 text-sm w-full max-w-60">
           <Icon name="mdi:arrow-left" size={16} />
           {strings.blog.backToBlog}
         </ButtonLink>
@@ -62,7 +63,7 @@ const breadcrumbs = [
       <PostHeader frontmatter={frontmatter} />
       <Flex class="flex-col gap-4 xl:hidden static items-start">
         <TableOfContents headings={frontmatter.headings} class="w-full" />
-        <ButtonLink href={getLocalizedPathname("/blog", locale)} variant="secondary" class="text-sm self-start">
+        <ButtonLink href={getRelativeLocaleUrl(locale, "/blog")} variant="secondary" class="text-sm self-start">
           <Icon name="mdi:arrow-left" size={16} />
           {strings.blog.backToBlog}
         </ButtonLink>

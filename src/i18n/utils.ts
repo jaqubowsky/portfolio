@@ -3,9 +3,14 @@ import { translations } from "./translations";
 
 export type Translations = (typeof translations)[Locale];
 
-export function getLocale(url: URL): Locale {
-  const [, segment] = url.pathname.split("/");
-  const match = LOCALES.find((l) => l === segment);
+export function getLocale(input?: URL | string): Locale {
+  if (input instanceof URL) {
+    const [, segment] = input.pathname.split("/");
+    const match = LOCALES.find((l) => l === segment);
+    return match ?? DEFAULT_LOCALE;
+  }
+
+  const match = LOCALES.find((l) => l === input);
   return match ?? DEFAULT_LOCALE;
 }
 

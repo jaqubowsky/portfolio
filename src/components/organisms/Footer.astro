@@ -3,7 +3,7 @@ import { Flex, Paragraph } from "@components/atoms";
 import { SocialMedia } from "@components/molecules";
 import { t, getLocale } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 
 const links = [

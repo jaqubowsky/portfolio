@@ -10,12 +10,12 @@ import {
   Skills,
 } from "@components/organisms";
 import Layout from "@layouts/Layout.astro";
-import { LOCALES } from "@i18n/config";
+import { DEFAULT_LOCALE, LOCALES } from "@i18n/config";
 import { t, getLocaleParam } from "@i18n";
 import type { InferGetStaticPropsType } from "astro";
 
 export function getStaticPaths() {
-  return LOCALES.map((locale) => ({
+  return LOCALES.filter((l) => l !== DEFAULT_LOCALE).map((locale) => ({
     params: { locale: getLocaleParam(locale) },
     props: { locale },
   }));

@@ -1,7 +1,6 @@
 export default {
   meta: {
-    title:
-      "Jakub Nalewajk — Frontend & Next.js Developer for Hire",
+    title: "Jakub Nalewajk — Frontend & Next.js Developer for Hire",
     description:
       "Freelance frontend & Next.js developer from Poland. I build fast web apps and custom websites in React and Next.js. 4+ years of experience. Get in touch.",
     keywords:

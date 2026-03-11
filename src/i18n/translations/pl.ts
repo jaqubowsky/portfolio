@@ -1,7 +1,6 @@
 export default {
   meta: {
-    title:
-      "Jakub Nalewajk — Programista Frontend & Next.js Developer",
+    title: "Jakub Nalewajk — Programista Frontend & Next.js Developer",
     description:
       "Programista frontend z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js. 4+ lata doświadczenia. Napisz do mnie.",
     keywords:

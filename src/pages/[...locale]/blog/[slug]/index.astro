@@ -2,7 +2,8 @@
 import { getCollection, render } from "astro:content";
 import MarkdownPostLayout from "@layouts/MarkdownPostLayout.astro";
 import { getPostsForLocale, stripLocalePrefix } from "@utils/posts";
-import { getLocalizedPathname, getLocaleParam } from "@i18n";
+import { getLocaleParam } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { LOCALES } from "@i18n/config";
 
 export async function getStaticPaths() {
@@ -26,9 +27,9 @@ export async function getStaticPaths() {
       if (translated) {
         const translatedSlug = stripLocalePrefix(translated.id);
         const translatedLocale = translated.data.lang;
-        alternateHref = getLocalizedPathname(
-          `/blog/${translatedSlug}/`,
+        alternateHref = getRelativeLocaleUrl(
           translatedLocale,
+          `/blog/${translatedSlug}/`,
         );
       }
 

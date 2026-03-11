@@ -1,14 +1,15 @@
 ---
 import { Flex, Link } from "@components/atoms";
 import { cn } from "@utils/cn";
-import { getLocalizedPathname, getLocale } from "@i18n";
+import { getLocale } from "@i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
   class?: string;
   tags: string[];
 }
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const { class: className, tags } = Astro.props;
 ---
 
@@ -16,7 +17,7 @@ const { class: className, tags } = Astro.props;
   {
     tags.map((tag: string) => (
       <Link
-        href={getLocalizedPathname(`/category/${tag}`, locale)}
+        href={getRelativeLocaleUrl(locale, `/category/${tag}`)}
         class={cn("decoration-wavy underline", className)}
       >
         #{tag}

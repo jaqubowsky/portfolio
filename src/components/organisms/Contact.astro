@@ -12,7 +12,7 @@ import { SectionHeader } from "@components/molecules";
 import { ContactForm } from "@components/react";
 import { t, getLocale } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 
 const contactLinks = [

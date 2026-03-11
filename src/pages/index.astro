@@ -1,0 +1,53 @@
+---
+import { Flex } from "@components/atoms";
+import { Recaptcha } from "@components/molecules";
+import {
+  Contact,
+  Experience,
+  Home,
+  Projects,
+  Services,
+  Skills,
+} from "@components/organisms";
+import Layout from "@layouts/Layout.astro";
+import { DEFAULT_LOCALE } from "@i18n/config";
+import { t, getLocale } from "@i18n";
+
+export const prerender = false;
+
+const COOKIE_NAME = "preferred-locale";
+const preferred = Astro.cookies.get(COOKIE_NAME)?.value;
+
+if (!preferred) {
+  const match = getLocale(Astro.preferredLocale);
+
+  if (match !== DEFAULT_LOCALE) {
+    Astro.cookies.set(COOKIE_NAME, match, {
+      path: "/",
+      maxAge: 31536000,
+      sameSite: "lax",
+      secure: Astro.url.protocol === "https:",
+      httpOnly: true,
+    });
+    return Astro.redirect(`/${match}`, 302);
+  }
+}
+
+const strings = t(DEFAULT_LOCALE);
+---
+
+<Layout
+  title={strings.meta.title}
+  description={strings.meta.description}
+>
+  <Recaptcha />
+
+  <Flex class="flex-col w-full">
+    <Home />
+    <Experience />
+    <Projects />
+    <Services />
+    <Skills />
+    <Contact />
+  </Flex>
+</Layout>

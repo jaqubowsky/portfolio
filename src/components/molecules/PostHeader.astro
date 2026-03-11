@@ -1,10 +1,9 @@
 ---
 import { Picture } from "astro:assets";
 import { Badge, Flex, Heading, Paragraph } from "@components/atoms";
-import { formatDate } from "@utils/date";
-import { t, getLocale } from "@i18n";
+import { t, getLocale, formatDate } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 const { frontmatter } = Astro.props;
 

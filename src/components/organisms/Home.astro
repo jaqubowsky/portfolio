@@ -9,7 +9,7 @@ import {
 import { Icon } from "astro-icon/components";
 import { t, getLocale } from "@i18n";
 
-const locale = getLocale(Astro.url);
+const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 ---
 
