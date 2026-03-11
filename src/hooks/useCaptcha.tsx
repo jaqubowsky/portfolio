@@ -22,11 +22,24 @@ const verifyCaptchaToken = async (recaptchaToken: string) => {
   if (!json?.data?.success) throw new Error(CAPTCHA_ERROR_MSG);
 };
 
+declare global {
+  var __loadRecaptcha: (() => void) | undefined;
+}
+
 const executeCaptcha = (key: string): Promise<string> => {
+  window.__loadRecaptcha?.();
+
   return new Promise((resolve, reject) => {
-    grecaptcha.ready(() => {
-      grecaptcha.execute(key, { action: "submit" }).then(resolve, reject);
-    });
+    const check = () => {
+      if (typeof grecaptcha !== "undefined") {
+        grecaptcha.ready(() => {
+          grecaptcha.execute(key, { action: "submit" }).then(resolve, reject);
+        });
+      } else {
+        setTimeout(check, 100);
+      }
+    };
+    check();
   });
 };
 

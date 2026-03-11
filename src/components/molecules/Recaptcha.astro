@@ -5,25 +5,18 @@ import { PUBLIC_RECAPTCHA_KEY } from "astro:env/client";
 <script is:inline define:vars={{ recaptchaKey: PUBLIC_RECAPTCHA_KEY }}>
   (function() {
     var loaded = false;
-    function loadRecaptcha() {
+    window.__loadRecaptcha = function() {
       if (loaded) return;
       loaded = true;
       var s = document.createElement("script");
       s.src = "https://www.google.com/recaptcha/api.js?render=" + recaptchaKey;
       document.head.appendChild(s);
-    }
+    };
 
     var contact = document.getElementById("contact");
-    if (contact && "IntersectionObserver" in window) {
-      var obs = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting) {
-          loadRecaptcha();
-          obs.disconnect();
-        }
-      }, { rootMargin: "200px" });
-      obs.observe(contact);
-    } else {
-      loadRecaptcha();
+    if (contact) {
+      contact.addEventListener("focusin", window.__loadRecaptcha, { once: true });
+      contact.addEventListener("pointerdown", window.__loadRecaptcha, { once: true });
     }
   })();
 </script>
