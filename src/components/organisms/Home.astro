@@ -6,16 +6,7 @@ import { Icon } from "astro-icon/components";
 <Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 relative" id="home">
   <Flex class="relative z-10 flex-col md:flex-row md:items-center gap-6 md:gap-8 w-full">
     <Flex class="flex-col items-center md:items-start gap-6 flex-1">
-      <Flex class="gap-2 hero-fade">
-        <span
-          class="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"
-        ></span>
-        <Paragraph class="text-sm font-medium font-mono">
-          Available for work
-        </Paragraph>
-      </Flex>
-
-      <Flex class="flex-col gap-2 items-center md:items-start hero-fade" style="animation-delay: 0.05s">
+      <Flex class="flex-col gap-2 items-center md:items-start hero-fade">
         <Heading level={1} class="text-center md:text-left text-5xl sm:text-6xl lg:text-7xl tracking-tight">
           <span class="text-gradient">Jakub</span>{" "}Nalewajk
           <span class="block text-lg sm:text-xl text-primary font-semibold font-mono tracking-wide mt-2">
@@ -58,7 +49,7 @@ import { Icon } from "astro-icon/components";
         preload="auto"
         disablepictureinpicture
         class="w-full rounded-2xl"
-        poster="/images/avatar-poster.webp"
+        poster="/videos/avatar-poster.webp"
       >
         <source src="/videos/avatar.mp4" type="video/mp4" />
       </video>
@@ -81,7 +72,7 @@ import { Icon } from "astro-icon/components";
           width="400"
           height="533"
           loading="eager"
-          src="/images/avatar-poster.webp"
+          src="/videos/avatar-poster.webp"
           alt="Jakub Nalewajk"
           class="w-full rounded-2xl"
         />
