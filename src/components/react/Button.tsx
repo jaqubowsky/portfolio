@@ -1,4 +1,4 @@
-import { cn } from "@utils/index";
+import { cn } from "@utils/cn";
 
 type Props = {
   variant?: keyof typeof variants;
@@ -7,8 +7,7 @@ type Props = {
 const variants = {
   primary:
     "bg-gradient-to-r from-[var(--gradient-from)] to-[var(--gradient-to)] hover:opacity-90 text-white",
-  secondary:
-    "bg-card hover:bg-muted text-foreground border border-border",
+  secondary: "bg-card hover:bg-muted text-foreground border border-border",
 } as const;
 
 const Button = ({

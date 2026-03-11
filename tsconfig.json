@@ -7,11 +7,13 @@
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
-      "layouts/*": ["src/layouts/*"],
       "@utils/*": ["src/utils/*"],
       "@images/*": ["src/assets/images/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@emails/*": ["src/emails/*"]
+      "@emails/*": ["src/emails/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@i18n": ["src/i18n"],
+      "@scripts/*": ["src/scripts/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

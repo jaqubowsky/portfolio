@@ -1,0 +1,93 @@
+---
+import { getCollection } from "astro:content";
+import { ButtonLink, Flex, Grid, Heading, Section } from "@components/atoms";
+import { BlogCard, Pagination } from "@components/molecules";
+import Layout from "@layouts/Layout.astro";
+import type { PaginateFunction } from "astro";
+import { Icon } from "astro-icon/components";
+import { getPostData, getPostsForLocale } from "@utils/posts";
+import { t, getLocalizedPathname, getLocaleParam } from "@i18n";
+import { LOCALES } from "@i18n/config";
+import type { InferGetStaticPropsType } from "astro";
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction;
+}) {
+  const posts = await getCollection("posts");
+
+  return LOCALES.flatMap((locale) => {
+    const publishedPosts = getPostsForLocale(posts, locale);
+    const tags = [...new Set(publishedPosts.flatMap((post) => post.data.tags))];
+
+    return tags.flatMap((tag) => {
+      const taggedPosts = publishedPosts.filter((post) =>
+        post.data.tags.includes(tag),
+      );
+      return paginate(taggedPosts, {
+        pageSize: 6,
+        params: {
+          locale: getLocaleParam(locale),
+          tag,
+        },
+        props: { locale },
+      });
+    });
+  });
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { locale, page } = Astro.props;
+const { tag } = Astro.params;
+
+const strings = t(locale);
+const siteUrl = Astro.site?.toString() ?? "";
+const breadcrumbs = [
+  {
+    name: strings.nav.home,
+    url: new URL(getLocalizedPathname("/", locale), siteUrl).toString(),
+  },
+  {
+    name: "Blog",
+    url: new URL(getLocalizedPathname("/blog", locale), siteUrl).toString(),
+  },
+  {
+    name: `#${tag}`,
+    url: new URL(
+      getLocalizedPathname(`/category/${tag}`, locale),
+      siteUrl,
+    ).toString(),
+  },
+];
+---
+
+<Layout
+  title={`${tag} - ${strings.meta.blogTitle}`}
+  description={`${strings.blog.postsTagged} ${tag} — Jakub Nalewajk.`}
+  noindex={page.currentPage > 1}
+  breadcrumbs={breadcrumbs}
+>
+  <Section id="blog" class="gap-12">
+    <Flex class="flex-wrap gap-4 flex-col items-start justify-start mt-4 w-full animate-on-scroll">
+      <ButtonLink href={getLocalizedPathname("/blog", locale)} variant="secondary" class="text-sm">
+        <Icon name="mdi:arrow-left" size={16} />
+        {strings.blog.backToBlog}
+      </ButtonLink>
+      <Heading level={2} class="text-3xl sm:text-4xl font-bold">
+        {strings.blog.postsTagged} <span class="text-primary">#{tag}</span>
+      </Heading>
+    </Flex>
+
+    <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {page.data.map((post) => <BlogCard {...getPostData(post, locale)} />)}
+    </Grid>
+
+    <Pagination
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      totalPages={page.lastPage}
+      currPage={page.currentPage}
+    />
+  </Section>
+</Layout>

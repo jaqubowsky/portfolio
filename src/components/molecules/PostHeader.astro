@@ -2,8 +2,20 @@
 import { Picture } from "astro:assets";
 import { Badge, Flex, Heading, Paragraph } from "@components/atoms";
 import { formatDate } from "@utils/date";
+import { t, getLocale } from "@i18n";
 
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 const { frontmatter } = Astro.props;
+
+const placeholders: Record<string, string> = {
+  author: frontmatter.author,
+  date: formatDate(frontmatter.pubDate, locale),
+};
+const postMeta = strings.blog.postMeta.replace(
+  /\{(\w+)\}/g,
+  (_, key: string) => placeholders[key] ?? `{${key}}`,
+);
 ---
 
 <Flex class="flex-col items-start gap-4">
@@ -16,7 +28,7 @@ const { frontmatter } = Astro.props;
     {frontmatter.title}
   </Heading>
   <Paragraph class="text-base">
-    by {frontmatter.author} on {formatDate(frontmatter.pubDate)}
+    {postMeta}
   </Paragraph>
   <Picture
     transition:name=`blog-image-${frontmatter.title}`

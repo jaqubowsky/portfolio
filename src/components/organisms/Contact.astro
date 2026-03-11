@@ -10,6 +10,10 @@ import {
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
 import { ContactForm } from "@components/react";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 
 const contactLinks = [
   {
@@ -36,24 +40,24 @@ const contactLinks = [
 <div class="w-full">
   <Section class="gap-10" id="contact">
     <SectionHeader
-      badge="Contact"
-      title="Let's Work Together"
-      description="Have a project in mind or looking for a frontend developer? Drop me a message and I'll get back to you."
+      badge={strings.contact.badge}
+      title={strings.contact.title}
+      description={strings.contact.description}
     />
 
     <div class="w-full animate-on-scroll stagger-1">
       <Card class="p-0 overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
           <Flex class="flex-col items-start p-6 sm:p-8 lg:border-r lg:border-border">
-            <Heading level={3} class="text-xl">Send a Message</Heading>
+            <Heading level={3} class="text-xl">{strings.contact.sendMessage}</Heading>
             <Paragraph class="text-sm">
-              I'll respond within 24 hours.
+              {strings.contact.responseTime}
             </Paragraph>
-            <ContactForm client:visible />
+            <ContactForm client:visible translations={strings.contactForm} />
           </Flex>
 
           <Flex class="flex-col gap-6 items-start justify-start p-6 sm:p-8 border-t lg:border-t-0 border-border">
-            <Heading level={3} class="text-xl">Reach Out Directly</Heading>
+            <Heading level={3} class="text-xl">{strings.contact.reachOut}</Heading>
 
             {
               contactLinks.map((link) => (

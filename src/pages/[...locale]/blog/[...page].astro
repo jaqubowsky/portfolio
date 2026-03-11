@@ -1,0 +1,89 @@
+---
+import { getCollection } from "astro:content";
+import { Badge, Flex, Grid, Heading, Link, Section } from "@components/atoms";
+import { BlogCard, Pagination } from "@components/molecules";
+import Layout from "@layouts/Layout.astro";
+import type { PaginateFunction } from "astro";
+import { getPostData, getPostsForLocale } from "@utils/posts";
+import {
+  validateTranslations,
+  logTranslationWarnings,
+} from "@utils/validate-translations";
+import { t, getLocalizedPathname, getLocaleParam } from "@i18n";
+import { LOCALES } from "@i18n/config";
+import type { InferGetStaticPropsType } from "astro";
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction;
+}) {
+  const posts = await getCollection("posts");
+
+  logTranslationWarnings(validateTranslations(posts));
+
+  return LOCALES.flatMap((locale) => {
+    const publishedPosts = getPostsForLocale(posts, locale);
+    const tags = [...new Set(publishedPosts.flatMap((post) => post.data.tags))];
+    return paginate(publishedPosts, {
+      pageSize: 6,
+      params: { locale: getLocaleParam(locale) },
+      props: { locale, tags },
+    });
+  });
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { locale, tags, page } = Astro.props;
+const strings = t(locale);
+
+const siteUrl = Astro.site?.toString() ?? "";
+const breadcrumbs = [
+  {
+    name: strings.nav.home,
+    url: new URL(getLocalizedPathname("/", locale), siteUrl).toString(),
+  },
+  {
+    name: "Blog",
+    url: new URL(getLocalizedPathname("/blog", locale), siteUrl).toString(),
+  },
+];
+---
+
+<Layout
+  title={strings.meta.blogTitle}
+  description={strings.meta.blogDescription}
+  noindex={page.currentPage > 1}
+  breadcrumbs={breadcrumbs}
+>
+  <Section id="blog" class="gap-12">
+    <Flex class="flex-wrap gap-4 flex-col items-start justify-start mt-4 w-full animate-on-scroll">
+      <Heading level={2} class="text-3xl sm:text-4xl font-bold">{strings.blog.heading}</Heading>
+      <Flex class="flex-wrap gap-2 items-start justify-start">
+        {
+          tags.map((tag: string) => (
+            <Link href={getLocalizedPathname(`/category/${tag}`, locale)} class="no-underline">
+              <Badge
+                variant="primary"
+                class="cursor-pointer hover:border-primary/50 transition-colors"
+              >
+                #{tag}
+              </Badge>
+            </Link>
+          ))
+        }
+      </Flex>
+    </Flex>
+
+    <Grid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {page.data.map((post) => <BlogCard {...getPostData(post, locale)} />)}
+    </Grid>
+
+    <Pagination
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      totalPages={page.lastPage}
+      currPage={page.currentPage}
+    />
+  </Section>
+</Layout>

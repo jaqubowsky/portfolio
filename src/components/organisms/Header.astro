@@ -1,22 +1,38 @@
 ---
 import { Flex, Link } from "@components/atoms";
-import { Navigation, ThemeToggler } from "@components/molecules";
-import Hamburger from "@components/molecules/Hamburger.astro";
+import { Hamburger, LanguageSwitcher, Navigation, ThemeToggler } from "@components/molecules";
 import { Icon } from "astro-icon/components";
+import { getLocale, t, getLocalizedPathname } from "@i18n";
+
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 
 const links = [
-  { href: "/#experience", text: "Experience" },
-  { href: "/#projects", text: "Projects" },
-  { href: "/#skills", text: "Skills" },
-  { href: "/#contact", text: "Contact" },
-  { href: "/blog", text: "Blog" },
+  {
+    href: getLocalizedPathname("/#experience", locale),
+    text: strings.nav.experience,
+  },
+  {
+    href: getLocalizedPathname("/#projects", locale),
+    text: strings.nav.projects,
+  },
+  {
+    href: getLocalizedPathname("/#services", locale),
+    text: strings.nav.services,
+  },
+  { href: getLocalizedPathname("/#skills", locale), text: strings.nav.skills },
+  {
+    href: getLocalizedPathname("/#contact", locale),
+    text: strings.nav.contact,
+  },
+  { href: getLocalizedPathname("/blog", locale), text: strings.nav.blog },
 ] as const;
 ---
 
 <header
   class="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 sticky top-0 left-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50"
 >
-  <Link href="/" class="no-underline font-bold text-lg tracking-tight">
+  <Link href={getLocalizedPathname("/", locale)} class="no-underline font-bold text-lg tracking-tight">
     Jakub<span class="text-primary">.</span>
   </Link>
 
@@ -26,18 +42,22 @@ const links = [
     <nav class="hidden lg:flex gap-1 items-center">
       <Navigation links={links} />
     </nav>
+    <LanguageSwitcher />
     <ThemeToggler />
   </Flex>
 </header>
 
 <div
   id="mobile-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
   class="fixed inset-0 z-[60] bg-background opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col items-center justify-center gap-2"
 >
   <button
     id="mobile-menu-close"
     class="absolute top-4 right-4 p-2 cursor-pointer text-foreground"
-    aria-label="Close menu"
+    aria-label={strings.nav.closeMenu}
   >
     <Icon name="mdi:close" size={28} />
   </button>

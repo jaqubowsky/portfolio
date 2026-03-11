@@ -47,6 +47,13 @@
   "overrides": [
     {
       "includes": ["**/*.astro"],
+      "assist": {
+        "actions": {
+          "source": {
+            "organizeImports": "off"
+          }
+        }
+      },
       "linter": {
         "rules": {
           "style": {
@@ -58,7 +65,8 @@
           },
           "correctness": {
             "noUnusedVariables": "off",
-            "noUnusedImports": "off"
+            "noUnusedImports": "off",
+            "useHookAtTopLevel": "off"
           }
         }
       }

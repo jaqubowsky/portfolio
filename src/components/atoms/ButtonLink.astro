@@ -1,5 +1,5 @@
 ---
-import { cn } from "@utils/index";
+import { cn } from "@utils/cn";
 import type { JSX } from "astro/jsx-runtime";
 
 type Props = {
@@ -9,8 +9,7 @@ type Props = {
 const variants = {
   primary:
     "bg-gradient-to-r from-gradient-from to-gradient-to hover:opacity-90 text-white",
-  secondary:
-    "bg-card hover:bg-muted text-foreground border border-border",
+  secondary: "bg-card hover:bg-muted text-foreground border border-border",
   ghost: "hover:bg-muted text-foreground",
 } as const;
 

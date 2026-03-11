@@ -6,6 +6,10 @@ type ServerResponseProps = {
   status?: Status;
 };
 
-export const ServerResponse = ({ data, message, status = 200 }: ServerResponseProps) => {
+export const ServerResponse = ({
+  data,
+  message,
+  status = 200,
+}: ServerResponseProps) => {
   return new Response(JSON.stringify({ data, message }), { status });
 };

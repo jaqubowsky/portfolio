@@ -1,18 +1,45 @@
 ---
 import { ButtonLink, Flex, Prose, Section } from "@components/atoms";
-import { BackToTop, BlogTags, PostHeader, ShareLinks, TableOfContents } from "@components/molecules";
+import {
+  BackToTop,
+  BlogTags,
+  PostHeader,
+  ShareLinks,
+  TableOfContents,
+} from "@components/molecules";
 import Layout from "@layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import { t, getLocale, getLocalizedPathname } from "@i18n";
 
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 const frontmatter = Astro.props;
+
+const siteUrl = Astro.site?.toString() ?? "";
+const breadcrumbs = [
+  {
+    name: strings.nav.home,
+    url: new URL(getLocalizedPathname("/", locale), siteUrl).toString(),
+  },
+  {
+    name: "Blog",
+    url: new URL(getLocalizedPathname("/blog", locale), siteUrl).toString(),
+  },
+  {
+    name: frontmatter.title,
+    url: new URL(Astro.url.pathname, siteUrl).toString(),
+  },
+];
 ---
 
 <Layout
   title={frontmatter.title}
   description={frontmatter.description}
-  image={frontmatter.image?.url}
+  image={frontmatter.image?.url?.src}
   type="article"
   publishedDate={frontmatter.pubDate}
+  alternateHref={frontmatter.alternateHref}
+  breadcrumbs={breadcrumbs}
 >
   <Section
     class="relative grid xl:grid-cols-[1fr_auto_1fr] gap-x-8 max-w-7xl mx-auto"
@@ -24,9 +51,9 @@ const frontmatter = Astro.props;
           withIndentation
           class="max-w-60"
         />
-        <ButtonLink href="/blog" variant="secondary" class="mt-4 ml-1 text-sm w-full max-w-60">
+        <ButtonLink href={getLocalizedPathname("/blog", locale)} variant="secondary" class="mt-4 ml-1 text-sm w-full max-w-60">
           <Icon name="mdi:arrow-left" size={16} />
-          Back to Blog
+          {strings.blog.backToBlog}
         </ButtonLink>
       </div>
     </div>
@@ -35,9 +62,9 @@ const frontmatter = Astro.props;
       <PostHeader frontmatter={frontmatter} />
       <Flex class="flex-col gap-4 xl:hidden static items-start">
         <TableOfContents headings={frontmatter.headings} class="w-full" />
-        <ButtonLink href="/blog" variant="secondary" class="text-sm self-start">
+        <ButtonLink href={getLocalizedPathname("/blog", locale)} variant="secondary" class="text-sm self-start">
           <Icon name="mdi:arrow-left" size={16} />
-          Back to Blog
+          {strings.blog.backToBlog}
         </ButtonLink>
       </Flex>
       <Prose>
@@ -51,34 +78,7 @@ const frontmatter = Astro.props;
         <Icon name="mdi:check" size={16} />
       </template>
 
-      <script>
-        const copyIcon = document.getElementById("copy-icon") as HTMLTemplateElement;
-        const checkIcon = document.getElementById("check-icon") as HTMLTemplateElement;
-
-        document.querySelectorAll("pre").forEach((pre) => {
-          const wrapper = document.createElement("div");
-          wrapper.className = "relative group";
-          pre.parentNode?.insertBefore(wrapper, pre);
-          wrapper.appendChild(pre);
-
-          const button = document.createElement("button");
-          button.className =
-            "absolute right-2 top-2 p-1.5 rounded-md bg-muted/80 text-muted-foreground opacity-0 group-hover:opacity-100 hover:bg-muted hover:text-foreground transition-all cursor-pointer";
-          button.setAttribute("aria-label", "Copy code");
-          button.appendChild(copyIcon.content.cloneNode(true));
-
-          button.addEventListener("click", async () => {
-            const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
-            await navigator.clipboard.writeText(code);
-            button.replaceChildren(checkIcon.content.cloneNode(true));
-            setTimeout(() => {
-              button.replaceChildren(copyIcon.content.cloneNode(true));
-            }, 2000);
-          });
-
-          wrapper.appendChild(button);
-        });
-      </script>
+      <script src="@scripts/code-copy.ts"></script>
       <BlogTags tags={frontmatter.tags} />
       <ShareLinks />
     </article>

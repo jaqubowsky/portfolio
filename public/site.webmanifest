@@ -1,9 +1,10 @@
 {
-  "name": "Jakub Nalewajk — Frontend Developer",
+  "name": "Jakub Nalewajk — Programista Frontend & Next.js Developer",
   "short_name": "Jakub Nalewajk",
-  "description": "Frontend Developer building fast web apps in Next.js. View projects, experience, and get in touch.",
+  "description": "Programista frontend i Next.js developer z Pułtuska — tworzę strony internetowe i aplikacje webowe na zamówienie i zlecenie w React i Next.js.",
   "start_url": "/",
   "display": "standalone",
+  "lang": "pl",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
   "icons": [

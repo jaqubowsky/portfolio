@@ -10,10 +10,14 @@ import {
   Tag,
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 
 const skills = [
   {
-    type: "Frontend",
+    type: strings.skills.categories.frontend,
     icon: "mdi:language-javascript",
     items: [
       "Next.js",
@@ -27,17 +31,17 @@ const skills = [
     ],
   },
   {
-    type: "Backend",
+    type: strings.skills.categories.backend,
     icon: "mdi:server",
     items: ["Node.js", "Express", "Prisma", "Supabase", "PostgreSQL"],
   },
   {
-    type: "DevOps",
+    type: strings.skills.categories.devops,
     icon: "mdi:cloud-outline",
     items: ["Docker", "Git", "CI/CD", "GitHub Actions"],
   },
   {
-    type: "Other",
+    type: strings.skills.categories.other,
     icon: "mdi:tools",
     items: ["Zod", "Sentry", "Cursor", "Strapi", "Figma", "Claude Code"],
   },
@@ -47,9 +51,9 @@ const skills = [
 <NoiseBackground class="w-full section-fade">
   <Section class="gap-10" id="skills">
     <SectionHeader
-      badge="Skills"
-      title="What I Work With"
-      description="Technologies I use daily to build fast, scalable web applications."
+      badge={strings.skills.badge}
+      title={strings.skills.title}
+      description={strings.skills.description}
     />
 
     <Grid class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">

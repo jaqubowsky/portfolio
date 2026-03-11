@@ -1,7 +1,10 @@
 ---
 import { Heading, Link } from "@components/atoms";
 import { cn } from "@utils/cn";
+import { t, getLocale } from "@i18n";
 
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 const { headings } = Astro.props;
 
 type HeadingItem = {
@@ -30,55 +33,18 @@ const getIndentation = (depth: number) => {
 const { class: className, withIndentation } = Astro.props;
 
 const filteredHeadings = headings.filter((h: HeadingItem) => h.depth > 1);
-let counter = 0;
 ---
 
-<script>
-  function initTocHighlight() {
-    const tocLinks = document.querySelectorAll("[data-toc-link]");
-    if (!tocLinks.length) return;
-
-    const headingEls = Array.from(tocLinks).map((link) => {
-      const slug = link.getAttribute("href")?.replace("#", "");
-      return slug ? document.getElementById(slug) : null;
-    }).filter(Boolean) as HTMLElement[];
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            for (const link of tocLinks) {
-              const isActive = link.getAttribute("href") === `#${id}`;
-              link.classList.toggle("!text-primary", isActive);
-              link.classList.toggle("!text-foreground", isActive);
-              link.classList.toggle("font-semibold", isActive);
-            }
-          }
-        }
-      },
-      { rootMargin: "-80px 0px -60% 0px", threshold: 0 },
-    );
-
-    for (const el of headingEls) {
-      observer.observe(el);
-    }
-  }
-
-  initTocHighlight();
-  document.addEventListener("astro:page-load", initTocHighlight);
-</script>
+<script src="@scripts/toc-highlight.ts"></script>
 
 <div class={cn("border border-border rounded-xl p-5 bg-card", className)}>
   <Heading class="text-base font-semibold mb-3" level={2}>
-    On this page
+    {strings.blog.onThisPage}
   </Heading>
   <nav>
     <ol class="space-y-1.5 list-none">
       {
-        filteredHeadings.map((heading: HeadingItem) => {
-          counter++;
-          return (
+        filteredHeadings.map((heading: HeadingItem, index: number) => (
             <li
               class={cn(
                 "flex gap-2",
@@ -86,7 +52,7 @@ let counter = 0;
               )}
             >
               <span class="text-xs font-mono text-primary/50 mt-0.5 shrink-0 w-5 text-right">
-                {String(counter).padStart(2, "0")}
+                {String(index + 1).padStart(2, "0")}
               </span>
               <Link
                 href={`#${heading.slug}`}
@@ -97,8 +63,7 @@ let counter = 0;
                 {heading.text}
               </Link>
             </li>
-          );
-        })
+          ))
       }
     </ol>
   </nav>

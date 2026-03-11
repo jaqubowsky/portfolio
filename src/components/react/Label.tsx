@@ -1,4 +1,4 @@
-import { cn } from "@utils/index";
+import { cn } from "@utils/cn";
 
 type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
 
@@ -6,7 +6,10 @@ const Label = ({ children, className, ...props }: LabelProps) => {
   return (
     <label
       {...props}
-      className={cn("block text-sm font-medium text-foreground w-full", className)}
+      className={cn(
+        "block text-sm font-medium text-foreground w-full",
+        className,
+      )}
     >
       {children}
     </label>

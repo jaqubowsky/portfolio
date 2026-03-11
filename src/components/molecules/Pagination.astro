@@ -1,38 +1,53 @@
 ---
 import { Flex, Link } from "@components/atoms";
 import { Icon } from "astro-icon/components";
+import { t, getLocale } from "@i18n";
 
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 const { prevUrl, nextUrl, currPage, totalPages } = Astro.props;
 ---
 
 <nav aria-label="Blog pages">
   <Flex class="gap-4">
-    <Link
-      aria-disabled={!prevUrl}
-      class:list={[
-        "flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium transition-colors hover:bg-muted",
-        !prevUrl && "opacity-40 pointer-events-none",
-      ]}
-      href={prevUrl ?? "/"}
-    >
-      <Icon name="mdi:arrow-left" size={16} />
-      Prev
-    </Link>
+    {prevUrl ? (
+      <Link
+        class="flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium transition-colors hover:bg-muted"
+        href={prevUrl}
+      >
+        <Icon name="mdi:arrow-left" size={16} />
+        {strings.blog.prev}
+      </Link>
+    ) : (
+      <span
+        class="flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium opacity-40"
+        aria-disabled="true"
+      >
+        <Icon name="mdi:arrow-left" size={16} />
+        {strings.blog.prev}
+      </span>
+    )}
 
     <Flex class="px-4 py-2 rounded-lg bg-card border border-border text-sm font-mono">
       {currPage} / {totalPages}
     </Flex>
 
-    <Link
-      aria-disabled={!nextUrl}
-      class:list={[
-        "flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium transition-colors hover:bg-muted",
-        !nextUrl && "opacity-40 pointer-events-none",
-      ]}
-      href={nextUrl ?? "/"}
-    >
-      Next
-      <Icon name="mdi:arrow-right" size={16} />
-    </Link>
+    {nextUrl ? (
+      <Link
+        class="flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium transition-colors hover:bg-muted"
+        href={nextUrl}
+      >
+        {strings.blog.next}
+        <Icon name="mdi:arrow-right" size={16} />
+      </Link>
+    ) : (
+      <span
+        class="flex gap-2 items-center px-4 py-2 rounded-lg border border-border text-sm font-medium opacity-40"
+        aria-disabled="true"
+      >
+        {strings.blog.next}
+        <Icon name="mdi:arrow-right" size={16} />
+      </span>
+    )}
   </Flex>
 </nav>

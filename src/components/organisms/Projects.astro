@@ -14,13 +14,16 @@ import { Icon } from "astro-icon/components";
 import jobzImg from "@images/projects/jobz.webp";
 import substatzImg from "@images/projects/substatz.webp";
 import createNextjsImg from "@images/projects/create-nextjs-app.webp";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 
 const projects = [
   {
     number: "01",
     title: "jobZ",
-    description:
-      "AI-powered job matching platform that scrapes Polish job boards and ranks offers against your profile using vector embeddings and cross-encoder re-ranking.",
+    description: strings.projects.items[0].description,
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
     github: "https://github.com/jaqubowsky/jobZ",
     live: "https://jobzzz.jnalewajk.me",
@@ -29,8 +32,7 @@ const projects = [
   {
     number: "02",
     title: "SubStatZ",
-    description:
-      "Subscription management application that allows users to track and manage their subscriptions. Using Stripe for payments, Sentry for error tracking.",
+    description: strings.projects.items[1].description,
     tech: ["Next.js", "Prisma", "Stripe", "Sentry", "Docker"],
     github: "https://github.com/jaqubowsky/substatz",
     live: "https://substatz.jnalewajk.me",
@@ -39,8 +41,7 @@ const projects = [
   {
     number: "03",
     title: "NextJS Scaffolding Template",
-    description:
-      "Production-ready template with Better Auth (Google OAuth), Stripe payments, Sentry monitoring. Docker multi-stage builds, automated CI/CD with GitHub Actions.",
+    description: strings.projects.items[2].description,
     tech: [
       "Next.js 15",
       "Drizzle ORM",
@@ -57,9 +58,9 @@ const projects = [
 
 <Section class="gap-10" id="projects">
   <SectionHeader
-    badge="Projects"
-    title="Things I've Built"
-    description="Side projects where I experiment with new tech and solve real problems."
+    badge={strings.projects.badge}
+    title={strings.projects.title}
+    description={strings.projects.description}
   />
 
   <Flex class="flex-col gap-6 w-full">
@@ -123,8 +124,8 @@ const projects = [
                 </Paragraph>
 
                 <Flex class="flex-wrap gap-1.5 justify-start mt-auto">
-                  {project.tech.map((t) => (
-                    <Tag variant="mono">{t}</Tag>
+                  {project.tech.map((techItem) => (
+                    <Tag variant="mono">{techItem}</Tag>
                   ))}
                 </Flex>
               </Flex>

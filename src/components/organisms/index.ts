@@ -4,4 +4,5 @@ export { default as Footer } from "./Footer.astro";
 export { default as Header } from "./Header.astro";
 export { default as Home } from "./Home.astro";
 export { default as Projects } from "./Projects.astro";
+export { default as Services } from "./Services.astro";
 export { default as Skills } from "./Skills.astro";

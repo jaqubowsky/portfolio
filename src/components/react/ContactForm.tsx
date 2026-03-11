@@ -8,18 +8,35 @@ import { getErrorMessage } from "@utils/error";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 
+type ContactFormTranslations = {
+  name: string;
+  namePlaceholder: string;
+  email: string;
+  emailPlaceholder: string;
+  message: string;
+  messagePlaceholder: string;
+  sending: string;
+  send: string;
+  success: string;
+  error: string;
+  subject: string;
+};
+
 type Message = {
   type: "success" | "error";
   text?: string;
 };
 
 const PARTICLE_COUNT = 1000;
-const SPREAD = 6000;
+const SPREAD = 360;
 
 const ONE_SECOND = 1000;
-const BASE_ERROR_MSG = "Failed to send message. Please try again.";
 
-const ContactForm = () => {
+const ContactForm = ({
+  translations,
+}: {
+  translations: ContactFormTranslations;
+}) => {
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [message, setMessage] = useState<Message | null>(null);
 
@@ -35,11 +52,11 @@ const ContactForm = () => {
       body: data,
     });
 
-    if (!response.ok) throw new Error(BASE_ERROR_MSG);
+    if (!response.ok) throw new Error(translations.error);
 
     setMessage({
       type: "success",
-      text: "Message sent successfully. I will get back to you soon.",
+      text: translations.success,
     });
   };
 
@@ -58,13 +75,13 @@ const ContactForm = () => {
           <ContactFormEmail
             name={formData.get("name") as string}
             email={formData.get("email") as string}
-            subject="Contact from portfolio"
+            subject={translations.subject}
             message={formData.get("message") as string}
           />,
         );
 
         formData.append("html", html);
-        formData.append("subject", "Contact from portfolio");
+        formData.append("subject", translations.subject);
 
         await handleSendFormData(formData);
 
@@ -78,7 +95,7 @@ const ContactForm = () => {
     } catch (error) {
       setMessage({
         type: "error",
-        text: getErrorMessage(error, BASE_ERROR_MSG),
+        text: getErrorMessage(error, translations.error),
       });
     } finally {
       setIsFormLoading(false);
@@ -96,26 +113,31 @@ const ContactForm = () => {
     <form className="space-y-3 w-full mt-2" onSubmit={onSubmit}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Label>
-          Name
-          <Input name="name" type="text" placeholder="John Doe" required />
+          {translations.name}
+          <Input
+            name="name"
+            type="text"
+            placeholder={translations.namePlaceholder}
+            required
+          />
         </Label>
 
         <Label>
-          Email
+          {translations.email}
           <Input
             name="email"
             type="email"
-            placeholder="john@doe.com"
+            placeholder={translations.emailPlaceholder}
             required
           />
         </Label>
       </div>
 
       <Label>
-        Message
+        {translations.message}
         <Textarea
           name="message"
-          placeholder="Tell me about your project or opportunity..."
+          placeholder={translations.messagePlaceholder}
           rows={5}
           required
         />
@@ -139,8 +161,13 @@ const ContactForm = () => {
           </p>
         )}
       </div>
-      <Button disabled={isLoading} className="w-full" type="submit" data-umami-event="contact-submit">
-        {isLoading ? "Sending..." : "Send Message"}
+      <Button
+        disabled={isLoading}
+        className="w-full"
+        type="submit"
+        data-umami-event="contact-submit"
+      >
+        {isLoading ? translations.sending : translations.send}
       </Button>
     </form>
   );

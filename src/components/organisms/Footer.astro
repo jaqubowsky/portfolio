@@ -1,6 +1,10 @@
 ---
 import { Flex, Paragraph } from "@components/atoms";
 import { SocialMedia } from "@components/molecules";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 
 const links = [
   { href: "https://github.com/jaqubowsky", name: "mdi:github" },
@@ -18,8 +22,19 @@ const currentYear = new Date().getFullYear();
 >
   <Flex class="max-w-[1440px] mx-auto flex-col sm:flex-row justify-between gap-4">
     <Paragraph class="text-sm">
-      &copy; {currentYear} Jakub Nalewajk
+      {`© ${currentYear} ${strings.footer.copyright}`}
     </Paragraph>
-    <SocialMedia links={links} />
+    <Flex class="items-center gap-4">
+      <a
+        href="https://status.jnalewajk.me"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        data-umami-event="status-page"
+      >
+        {strings.footer.status}
+      </a>
+      <SocialMedia links={links} />
+    </Flex>
   </Flex>
 </footer>

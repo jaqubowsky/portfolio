@@ -1,0 +1,43 @@
+---
+import { Flex } from "@components/atoms";
+import { Recaptcha } from "@components/molecules";
+import {
+  Contact,
+  Experience,
+  Home,
+  Projects,
+  Services,
+  Skills,
+} from "@components/organisms";
+import Layout from "@layouts/Layout.astro";
+import { LOCALES } from "@i18n/config";
+import { t, getLocaleParam } from "@i18n";
+import type { InferGetStaticPropsType } from "astro";
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({
+    params: { locale: getLocaleParam(locale) },
+    props: { locale },
+  }));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { locale } = Astro.props;
+const strings = t(locale);
+---
+
+<Layout
+  title={strings.meta.title}
+  description={strings.meta.description}
+>
+  <Recaptcha />
+
+  <Flex class="flex-col w-full">
+    <Home />
+    <Experience />
+    <Projects />
+    <Services />
+    <Skills />
+    <Contact />
+  </Flex>
+</Layout>

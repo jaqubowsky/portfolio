@@ -1,13 +1,32 @@
 ---
 import { Picture } from "astro:assets";
-import { Badge, Flex, GlowCard, Heading, Link, Paragraph } from "@components/atoms";
+import {
+  Badge,
+  Flex,
+  GlowCard,
+  Heading,
+  Link,
+  Paragraph,
+} from "@components/atoms";
 import { formatDate } from "@utils/date";
+import { getLocalizedPathname, getLocale } from "@i18n";
+import type { ImageMetadata } from "astro";
 
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  image: { url: ImageMetadata; alt: string };
+  slug: string;
+  pubDate: Date;
+}
+
+const locale = getLocale(Astro.url);
 const { title, description, tags, image, slug, pubDate } = Astro.props;
 ---
 
 <Link
-  href=`/blog/${slug}`
+  href={getLocalizedPathname(`/blog/${slug}`, locale)}
   class="no-underline w-full"
 >
   <GlowCard class="overflow-hidden h-full flex flex-col">
@@ -48,7 +67,7 @@ const { title, description, tags, image, slug, pubDate } = Astro.props;
       </Paragraph>
 
       <Paragraph class="text-xs opacity-60 mt-auto">
-        {formatDate(pubDate)}
+        {formatDate(pubDate, locale)}
       </Paragraph>
     </Flex>
   </GlowCard>

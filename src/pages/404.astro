@@ -2,17 +2,23 @@
 import { ButtonLink, Flex, Heading, Section } from "@components/atoms";
 import Layout from "@layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import { t, getLocale, getLocalizedPathname } from "@i18n";
+
+export const prerender = false;
+
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 ---
 
 <Layout
-  title="404 — Page Not Found | Jakub Nalewajk"
-  description="The page you're looking for doesn't exist. Head back to Jakub Nalewajk's portfolio."
+  title={strings.meta.notFoundTitle}
+  description={strings.meta.notFoundDescription}
 >
   <Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 min-h-[70svh] justify-center">
     <Flex class="flex-col items-center gap-4 text-center">
       <div class="shrink-0 w-24 sm:w-32">
         <video
-          id="404-video"
+          data-autoplay-video
           autoplay
           loop
           muted
@@ -24,27 +30,14 @@ import { Icon } from "astro-icon/components";
         >
           <source src="/videos/404-avatar.mp4" type="video/mp4" />
         </video>
-        <script>
-          function init404Video() {
-            const video = document.getElementById("404-video") as HTMLVideoElement;
-            if (!video) return;
-            video.load();
-            video.play().catch(() => {
-              const play = () => { video.play(); document.removeEventListener("click", play); };
-              document.addEventListener("click", play, { once: true });
-            });
-          }
-          init404Video();
-          document.addEventListener("astro:page-load", init404Video);
-          window.addEventListener("pageshow", (e) => { if (e.persisted) init404Video(); });
-        </script>
+        <script src="@scripts/video-autoplay.ts"></script>
         <noscript>
           <img
             width="480"
             height="854"
             loading="eager"
             src="/videos/404-avatar-poster.webp"
-            alt="Jakub Nalewajk searching with a magnifying glass"
+            alt={strings.notFound.imgAlt}
             class="w-full"
           />
         </noscript>
@@ -54,11 +47,11 @@ import { Icon } from "astro-icon/components";
         <span class="text-gradient">404</span>
       </Heading>
       <Heading level={2} class="text-xl sm:text-2xl">
-        Nothing here... yet.
+        {strings.notFound.subtitle}
       </Heading>
-      <ButtonLink href="/">
+      <ButtonLink href={getLocalizedPathname("/", locale)}>
         <Icon name="mdi:arrow-left" size={18} />
-        Back to Home
+        {strings.notFound.backHome}
       </ButtonLink>
     </Flex>
   </Section>

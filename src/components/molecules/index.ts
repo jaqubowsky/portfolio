@@ -10,4 +10,5 @@ export { default as SectionHeader } from "./SectionHeader.astro";
 export { default as ShareLinks } from "./ShareLinks.astro";
 export { default as SocialMedia } from "./SocialMedia.astro";
 export { default as TableOfContents } from "./TableOfContents.astro";
+export { default as LanguageSwitcher } from "./LanguageSwitcher.astro";
 export { default as ThemeToggler } from "./ThemeToggler.astro";

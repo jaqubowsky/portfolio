@@ -1,0 +1,282 @@
+---
+title: "Wdrażanie Astro 5 na Dokploy"
+pubDate: 2026-03-10
+description: "Przewodnik krok po kroku do self-hostingu strony Astro 5 SSR na VPS za pomocą Dokploy z certyfikatem Let's Encrypt SSL."
+author: "Jakub Nalewajk"
+image:
+  {
+    url: "../../../assets/images/blog/deploying-astro-on-dokploy-cover.webp",
+    alt: "Wdrażanie Astro na Dokploy",
+  }
+category: "tutorial"
+tags: ["astro", "docker", "self-hosting", "dokploy", "traefik"]
+draft: false
+lang: "pl"
+translationKey: "deploying-astro-dokploy"
+---
+
+Większość poradników o Astro mówi ci, żebyś wdrożył na Vercel i tyle. A co jeśli chcesz mieć kontrolę nad swoją infrastrukturą, nie być przywiązanym do jednego dostawcy i móc uruchamiać wiele aplikacji na jednym VPS? Dlatego przeniosłem swoje portfolio z Vercel na self-hosted setup z Dokploy.
+
+W tym poradniku przeprowadzę cię przez proces wdrażania strony Astro 5 z SSR na twoim VPS za pomocą Dokploy, Traefik jako reverse proxy i Dockera.
+
+## Dlaczego self-hosting?
+
+Vercel jest świetny do wdrożeń, ale self-hosting daje ci:
+
+- **Kontrolę nad kosztami** — jeden VPS może obsługiwać wiele aplikacji zamiast płacenia za każdy projekt
+- **Pełną kontrolę nad infrastrukturą** — żadnych niespodzianek, limitów ani vendor lock-in
+- **Szansę na naukę** — zrozumienie Dockera, reverse proxy i sieci czyni cię lepszym developerem
+- **Prywatność** — twoje dane zostają na twoim serwerze
+
+Uruchamiam swoje portfolio, dwie aplikacje Next.js i serwer bazy danych na jednym VPS za €7/miesiąc.
+
+## Wymagania
+
+Zanim zaczniemy, będziesz potrzebował:
+
+- VPS z Ubuntu 22+ (ja używam Hetzner, ale każdy dostawca działa)
+- Nazwę domeny z dostępem do DNS (ja używam Cloudflare)
+- Dokploy zainstalowane na VPS
+- Projekt Astro 5 z adapterem Node.js
+
+## Krok 1: Konfiguracja Astro dla Node.js
+
+Astro potrzebuje adaptera `@astrojs/node`, żeby działać jako samodzielny serwer zamiast generować statyczne pliki dla CDN.
+
+```bash
+npm install @astrojs/node
+```
+
+Zaktualizuj swój `astro.config.mjs`:
+
+```js
+import node from "@astrojs/node";
+
+export default defineConfig({
+  adapter: node({
+    mode: "standalone",
+  }),
+  // ... reszta konfiguracji
+});
+```
+
+Tryb `standalone` tworzy samodzielny serwer, który możesz uruchomić za pomocą `node ./dist/server/entry.mjs`.
+
+## Krok 2: Napisz Dockerfile
+
+To jest miejsce, gdzie większość ludzi się zatrzymuje. Oto wieloetapowy Dockerfile, który utrzymuje obraz mały:
+
+```dockerfile
+FROM node:22-alpine AS base
+WORKDIR /app
+
+FROM base AS deps
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM base AS build
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM base AS runtime
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY package.json .
+
+ENV HOST=0.0.0.0
+ENV PORT=3000
+EXPOSE 3000
+
+CMD ["node", "./dist/server/entry.mjs"]
+```
+
+Kluczowe decyzje:
+
+- **Wieloetapowy build** — etap `deps` cachuje `node_modules`, etap `build` kompiluje, a etap `runtime` zawiera tylko to, co potrzebne do uruchomienia
+- **`HOST=0.0.0.0`** — krytyczne. Bez tego serwer nasłuchuje tylko na localhost wewnątrz kontenera i Traefik nie może do niego dotrzeć
+- **`PORT=3000`** — dopasuj to do konfiguracji domeny w Dokploy
+
+Nie zapomnij o `.dockerignore`:
+
+```
+node_modules
+dist
+.git
+.env
+```
+
+## Krok 3: Konfiguracja Dokploy
+
+Jeśli nie masz jeszcze zainstalowanego Dokploy:
+
+```bash
+curl -sSL https://dokploy.com/install.sh | sh
+```
+
+Po uruchomieniu Dokploy stwórz aplikację:
+
+1. Przejdź do **Projects** → **Create Project**
+2. Dodaj **Application** → **GitHub** jako dostawcę
+3. Połącz swoje repozytorium i wybierz branch
+4. Ustaw typ buildu na **Dockerfile**
+
+### Zmienne środowiskowe
+
+W **Environment Settings** Dokploy dodaj swoje zmienne:
+
+```
+PUBLIC_RECAPTCHA_KEY=twój_klucz
+RECAPTCHA_KEY=twój_sekretny_klucz
+RESEND_API_KEY=re_xxxxx
+```
+
+Są one wstrzykiwane w runtime przez Dockera, więc nie potrzebujesz ich w Dockerfile.
+
+### Konfiguracja domeny
+
+W sekcji **Domains**:
+
+- Dodaj swoją domenę (np. `jnalewajk.me`)
+- Ustaw port na `3000` (zgodny z `ENV PORT` w Dockerfile)
+- Wybierz HTTPS z Let's Encrypt
+- Kliknij **Generate**, żeby utworzyć konfigurację Traefik
+
+## Krok 4: Konfiguracja DNS
+
+W swoim dostawcy DNS (ja używam Cloudflare) skieruj domenę na VPS:
+
+| Typ | Nazwa | Zawartość | Proxy |
+|-----|-------|-----------|-------|
+| A | @ | twoje.ip.vps | DNS only |
+| CNAME | www | twojadomena.com | DNS only |
+
+**Ważne**: Użyj **DNS only** (szara chmurka w Cloudflare), nie Proxied. Traefik obsługuje SSL przez Let's Encrypt, a proxy Cloudflare powodowałoby konflikty certyfikatów.
+
+## Krok 5: Konfiguracja Traefik
+
+Dokploy automatycznie generuje konfigurację Traefik dla twojej aplikacji. Prawdopodobnie będziesz chciał ją dostosować dla kompresji i przekierowań www. Oto jak wygląda moja konfiguracja:
+
+```yaml
+http:
+  routers:
+    app-router:
+      rule: Host(`jnalewajk.me`)
+      service: app-service
+      middlewares:
+        - redirect-to-https
+      entryPoints:
+        - web
+    app-router-secure:
+      rule: Host(`jnalewajk.me`)
+      service: app-service
+      middlewares:
+        - compress
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+    www-router:
+      rule: Host(`www.jnalewajk.me`)
+      service: app-service
+      middlewares:
+        - www-to-non-www
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+  middlewares:
+    compress:
+      compress: {}
+    www-to-non-www:
+      redirectRegex:
+        regex: "^https?://www\\.jnalewajk\\.me/(.*)"
+        replacement: "https://jnalewajk.me/${1}"
+        permanent: true
+  services:
+    app-service:
+      loadBalancer:
+        servers:
+          - url: http://twój-kontener:3000
+        passHostHeader: true
+```
+
+Middleware `compress` włącza kompresję gzip/Brotli, a `www-to-non-www` obsługuje przekierowania 301 z `www` na nagą domenę.
+
+## Krok 6: Zmienne środowiskowe build-time vs runtime
+
+To częsty problem z Astro i Dockerem. Są dwa typy zmiennych:
+
+**Build-time** (potrzebne podczas `npm run build`):
+- Zmienne `PUBLIC_*`, które są wstawiane do JavaScript po stronie klienta
+- Muszą być przekazane jako `ARG` w Dockerfile
+
+```dockerfile
+FROM base AS build
+ARG PUBLIC_RECAPTCHA_KEY
+ENV PUBLIC_RECAPTCHA_KEY=$PUBLIC_RECAPTCHA_KEY
+RUN npm run build
+```
+
+W Dokploy ustaw je w sekcji **Build Arguments**, nie Environment Variables.
+
+**Runtime** (potrzebne gdy serwer działa):
+- Sekrety po stronie serwera jak klucze API
+- Idą do sekcji **Environment Variables** Dokploy i są wstrzykiwane do kontenera w runtime
+
+## Krok 7: Wdrożenie
+
+Kliknij **Deploy** w Dokploy. Wykona:
+
+1. Klonowanie repozytorium
+2. Budowanie obrazu Docker za pomocą Dockerfile
+3. Uruchomienie kontenera
+4. Traefik automatycznie kieruje ruch i provisionuje SSL
+
+Sprawdź logi budowania pod kątem błędów. Częste problemy:
+
+- **Build nie działa** — brakujące build args dla zmiennych `PUBLIC_*`
+- **Kontener startuje, ale 502** — zły port lub `HOST` nie ustawiony na `0.0.0.0`
+- **SSL nie działa** — DNS jeszcze się nie propagował lub używasz trybu proxy Cloudflare
+
+## Krok 8: Auto-Deploy
+
+W Dokploy włącz auto-deploy z repozytorium GitHub:
+
+1. Przejdź do ustawień aplikacji
+2. Włącz **Auto Deploy** na push do twojego brancha
+3. Dokploy automatycznie przebuduje i wdroży przy każdym pushu
+
+## Problem z SMTP
+
+Jeśli twoja aplikacja wysyła emaile (jak formularz kontaktowy), pamiętaj, że wielu dostawców VPS **blokuje wychodzące porty SMTP** (25, 465, 587). Odkryłem to, gdy moja konfiguracja Nodemailer zawieszała się w nieskończoność.
+
+Rozwiązanie: użyj serwisu emailowego opartego na API jak **Resend** zamiast SMTP. Używa HTTPS (port 443), który nigdy nie jest blokowany.
+
+```ts
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+await resend.emails.send({
+  from: "noreply@twojadomena.com",
+  to: "ty@gmail.com",
+  subject: "Formularz kontaktowy",
+  html: renderedHtml,
+});
+```
+
+## Efekt końcowy
+
+Mam swoją stronę Astro 5 wdrożoną na Dokploy i działa świetnie. Mogę uruchamiać wiele aplikacji na jednym VPS i mam pełną kontrolę nad infrastrukturą.
+
+Moje portfolio działa na VPS Hetzner obok dwóch innych aplikacji z:
+
+- Automatycznym SSL przez Let's Encrypt
+- Kompresją gzip przez Traefik
+- Auto-deploy z GitHub
+- Zerowym kosztem miesięcznym poza VPS (€7/miesiąc za wszystko)
+
+Konfiguracja zajęła mi około godziny i od tamtej pory działa stabilnie. Jeśli znasz podstawy Dockera, nie ma powodu, żeby zostawać na darmowym planie Vercel z jego ograniczeniami.
+
+Kod źródłowy mojego portfolio jest na [GitHubie](https://github.com/jaqubowsky/portfolio), jeśli chcesz zobaczyć Dockerfile i konfigurację.

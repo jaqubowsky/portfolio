@@ -1,5 +1,5 @@
 ---
-import { cn } from "@utils/index";
+import { cn } from "@utils/cn";
 import type { JSX } from "astro/jsx-runtime";
 
 type Props = {
@@ -7,7 +7,12 @@ type Props = {
   label?: string;
 } & JSX.IntrinsicElements["a"];
 
-const { href, label = "All systems operational", class: className, ...rest } = Astro.props;
+const {
+  href,
+  label = "All systems operational",
+  class: className,
+  ...rest
+} = Astro.props;
 ---
 
 <a

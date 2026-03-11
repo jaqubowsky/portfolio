@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from "astro:content";
+import MarkdownPostLayout from "@layouts/MarkdownPostLayout.astro";
+import { getPostsForLocale, stripLocalePrefix } from "@utils/posts";
+import { getLocalizedPathname, getLocaleParam } from "@i18n";
+import { LOCALES } from "@i18n/config";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+
+  return LOCALES.flatMap((locale) => {
+    const publishedEntries = getPostsForLocale(allPosts, locale);
+
+    return publishedEntries.map((entry) => {
+      const slug = stripLocalePrefix(entry.id);
+
+      const translated = allPosts.find(
+        (p) =>
+          p.data.translationKey &&
+          p.data.translationKey === entry.data.translationKey &&
+          p.data.lang !== locale,
+      );
+
+      let alternateHref: string | undefined;
+
+      if (translated) {
+        const translatedSlug = stripLocalePrefix(translated.id);
+        const translatedLocale = translated.data.lang;
+        alternateHref = getLocalizedPathname(
+          `/blog/${translatedSlug}/`,
+          translatedLocale,
+        );
+      }
+
+      return {
+        params: {
+          locale: getLocaleParam(locale),
+          slug,
+        },
+        props: { entry, alternateHref },
+      };
+    });
+  });
+}
+
+const { entry, alternateHref } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<MarkdownPostLayout {...entry.data} {headings} {alternateHref}>
+  <Content />
+</MarkdownPostLayout>

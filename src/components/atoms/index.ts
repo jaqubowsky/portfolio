@@ -13,5 +13,5 @@ export { default as NoiseBackground } from "./NoiseBackground.astro";
 export { default as Paragraph } from "./Paragraph.astro";
 export { default as Prose } from "./Prose.astro";
 export { default as Section } from "./Section.astro";
-export { default as StatusBadge } from "./StatusBadge.astro";
+
 export { default as Tag } from "./Tag.astro";

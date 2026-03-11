@@ -3,6 +3,13 @@ import "../styles/global.css";
 
 import { ClientRouter } from "astro:transitions";
 import { Footer, Header } from "@components/organisms";
+import {
+  getSeoData,
+  getBreadcrumbJsonLd,
+  AUTHOR,
+  type BreadcrumbItem,
+} from "@utils/seo";
+import { DEFAULT_LOCALE, LOCALES } from "@i18n/config";
 
 interface Props {
   title: string;
@@ -10,22 +17,25 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   publishedDate?: Date;
+  alternateHref?: string;
+  noindex?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
+const seo = getSeoData({ url: Astro.url, site: Astro.site, ...Astro.props });
 const {
   title,
   description,
-  image = "/og-image.png",
   type = "website",
   publishedDate,
+  noindex = false,
+  breadcrumbs,
 } = Astro.props;
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const imageURL = new URL(image, Astro.site);
+const breadcrumbJsonLd = breadcrumbs ? getBreadcrumbJsonLd(breadcrumbs) : null;
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang={seo.lang} class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -33,23 +43,40 @@ const imageURL = new URL(image, Astro.site);
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="canonical" href={canonicalURL} />
+    <link rel="canonical" href={seo.canonicalURL} />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href="/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="dns-prefetch" href="https://umami.jnalewajk.me" />
+
+    {LOCALES.map((l) => (
+      <link rel="alternate" hreflang={l} href={seo.hreflangUrls[l]} />
+    ))}
+
+    <link rel="alternate" hreflang="x-default" href={seo.hreflangUrls[DEFAULT_LOCALE]} />
+
+    {AUTHOR.socials.map((url) => (
+      <link rel="me" href={url} />
+    ))}
+
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="description" content={description} />
     <meta name="author" content="Jakub Nalewajk" />
-    <meta name="keywords" content="Jakub Nalewajk, Nalewajk, Frontend Developer, React, Next.js, TypeScript, portfolio, web developer" />
+    <meta name="keywords" content={seo.strings.meta.keywords} />
     <title>{title}</title>
 
     <meta property="og:type" content={type} />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={seo.canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={imageURL} />
+    <meta property="og:image" content={seo.imageURL} />
     <meta property="og:site_name" content="Jakub Nalewajk" />
+    <meta property="og:locale" content={seo.ogLocale} />
+    {seo.ogLocaleAlternates.map((alt) => (
+      <meta property="og:locale:alternate" content={alt} />
+    ))}
+
     {publishedDate && (
       <meta property="article:published_time" content={publishedDate.toISOString()} />
     )}
@@ -57,66 +84,28 @@ const imageURL = new URL(image, Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image" content={seo.imageURL} />
 
-    {type === "website" ? (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "@id": `${Astro.site?.toString()}#website`,
-            "name": "Jakub Nalewajk",
-            "url": Astro.site?.toString(),
-            "description": description,
-          },
-          {
-            "@type": "Person",
-            "@id": `${Astro.site?.toString()}#person`,
-            "name": "Jakub Nalewajk",
-            "givenName": "Jakub",
-            "familyName": "Nalewajk",
-            "url": Astro.site?.toString(),
-            "image": `${Astro.site?.toString()}og-image.png`,
-            "jobTitle": "Frontend Developer",
-            "worksFor": {
-              "@type": "Organization",
-              "name": "CodeYourBrand",
-            },
-            "alumniOf": {
-              "@type": "EducationalOrganization",
-              "name": "WSB Merito University",
-            },
-            "knowsAbout": ["Next.js", "React", "TypeScript", "TailwindCSS", "Nx", "Turborepo"],
-            "sameAs": [
-              "https://github.com/jaqubowsky",
-              "https://www.linkedin.com/in/jakub-nalewajk/",
-            ],
-          },
-        ],
-      })} />
-    ) : (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": title,
-        "description": description,
-        "image": imageURL.toString(),
-        "url": canonicalURL.toString(),
-        ...(publishedDate && { "datePublished": publishedDate.toISOString() }),
-        "author": {
-          "@type": "Person",
-          "@id": `${Astro.site?.toString()}#person`,
-          "name": "Jakub Nalewajk",
-          "url": Astro.site?.toString(),
-        },
-      })} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(seo.jsonLd)} />
+    {breadcrumbJsonLd && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
     )}
 
     {import.meta.env.PROD && (
       <script defer src="https://umami.jnalewajk.me/script.js" data-website-id="a755b16f-2436-40eb-a400-d39ddbcaefdb" is:inline></script>
     )}
+    <script is:inline>
+      (function() {
+        var theme = localStorage.getItem("theme");
+        if (theme === "light") {
+          document.documentElement.classList.remove("dark");
+        } else {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <ClientRouter />
+    <script src="@scripts/locale-detect.ts"></script>
   </head>
   <body class="bg-background text-foreground min-h-svh flex flex-col">
     <Header />
@@ -125,29 +114,6 @@ const imageURL = new URL(image, Astro.site);
     </main>
     <Footer />
 
-    <script>
-      const SELECTORS = ".animate-on-scroll, .animate-slide-left, .animate-slide-right";
-
-      function initScrollAnimations() {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            }
-          },
-          { rootMargin: "-50px", threshold: 0.1 },
-        );
-
-        for (const el of document.querySelectorAll(SELECTORS)) {
-          observer.observe(el);
-        }
-      }
-
-      initScrollAnimations();
-      document.addEventListener("astro:page-load", initScrollAnimations);
-    </script>
+    <script src="@scripts/scroll-animations.ts"></script>
   </body>
 </html>

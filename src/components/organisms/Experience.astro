@@ -9,46 +9,23 @@ import {
   Section,
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
+import { t, getLocale } from "@i18n";
 
-const experience = [
-  {
-    company: "CodeYourBrand",
-    role: "Frontend Developer",
-    tech: "Next.js, Nx, Turborepo",
-    period: "Oct 2025 – Present",
-    location: "Remote",
-    bullets: [
-      "Owned frontend development of Maspex Photo Service for one of Central Europe's largest FMCG companies and built customer-facing application and admin panel using Turborepo and Next.js; delivered in under 6 months and approved by the client.",
-      "Led frontend development for a Dubai Real Estate platform as project owner, implementing layered architecture with Nx, Next.js 16, and Strapi CMS; built a reusable component library documented with Storybook.",
-      "Shipped features and reviewed PRs across the frontend team for the TwoContinents travel platform, improving code quality and consistency.",
-    ],
-  },
-  {
-    company: "Haergi",
-    role: "Fullstack Developer",
-    tech: "Next.js, Express",
-    period: "Aug 2023 – Oct 2025",
-    location: "Warsaw, Poland",
-    bullets: [
-      "Built e-commerce platform for B2B food ordering that handled 3,500+ orders monthly.",
-      "Created intuitive ordering interface for Mezze Foods restaurant B2B clients that replaced manual phone orders, with integrated PayU and Stripe payments.",
-      "Developed InstagoAI — an AI-powered website builder enabling non-technical users to create sites in under 15 minutes.",
-    ],
-  },
-] as const;
+const locale = getLocale(Astro.url);
+const strings = t(locale);
 ---
 
 <NoiseBackground class="w-full section-fade">
   <Section class="gap-10" id="experience">
     <SectionHeader
-      badge="Experience"
-      title="Where I've Worked"
-      description="Building products that matter, from architecture to deployment."
+      badge={strings.experience.badge}
+      title={strings.experience.title}
+      description={strings.experience.description}
     />
 
     <Flex class="flex-col w-full max-w-3xl gap-8">
       {
-        experience.map((job, i) => (
+        strings.experience.jobs.map((job, i) => (
           <div class={`animate-on-scroll stagger-${i + 1}`}>
             <GlowCard class="p-6 sm:p-8">
               <Flex class="flex-col sm:flex-row items-start justify-between gap-2 mb-4">
@@ -71,7 +48,7 @@ const experience = [
                 </Flex>
               </Flex>
 
-              <BulletList items={job.bullets} />
+              <BulletList items={[...job.bullets]} />
             </GlowCard>
           </div>
         ))

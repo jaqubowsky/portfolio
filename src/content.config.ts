@@ -1,4 +1,5 @@
 import { defineCollection } from "astro:content";
+import { LOCALES } from "@i18n/config";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
@@ -17,6 +18,8 @@ const postsCollection = defineCollection({
         alt: z.string(),
       }),
       tags: z.array(z.string()),
+      lang: z.enum(LOCALES),
+      translationKey: z.string().optional(),
     }),
 });
 
