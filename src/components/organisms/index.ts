@@ -6,3 +6,4 @@ export { default as Home } from "./Home.astro";
 export { default as Projects } from "./Projects.astro";
 export { default as Services } from "./Services.astro";
 export { default as Skills } from "./Skills.astro";
+export { default as Stats } from "./Stats.astro";

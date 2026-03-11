@@ -7,7 +7,7 @@ export default {
       "Jakub Nalewajk, Frontend Developer, Next.js developer, React developer, hire Next.js developer, hire frontend developer, freelance frontend developer, freelance Next.js developer, freelance React developer, TypeScript developer, portfolio, web developer, web developer Poland, custom websites, web applications, SEO optimization, freelance developer Poland, Next.js developer for hire, React developer for hire, frontend developer for hire, web developer for hire",
     blogTitle: "Blog - Jakub Nalewajk",
     blogDescription:
-      "Jakub Nalewajk's blog — a frontend and Next.js developer from Poland sharing articles about Next.js, React, TypeScript, and web development.",
+      "Practical articles about Next.js, React, TypeScript, and building websites. Tutorials, problem-solving, and lessons from real projects.",
     notFoundTitle: "404 — Page Not Found | Jakub Nalewajk",
     notFoundDescription:
       "The page you're looking for doesn't exist. Head back to Jakub Nalewajk's portfolio.",
@@ -29,11 +29,16 @@ export default {
     cta: "Get in Touch",
     downloadCv: "Download CV",
   },
+  stats: {
+    experience: "Years of experience",
+    projects: "Projects delivered",
+    clients: "Happy clients",
+  },
   experience: {
     badge: "Experience",
     title: "Where I've Worked",
     description:
-      "Building products that matter, from architecture to deployment.",
+      "Commercial projects I've worked on — from architecture to deployment.",
     jobs: [
       {
         company: "CodeYourBrand",
@@ -65,19 +70,19 @@ export default {
     badge: "Projects",
     title: "Things I've Built",
     description:
-      "Side projects where I experiment with new tech and solve real problems.",
+      "Tools I built for myself and use every day. Each project started because I hit a real problem and decided to solve it.",
     items: [
       {
         description:
-          "AI-powered job matching platform that scrapes Polish job boards and ranks offers against your profile using vector embeddings and cross-encoder re-ranking.",
+          "Got tired of manually browsing job offers across multiple boards. Built a platform that scrapes Polish job portals and ranks offers against my profile using vector embeddings and AI re-ranking.",
       },
       {
         description:
-          "Subscription management application that allows users to track and manage their subscriptions. Using Stripe for payments, Sentry for error tracking.",
+          "Lost track of my subscriptions — had no idea how much I was paying monthly. Built an app to track and manage them with Stripe payments and Sentry monitoring.",
       },
       {
         description:
-          "Production-ready template with Better Auth (Google OAuth), Stripe payments, Sentry monitoring. Docker multi-stage builds, automated CI/CD with GitHub Actions.",
+          "Was setting up the same boilerplate for every new project. Built a production-ready template with Better Auth (Google OAuth), Stripe, Sentry, Docker and CI/CD — now I start a new project in minutes instead of hours.",
       },
     ],
   },
@@ -111,9 +116,9 @@ export default {
       "You work directly with me — no middlemen, no unnecessary meetings. A simple business website? Ready in 2–3 weeks. No waiting on a team — we gather requirements and I get straight to work.",
     steps: [
       {
-        title: "Get in Touch",
+        title: "Free Discovery Call",
         description:
-          "Send me a short description of what you need. I respond within 24 hours.",
+          "Write or call me — tell me about your idea. No commitment, we'll figure out what you need and if I can help.",
       },
       {
         title: "Quote & Plan",
@@ -203,7 +208,7 @@ export default {
       "TypeScript",
       "SEO optimization",
     ],
-    serviceName: "Jakub Nalewajk — Frontend & Next.js Developer",
+    serviceName: "Strona na Miarę – Jakub Nalewajk | Frontend & Next.js Developer",
     serviceType: "Web development, custom websites, and web applications",
     serviceDescription:
       "Freelance frontend and Next.js developer from Pułtusk, Poland — available for hire. Building custom websites, online systems, and web applications with React and Next.js.",

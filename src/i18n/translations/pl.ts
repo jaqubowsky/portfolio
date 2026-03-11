@@ -4,10 +4,10 @@ export default {
     description:
       "Programista frontend z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js. 4+ lata doświadczenia. Napisz do mnie.",
     keywords:
-      "Jakub Nalewajk, Jakub Nalewajk programista, programista, programista frontend, programista Pułtusk, programista w okolicy Pułtuska, programista mazowieckie, programista w okolicy, strona internetowa na zamówienie, strona na zlecenie, strona na zlecenie Pułtusk, tworzenie stron internetowych, tworzenie stron Pułtusk, aplikacje webowe na zamówienie, strona na zamówienie, strona internetowa na zlecenie, pozycjonowanie SEO, React, Next.js, Next.js developer, programista Next.js, TypeScript, portfolio, frontend developer, frontend developer Next.js, tworzenie aplikacji webowych, programista Warszawa, web developer Pułtusk, strony internetowe na zlecenie, freelancer programista",
+      "Jakub Nalewajk, Jakub Nalewajk programista, Strona na Miarę, programista, programista frontend, programista Pułtusk, programista w okolicy Pułtuska, programista mazowieckie, programista w okolicy, strona internetowa na zamówienie, strona na zlecenie, strona na zlecenie Pułtusk, tworzenie stron internetowych, tworzenie stron Pułtusk, aplikacje webowe na zamówienie, strona na zamówienie, strona internetowa na zlecenie, pozycjonowanie SEO, React, Next.js, Next.js developer, programista Next.js, TypeScript, portfolio, frontend developer, frontend developer Next.js, tworzenie aplikacji webowych, programista Warszawa, web developer Pułtusk, strony internetowe na zlecenie, freelancer programista",
     blogTitle: "Blog - Jakub Nalewajk",
     blogDescription:
-      "Blog Jakuba Nalewajka — programisty frontend i Next.js developera z Pułtuska. Artykuły o programowaniu, Next.js, React, TypeScript i tworzeniu aplikacji webowych.",
+      "Praktyczne artykuły o Next.js, React, TypeScript i tworzeniu stron internetowych. Poradniki, rozwiązania problemów i lekcje z realnych projektów.",
     notFoundTitle: "404 — Nie znaleziono strony | Jakub Nalewajk",
     notFoundDescription:
       "Strona, której szukasz, nie istnieje. Wróć do portfolio Jakuba Nalewajka.",
@@ -29,11 +29,16 @@ export default {
     cta: "Napisz do mnie",
     downloadCv: "Pobierz CV",
   },
+  stats: {
+    experience: "Lat doświadczenia",
+    projects: "Dostarczonych projektów",
+    clients: "Zadowolonych klientów",
+  },
   experience: {
     badge: "Doświadczenie",
     title: "Gdzie pracowałem",
     description:
-      "Budowanie produktów, które mają znaczenie — od architektury po wdrożenie.",
+      "Komercyjne projekty, w których brałem udział — od architektury po wdrożenie.",
     jobs: [
       {
         company: "CodeYourBrand",
@@ -65,19 +70,19 @@ export default {
     badge: "Projekty",
     title: "Co zbudowałem",
     description:
-      "Projekty poboczne, w których eksperymentuję z nowymi technologiami i rozwiązuję prawdziwe problemy.",
+      "Narzędzia, które stworzyłem na własne potrzeby i używam na co dzień. Każdy projekt powstał, bo napotkałem realny problem i postanowiłem go rozwiązać.",
     items: [
       {
         description:
-          "Platforma dopasowywania ofert pracy oparta na AI, która scrapuje polskie portale z ofertami i rankinguje je względem Twojego profilu za pomocą embeddingów wektorowych i cross-encoder re-rankingu.",
+          "Miałem dość ręcznego przeglądania ofert pracy na kilku portalach. Zbudowałem platformę, która scrapuje polskie portale i rankinguje oferty względem mojego profilu za pomocą embeddingów wektorowych i re-rankingu AI.",
       },
       {
         description:
-          "Aplikacja do zarządzania subskrypcjami, która umożliwia śledzenie i zarządzanie subskrypcjami. Wykorzystuje Stripe do płatności i Sentry do śledzenia błędów.",
+          "Straciłem kontrolę nad subskrypcjami — nie wiedziałem ile płacę miesięcznie. Stworzyłem apkę do śledzenia i zarządzania subskrypcjami z płatnościami Stripe i monitoringiem Sentry.",
       },
       {
         description:
-          "Gotowy do produkcji szablon z Better Auth (Google OAuth), płatnościami Stripe, monitoringiem Sentry. Wieloetapowe buildy Docker, zautomatyzowane CI/CD z GitHub Actions.",
+          "Przy każdym nowym projekcie konfigurowałem to samo od zera. Zbudowałem gotowy szablon z Better Auth (Google OAuth), Stripe, Sentry, Docker i CI/CD — teraz startuję nowy projekt w minuty zamiast godzin.",
       },
     ],
   },
@@ -111,9 +116,9 @@ export default {
       "Pracujesz bezpośrednio ze mną — bez pośredników i zbędnych spotkań. Prosta strona firmowa? Gotowa w 2–3 tygodnie. Bez czekania na zespół — zbieramy wymagania i od razu działam.",
     steps: [
       {
-        title: "Kontakt",
+        title: "Darmowa rozmowa",
         description:
-          "Napisz do mnie z krótkim opisem tego, czego potrzebujesz. Odpowiadam w ciągu 24 godzin.",
+          "Napisz lub zadzwoń — opowiedz o swoim pomyśle. Bez zobowiązań sprawdzimy, czego potrzebujesz i czy mogę pomóc.",
       },
       {
         title: "Wycena i plan",
@@ -204,11 +209,11 @@ export default {
       "React",
       "pozycjonowanie SEO",
     ],
-    serviceName: "Jakub Nalewajk — Programista Frontend & Next.js Developer",
+    serviceName: "Strona na Miarę – Jakub Nalewajk | Programista Frontend & Next.js Developer",
     serviceType:
       "Tworzenie stron internetowych i aplikacji webowych na zamówienie i zlecenie",
     serviceDescription:
-      "Programista frontend i Next.js developer z Pułtuska (mazowieckie) — tworzę strony internetowe na zamówienie i zlecenie, systemy online i aplikacje webowe w React i Next.js. Obsługuję firmy z Pułtuska, okolicy i całej Polski.",
+      "Strona na Miarę – programista frontend i Next.js developer z Pułtuska (mazowieckie). Tworzę strony internetowe na zamówienie i zlecenie, systemy online i aplikacje webowe w React i Next.js. Obsługuję firmy z Pułtuska, Warszawy i całej Polski.",
     countryName: "Polska",
     offerCatalogName: "Usługi programistyczne",
     offers: [

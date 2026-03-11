@@ -8,6 +8,7 @@ import {
   Projects,
   Services,
   Skills,
+  Stats,
 } from "@components/organisms";
 import Layout from "@layouts/Layout.astro";
 import { DEFAULT_LOCALE } from "@i18n/config";
@@ -44,6 +45,7 @@ const strings = t(DEFAULT_LOCALE);
 
   <Flex class="flex-col w-full">
     <Home />
+    <Stats />
     <Experience />
     <Projects />
     <Services />

@@ -168,6 +168,7 @@ function getJsonLd(options: JsonLdOptions) {
           "@type": "ProfessionalService",
           "@id": `${siteUrl}#service`,
           name: seo.serviceName,
+          alternateName: "Strona na Miarę – Jakub Nalewajk",
           url: siteUrl,
           image: new URL(AUTHOR.image, siteUrl).toString(),
           telephone: AUTHOR.telephone,
@@ -181,6 +182,8 @@ function getJsonLd(options: JsonLdOptions) {
           },
           areaServed: [
             { "@type": "City", name: AUTHOR.address.locality },
+            { "@type": "City", name: "Warszawa" },
+            { "@type": "City", name: "Ciechanów" },
             { "@type": "AdministrativeArea", name: AUTHOR.address.region },
             { "@type": "Country", name: seo.countryName },
           ],
