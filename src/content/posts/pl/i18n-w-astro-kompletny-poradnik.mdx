@@ -482,6 +482,25 @@ Używamy `navigator.sendBeacon()` w handlerze kliknięcia, ponieważ wysyła ż�
 
 Kluczowy trik dla postów blogowych: ponieważ przetłumaczone posty mają różne slugi (jak `/blog/moja-droga/` vs `/en/blog/my-journey/`), komponent odczytuje link `hreflang` z `<head>`, żeby uzyskać prawdziwy przetłumaczony URL zamiast prostej zamiany prefiksu języka.
 
+### Uwaga: Przycisk wstecz w przeglądarce
+
+Jest subtelny problem UX z domyślną nawigacją przez `<a>` — zmiana języka dodaje nowy wpis do historii przeglądarki. Więc gdy użytkownik czyta post, przełączy się na angielski i wciśnie przycisk wstecz, wróci do polskiej wersji zamiast do poprzedniej strony.
+
+Rozwiązaniem jest użycie `window.location.replace()` zamiast normalnej nawigacji. To **zastępuje** bieżący wpis w historii zamiast dodawać nowy:
+
+```javascript
+link.addEventListener('click', (e) => {
+  if (targetLocale) {
+    navigator.sendBeacon('/api/set-language', targetLocale)
+  }
+
+  e.preventDefault()
+  window.location.replace(link.href)
+})
+```
+
+Teraz przycisk wstecz zabiera użytkownika na faktycznie poprzednią stronę, niezależnie od tego ile razy przełączał język.
+
 ## Krok 9: Detekcja języka po stronie serwera
 
 Zamiast wykrywać język przeglądarki po stronie klienta (co powoduje widoczne przekierowanie i obniża wyniki Lighthouse), obsługujemy to po stronie serwera. Strona główna `/` jest renderowana na serwerze i wykorzystuje wbudowany `preferredLocale` Astro do sprawdzenia nagłówka `Accept-Language`:

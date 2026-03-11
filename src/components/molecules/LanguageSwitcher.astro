@@ -36,10 +36,16 @@ const href = getRelativeLocaleUrl(targetLocale, basePath);
         link.href = new URL(hreflangLink.href).pathname;
       }
 
-      link.addEventListener("click", () => {
+      link.addEventListener("click", (e) => {
         if (targetLocale) {
           navigator.sendBeacon("/api/set-language", targetLocale);
         }
+
+        e.preventDefault();
+
+        const url = link.href;
+        history.replaceState(history.state, "", url);
+        window.location.replace(url);
       });
     }
   }

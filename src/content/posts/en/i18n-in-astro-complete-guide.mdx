@@ -482,6 +482,25 @@ We use `navigator.sendBeacon()` in the click handler because it fires asynchrono
 
 The key trick for blog posts: since translated posts have different slugs (like `/blog/moja-droga/` vs `/en/blog/my-journey/`), the component reads the `hreflang` link from `<head>` to get the real translated URL instead of just swapping the locale prefix.
 
+### Caveat: Browser Back Button
+
+There's a subtle UX issue with the default `<a>` navigation — switching language pushes a new entry to the browser history. So when a user reads a blog post, switches to English, and hits the back button, they go back to the Polish version instead of the previous page.
+
+The fix is to use `window.location.replace()` instead of normal navigation. This **replaces** the current history entry rather than adding a new one:
+
+```javascript
+link.addEventListener('click', (e) => {
+  if (targetLocale) {
+    navigator.sendBeacon('/api/set-language', targetLocale)
+  }
+
+  e.preventDefault()
+  window.location.replace(link.href)
+})
+```
+
+Now the back button takes the user to the actual previous page, regardless of how many times they switch languages.
+
 ## Step 9: Server-Side Locale Detection
 
 Instead of detecting the browser language client-side (which causes a visible redirect and hurts Lighthouse performance), we handle it server-side. The root `/` page is server-rendered and uses Astro's built-in `preferredLocale` to check the `Accept-Language` header:
