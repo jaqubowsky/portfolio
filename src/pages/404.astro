@@ -1,0 +1,65 @@
+---
+import { ButtonLink, Flex, Heading, Section } from "@components/atoms";
+import Layout from "@layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout
+  title="404 — Page Not Found | Jakub Nalewajk"
+  description="The page you're looking for doesn't exist. Head back to Jakub Nalewajk's portfolio."
+>
+  <Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 min-h-[70svh] justify-center">
+    <Flex class="flex-col items-center gap-4 text-center">
+      <div class="shrink-0 w-24 sm:w-32">
+        <video
+          id="404-video"
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="auto"
+          disablepictureinpicture
+          class="w-full"
+          poster="/videos/404-avatar-poster.webp"
+        >
+          <source src="/videos/404-avatar.mp4" type="video/mp4" />
+        </video>
+        <script>
+          function init404Video() {
+            const video = document.getElementById("404-video") as HTMLVideoElement;
+            if (!video) return;
+            video.load();
+            video.play().catch(() => {
+              const play = () => { video.play(); document.removeEventListener("click", play); };
+              document.addEventListener("click", play, { once: true });
+            });
+          }
+          init404Video();
+          document.addEventListener("astro:page-load", init404Video);
+          window.addEventListener("pageshow", (e) => { if (e.persisted) init404Video(); });
+        </script>
+        <noscript>
+          <img
+            width="480"
+            height="854"
+            loading="eager"
+            src="/videos/404-avatar-poster.webp"
+            alt="Jakub Nalewajk searching with a magnifying glass"
+            class="w-full"
+          />
+        </noscript>
+      </div>
+
+      <Heading level={1} class="text-7xl sm:text-9xl tracking-tight">
+        <span class="text-gradient">404</span>
+      </Heading>
+      <Heading level={2} class="text-xl sm:text-2xl">
+        Nothing here... yet.
+      </Heading>
+      <ButtonLink href="/">
+        <Icon name="mdi:arrow-left" size={18} />
+        Back to Home
+      </ButtonLink>
+    </Flex>
+  </Section>
+</Layout>
