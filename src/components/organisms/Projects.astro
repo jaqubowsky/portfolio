@@ -97,6 +97,8 @@ const projects = [
                       rel="noopener noreferrer"
                       class="p-1"
                       aria-label={`${project.title} GitHub`}
+                      data-umami-event="project-github"
+                      data-umami-event-project={project.title}
                     >
                       <Icon name="mdi:github" size={20} />
                     </Link>
@@ -107,6 +109,8 @@ const projects = [
                         rel="noopener noreferrer"
                         class="p-1"
                         aria-label={`${project.title} live demo`}
+                        data-umami-event="project-live"
+                        data-umami-event-project={project.title}
                       >
                         <Icon name="mdi:open-in-new" size={20} />
                       </Link>

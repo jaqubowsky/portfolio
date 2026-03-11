@@ -23,7 +23,7 @@ import { Icon } from "astro-icon/components";
       </Paragraph>
 
       <Flex class="justify-start gap-3 hero-fade w-full sm:w-auto flex-col sm:flex-row" style="animation-delay: 0.15s">
-        <ButtonLink href="#contact">
+        <ButtonLink href="#contact" data-umami-event="hero-contact">
           <Icon name="mdi:email-outline" size={18} />
           Get in Touch
         </ButtonLink>
@@ -32,6 +32,7 @@ import { Icon } from "astro-icon/components";
           variant="secondary"
           target="_blank"
           rel="noopener noreferrer"
+          data-umami-event="download-cv"
         >
           <Icon name="mdi:download" size={18} />
           Download CV

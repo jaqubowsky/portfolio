@@ -68,6 +68,8 @@ const contactLinks = [
                       target={link.href.startsWith("mailto") ? undefined : "_blank"}
                       rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
                       class="text-sm break-all"
+                      data-umami-event="contact-link"
+                      data-umami-event-platform={link.label}
                     >
                       {link.value}
                     </Link>

@@ -139,7 +139,7 @@ const ContactForm = () => {
           </p>
         )}
       </div>
-      <Button disabled={isLoading} className="w-full" type="submit">
+      <Button disabled={isLoading} className="w-full" type="submit" data-umami-event="contact-submit">
         {isLoading ? "Sending..." : "Send Message"}
       </Button>
     </form>
