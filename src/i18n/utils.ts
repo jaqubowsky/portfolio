@@ -1,3 +1,6 @@
+import { readdirSync, readFileSync } from 'node:fs'
+import { basename, join } from 'node:path'
+
 import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES, PATHNAMES, type Locale } from './config'
 import { translations } from './translations'
 
@@ -63,16 +66,39 @@ export function buildHreflangMap(siteUrl: string): Map<string, { url: string; la
       paths[l] = getLocalizedPathname(entry[l], l)
     }
 
-    const links = LOCALES.map((l) => ({
-      url: `${siteUrl}${paths[l]}/`,
-      lang: LOCALE_BCP47[l],
-    }))
+    const links = [
+      ...LOCALES.map((l) => ({
+        url: `${siteUrl}${paths[l]}/`,
+        lang: LOCALE_BCP47[l],
+      })),
+      {
+        url: `${siteUrl}${paths[DEFAULT_LOCALE]}/`,
+        lang: 'x-default',
+      },
+    ]
 
     for (const l of LOCALES) {
       map.set(`${siteUrl}${paths[l]}/`, links)
     }
   }
 
+  return map
+}
+
+export function buildLastmodMap(siteUrl: string, postsDir: string): Map<string, string> {
+  const map = new Map<string, string>()
+  for (const locale of LOCALES) {
+    const dir = join(postsDir, locale)
+    for (const file of readdirSync(dir)) {
+      if (!file.endsWith('.mdx')) continue
+      const content = readFileSync(join(dir, file), 'utf-8')
+      const match = content.match(/pubDate:\s*(\d{4}-\d{2}-\d{2})/)
+      if (!match) continue
+      const slug = basename(file, '.mdx')
+      const prefix = locale === DEFAULT_LOCALE ? '' : `/${locale}`
+      map.set(`${siteUrl}${prefix}/blog/${slug}/`, match[1])
+    }
+  }
   return map
 }
 

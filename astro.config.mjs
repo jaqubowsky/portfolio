@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, envField } from 'astro/config'
 import icon from 'astro-icon'
 import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES } from './src/i18n/config'
-import { buildHreflangMap } from './src/i18n/utils'
+import { buildHreflangMap, buildLastmodMap } from './src/i18n/utils'
 
 const SITE = 'https://jnalewajk.me'
 
@@ -16,6 +16,7 @@ const legacyRedirects = {
 }
 
 const hreflangMap = buildHreflangMap(SITE)
+const lastmodMap = buildLastmodMap(SITE, './src/content/posts')
 
 // https://astro.build/config
 export default defineConfig({
@@ -35,6 +36,9 @@ export default defineConfig({
       serialize(item) {
         const links = hreflangMap.get(item.url)
         if (links) item.links = links
+
+        const lastmod = lastmodMap.get(item.url)
+        if (lastmod) item.lastmod = lastmod
 
         return item
       },

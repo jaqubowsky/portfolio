@@ -126,7 +126,8 @@ Server env vars are imported from `astro:env/server`, client vars from `astro:en
 
 1. Create MDX files in `src/content/posts/{en,pl}/` with matching `translationKey`
 2. Add the translated post pathname pair to `PATHNAMES` in `src/i18n/config.ts` (for sitemap hreflang)
-3. Run `npm run build` to validate translations (mismatched structure/fields are warned)
+3. If the post introduces new locale-specific tags (e.g. PL `biznes` / EN `business`), add a category pathname pair to `PATHNAMES` as well (e.g. `'/category/business': { pl: '/category/biznes', en: '/category/business' }`)
+4. Run `npm run build` to validate translations (mismatched structure/fields are warned)
 
 ## Writing Style for Blog Posts & UI Content
 

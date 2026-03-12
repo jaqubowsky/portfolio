@@ -46,4 +46,28 @@ export const PATHNAMES = {
     pl: '/blog/ile-kosztuje-strona-internetowa',
     en: '/blog/how-much-does-website-cost',
   },
+  '/category/programming': {
+    pl: '/category/programowanie',
+    en: '/category/programming',
+  },
+  '/category/journey': {
+    pl: '/category/droga',
+    en: '/category/journey',
+  },
+  '/category/career': {
+    pl: '/category/kariera',
+    en: '/category/career',
+  },
+  '/category/websites': {
+    pl: '/category/strony-internetowe',
+    en: '/category/websites',
+  },
+  '/category/pricing': {
+    pl: '/category/cennik',
+    en: '/category/pricing',
+  },
+  '/category/business': {
+    pl: '/category/biznes',
+    en: '/category/business',
+  },
 } as const satisfies Record<string, string | Record<Locale, string>>

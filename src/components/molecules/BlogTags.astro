@@ -18,7 +18,7 @@ const { class: className, tags } = Astro.props;
     tags.map((tag: string) => (
       <Link
         href={getRelativeLocaleUrl(locale, `/category/${tag}`)}
-        class={cn("decoration-wavy underline", className)}
+        class={cn("decoration-wavy underline text-muted-foreground hover:text-primary", className)}
       >
         #{tag}
       </Link>
