@@ -5,6 +5,7 @@ import {
   stripLocaleFromPath,
   LOCALE_LABELS,
 } from "@i18n";
+import { LOCALE_BCP47 } from "@i18n/config";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = getLocale(Astro.currentLocale);
@@ -12,12 +13,14 @@ const locale = getLocale(Astro.currentLocale);
 const [targetLocale] = getAlternateLocales(locale);
 const basePath = stripLocaleFromPath(Astro.url.pathname);
 const href = getRelativeLocaleUrl(targetLocale, basePath);
+const targetHreflang = LOCALE_BCP47[targetLocale];
 ---
 
 <a
   href={href}
   class="px-2 py-1 text-xs font-mono rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-muted/50 no-underline transition-colors"
   data-locale-switch={targetLocale}
+  data-target-hreflang={targetHreflang}
   data-astro-prefetch
 >
   {LOCALE_LABELS[targetLocale]}
@@ -27,9 +30,10 @@ const href = getRelativeLocaleUrl(targetLocale, basePath);
   function initLanguageSwitcher() {
     for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-locale-switch]")) {
       const targetLocale = link.dataset.localeSwitch;
+      const targetHreflang = link.dataset.targetHreflang;
 
       const hreflangLink = document.querySelector<HTMLLinkElement>(
-        `link[rel="alternate"][hreflang="${targetLocale}"]`,
+        `link[rel="alternate"][hreflang="${targetHreflang}"]`,
       );
 
       if (hreflangLink?.href) {

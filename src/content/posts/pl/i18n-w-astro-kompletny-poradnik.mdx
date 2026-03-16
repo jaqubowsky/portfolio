@@ -243,15 +243,25 @@ export function buildHreflangMap(siteUrl: string) {
   const map = new Map<string, { url: string; lang: string }[]>()
 
   for (const entry of Object.values(PATHNAMES)) {
-    if (typeof entry === 'string') continue
+    const paths: Record<Locale, string> = {} as Record<Locale, string>
+    for (const l of LOCALES) {
+      const path = typeof entry === 'string' ? entry : entry[l]
+      paths[l] = getLocalizedPathname(path, l)
+    }
 
-    const links = LOCALES.map((l) => ({
-      url: `${siteUrl}${getLocalizedPathname(entry[l], l)}`,
-      lang: LOCALE_BCP47[l],
-    }))
+    const links = [
+      ...LOCALES.map((l) => ({
+        url: `${siteUrl}${paths[l]}/`,
+        lang: LOCALE_BCP47[l],
+      })),
+      {
+        url: `${siteUrl}${paths[DEFAULT_LOCALE]}/`,
+        lang: 'x-default',
+      },
+    ]
 
-    for (const link of links) {
-      map.set(link.url, links)
+    for (const l of LOCALES) {
+      map.set(`${siteUrl}${paths[l]}/`, links)
     }
   }
 
@@ -527,18 +537,21 @@ import {
   stripLocaleFromPath,
   LOCALE_LABELS,
 } from '@i18n'
+import { LOCALE_BCP47 } from '@i18n/config'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 
 const locale = getLocale(Astro.currentLocale)
 const [targetLocale] = getAlternateLocales(locale)
 const basePath = stripLocaleFromPath(Astro.url.pathname)
 const href = getRelativeLocaleUrl(targetLocale, basePath)
+const targetHreflang = LOCALE_BCP47[targetLocale]
 ---
 
 <a
   href={href}
   class="px-2 py-1 text-xs font-mono rounded-md border"
   data-locale-switch={targetLocale}
+  data-target-hreflang={targetHreflang}
 >
   {LOCALE_LABELS[targetLocale]}
 </a>
@@ -549,10 +562,11 @@ const href = getRelativeLocaleUrl(targetLocale, basePath)
       '[data-locale-switch]',
     )) {
       const targetLocale = link.dataset.localeSwitch
+      const targetHreflang = link.dataset.targetHreflang
 
       // Użyj linków hreflang dla postów z różnymi slugami
       const hreflangLink = document.querySelector<HTMLLinkElement>(
-        `link[rel="alternate"][hreflang="${targetLocale}"]`,
+        `link[rel="alternate"][hreflang="${targetHreflang}"]`,
       )
       if (hreflangLink?.href) {
         link.href = new URL(hreflangLink.href).pathname
@@ -670,19 +684,19 @@ Strona `[...locale]/index.astro` nadal generuje prerendered stronę `/en/` przez
 
 ## Krok 10: SEO - Hreflang i Sitemap
 
-Twój layout powinien zawierać linki `hreflang` dla każdej wersji językowej:
+Twój layout powinien zawierać linki `hreflang` dla każdej wersji językowej. Ważne: używaj formatu BCP47 (np. `pl-PL`, `en-US`) zamiast samych kodów języka - to zapewnia spójność z sitemapą i lepszą interpretację przez Google:
 
 ```astro
 ---
 // W <head> Layout.astro
 ---
 {LOCALES.map((l) => (
-  <link rel="alternate" hreflang={l} href={seo.hreflangUrls[l]} />
+  <link rel="alternate" hreflang={LOCALE_BCP47[l]} href={seo.hreflangUrls[l]} />
 ))}
 <link rel="alternate" hreflang="x-default" href={seo.hreflangUrls[DEFAULT_LOCALE]} />
 ```
 
-Dla sitemapy skonfiguruj `@astrojs/sitemap` ze wsparciem i18n. Opcja `i18n` pluginu automatycznie dodaje linki hreflang dla stron o tej samej strukturze ścieżki (jak `/` i `/en/`). Ale strony i posty blogowe z **różnymi slugami per język** - `/blog/moja-droga-w-programowaniu/` vs `/en/blog/my-programming-journey/` - nie mogą być automatycznie dopasowane przez plugin. Zamiast ręcznie utrzymywać listę przetłumaczonych par URLi, używamy `buildHreflangMap()`, która generuje mapę bezpośrednio z `PATHNAMES` - jedynego źródła prawdy:
+Dla sitemapy skonfiguruj `@astrojs/sitemap` ze wsparciem i18n. Opcja `i18n` pluginu automatycznie dodaje linki hreflang na podstawie prefiksów locale w URL, ale nie generuje tagu `x-default` i nie potrafi dopasować stron z **różnymi slugami per język** - `/blog/moja-droga-w-programowaniu/` vs `/en/blog/my-programming-journey/`. Zamiast ręcznie utrzymywać listę przetłumaczonych par URLi, używamy `buildHreflangMap()`, która generuje pełną mapę hreflang (z `x-default`) bezpośrednio z `PATHNAMES` - jedynego źródła prawdy:
 
 ```javascript
 // astro.config.mjs
@@ -710,7 +724,7 @@ export default defineConfig({
 })
 ```
 
-Każdy wpis w `PATHNAMES`, który ma ścieżki per locale, jest automatycznie uwzględniony w mapie hreflang sitemapy. Gdy dodasz nową przetłumaczoną stronę lub post, wystarczy zaktualizować `PATHNAMES` - sitemap przejmie to bez dodatkowej konfiguracji.
+Każdy wpis w `PATHNAMES` jest automatycznie uwzględniony w mapie hreflang sitemapy - zarówno te ze wspólną ścieżką (jak `/blog`), jak i te z różnymi slugami per locale. Mapa zawiera też tag `x-default` wskazujący na domyślny język, co pomaga Google poprawnie zrozumieć relacje między wersjami językowymi. Gdy dodasz nową przetłumaczoną stronę lub post, wystarczy zaktualizować `PATHNAMES` - sitemap przejmie to bez dodatkowej konfiguracji.
 
 ## Podsumowanie
 

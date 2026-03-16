@@ -11,7 +11,7 @@ import {
   type BreadcrumbItem,
   type FaqItem,
 } from "@utils/seo";
-import { DEFAULT_LOCALE, LOCALES } from "@i18n/config";
+import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES } from "@i18n/config";
 
 interface Props {
   title: string;
@@ -58,7 +58,7 @@ const faqJsonLd = faqItems ? getFaqJsonLd(faqItems) : null;
     <link rel="dns-prefetch" href="https://umami.jnalewajk.me" />
 
     {LOCALES.map((l) => (
-      <link rel="alternate" hreflang={l} href={seo.hreflangUrls[l]} />
+      <link rel="alternate" hreflang={LOCALE_BCP47[l]} href={seo.hreflangUrls[l]} />
     ))}
 
     <link rel="alternate" hreflang="x-default" href={seo.hreflangUrls[DEFAULT_LOCALE]} />

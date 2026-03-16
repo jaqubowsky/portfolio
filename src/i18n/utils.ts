@@ -59,11 +59,10 @@ export function buildHreflangMap(siteUrl: string): Map<string, { url: string; la
   const map = new Map<string, { url: string; lang: string }[]>()
 
   for (const entry of Object.values(PATHNAMES)) {
-    if (typeof entry === 'string') continue
-
     const paths: Record<Locale, string> = {} as Record<Locale, string>
     for (const l of LOCALES) {
-      paths[l] = getLocalizedPathname(entry[l], l)
+      const path = typeof entry === 'string' ? entry : entry[l]
+      paths[l] = getLocalizedPathname(path, l)
     }
 
     const links = [
