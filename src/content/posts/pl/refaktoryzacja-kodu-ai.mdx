@@ -1,0 +1,222 @@
+---
+title: 'Refaktoryzacja kodu wygenerowanego przez AI - czego się nauczyłem'
+pubDate: 2026-03-19
+description: 'Zbudowałem apkę z agentami AI, kod wymknął się spod kontroli. Opisuję konkretne błędy i jak podszedłem do naprawy.'
+author: 'Jakub Nalewajk'
+image:
+  {
+    url: '../../../assets/images/blog/refactoring-ai-code-cover.webp',
+    alt: 'Ilustracja przedstawiająca refaktoryzację kodu wygenerowanego przez AI',
+  }
+category: 'programming'
+tags: ['ai', 'refaktoryzacja', 'react', 'nextjs', 'clean-code']
+draft: false
+lang: 'pl'
+translationKey: 'refactoring-ai-code'
+---
+
+Kilka dni temu skończyłem refaktoryzację PillPilot - PWA do śledzenia suplementacji, którą zbudowałem prawie w całości z pomocą agentów AI. Przygotowałem PRD, design system, technical requirements, roadmapę i kazałem agentom implementować feature po feature. Kod działał. Apka się budowała i użytkownicy mogli z niej korzystać. A potem otworzyłem jeden komponent i zobaczyłem 600 linii spaghetti.
+
+## Jak do tego doszło
+
+Główny problem był po mojej stronie. Zlecałem agentom zbyt wiele rzeczy naraz, bez wcześniejszego planowania szczegółów. Roadmapa przestała być aktualna po kilku dniach, a ja jej nie aktualizowałem. Nie kazałem agentom aktualizować `CLAUDE.md` po każdej istotnej decyzji, więc przy następnej sesji AI tracił kontekst i robił rzeczy po swojemu. Zostawiałem agentów w samopas i nie czytałem wygenerowanego kodu na bieżąco.
+
+Drugi problem: sam pobieżnie czytałem własne PRD i roadmapę. Potem wychodziły kwiatki - agent implementował feature'y, których okazywało się, że nie chciałem, albo chciałem zrobić inaczej. Marnowałem czas na zbędne refaktory logiki, komponentów, a czasem nawet modelu bazy danych. Traktowałem AI jak guru, które wie lepiej, zamiast samemu nadawać tor. Efekt? Projekt wymknął się spod kontroli szybciej niż się spodziewałem.
+
+Wziąłem ten codebase i przeprowadziłem go przez serię refaktorów, znowu z pomocą AI, ale tym razem z moim kierownictwem architektonicznym. Opiszę konkretne błędy, które AI robiło podczas implementacji i jak podszedłem do ich naprawy.
+
+## Komponenty, które robią wszystko
+
+Prosisz agenta o komponent do zarządzania koszykiem zakupowym i dostajesz jeden plik, który trzyma cały state, zawiera logikę biznesową i renderuje UI. `cart-price-sheet.tsx` miał ponad 600 linii - formularz uploadu, lista skanów, picker suplementów, selektor sklepu, obliczenia cen. Każda zmiana w jednym aspekcie wymagała zrozumienia całego pliku.
+
+Początek pliku wygenerowanego przez AI - 17 importów z lucide-react, cały state w jednym miejscu:
+
+```tsx
+// cart-price-sheet.tsx - 678 linii, PRZED refaktorem
+"use client";
+
+import {
+  AlertTriangle, ChevronDown, Clock, Link2, Loader2,
+  Pencil, Plus, RotateCcw, Search, ShoppingCart,
+  Store, Trash2, X,
+} from "lucide-react";
+import { useRef, useState } from "react";
+// ...jeszcze 20 importów
+
+// Inline sub-komponent - SupplementPicker, ~80 linii
+function SupplementPicker({ supplements, value, onChange, ... }) { /* ... */ }
+
+// Inline sub-komponent - ShopSelector, ~60 linii
+function ShopSelector({ shops, value, onChange, ... }) { /* ... */ }
+
+// Inline sub-komponent - CartItemRow, ~90 linii
+function CartItemRow({ item, onUpdate, onDelete, ... }) { /* ... */ }
+
+// Główny komponent - reszta pliku
+export function CartPriceSheet({ supplements, shops, recentScans }) {
+  const [items, setItems] = useState([]);
+  const [selectedShop, setSelectedShop] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [scanToDelete, setScanToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  // ...jeszcze 15 stanów
+}
+```
+
+Po refaktorze - 12 plików, każdy z jedną odpowiedzialnością:
+
+```
+cart-price-sheet/
+├── cart-price-sheet.tsx      # 102 linii - kompozycja
+├── cart-error-state.tsx
+├── cart-item-row.tsx
+├── cart-items-list.tsx
+├── use-cart-items.ts
+├── use-cart-price-sheet.ts
+├── use-cart-shop.ts
+├── cart-upload/
+│   ├── cart-upload-trigger.tsx
+│   └── use-cart-upload.ts
+├── recent-scans-list/
+│   ├── recent-scans-list.tsx
+│   ├── scan-card.tsx
+│   └── delete-scan-dialog.tsx
+├── shop-selector/
+│   ├── shop-selector.tsx
+│   └── use-shop-selector.ts
+└── supplement-picker/
+    ├── supplement-picker.tsx
+    └── use-supplement-picker.ts
+```
+
+Podobnie wyglądał `protocol-card.tsx` w ustawieniach - renderowanie karty, badge'e statusów, dialogi potwierdzające archiwizację i usunięcie, akcje per status. Albo `parsed-preview.tsx` w kreatorze protokołów - podgląd sparsowanego protokołu, zatwierdzanie, odrzucanie, edycja suplementów, weryfikacja. Ten sam pattern - rozbicie na małe pliki z jasną odpowiedzialnością.
+
+## Łamanie granic feature'ów
+
+AI nie rozumie granic między modułami. Komponent używany tylko w dashboardzie lądował w `shared/components/`. Query specyficzne dla shoppingu siedziało w `features/shopping/`, ale importował je `features/stock/`. Serwis push notification żył w `shared/lib/`, mimo że dotyczył wyłącznie ustawień.
+
+Przeniosłem `pill-bottle-icon` do `features/dashboard/`, `info-hint` do `features/supplements/`, `web-push.ts` do `features/settings/`, `time-block-icons.ts` do `features/settings/`. Kilka komponentów jak `truncated-note` okazało się niepotrzebnych po rozbiciu większych plików. Zasada: zaczynaj od co-lokacji, promuj do shared dopiero gdy używane w dwóch lub więcej miejscach.
+
+## Brak testów krytycznej logiki biznesowej
+
+Agent nie napisał ani jednego testu dla logiki biznesowej. Obliczanie listy zakupów, grupowanie suplementów po blokach czasowych, zbieranie aktywnych timerów, sprawdzanie czy schedule jest checkable - to wszystko siedziało bezpośrednio w query bazodanowych albo w hookach komponentów. Niby logiczne, dane wchodzą, przetworzone wychodzą. Problem? Nie da się tego przetestować bez bazy danych albo renderowania komponentu.
+
+Przykład - `get-shopping-list.ts` przed refaktorem. Jedno query, 227 linii, logika biznesowa (forecast, grupowanie, sortowanie) zmieszana z fetchowaniem z bazy:
+
+```ts
+// get-shopping-list.ts - 227 linii, PRZED refaktorem
+export async function getShoppingList(userId: string): Promise<ShoppingGroup[]> {
+  // 1. Query z bazy - ok
+  const rows = await db
+    .select({ /* ...8 kolumn + agregacja SQL */ })
+    .from(supplements)
+    .leftJoin(supplementSchedules, ...)
+    .leftJoin(protocols, ...)
+    .where(...)
+    .groupBy(supplements.id)
+    .having(...);
+
+  // 2. Drugie query po schedule'e
+  const scheduleRows = await db.select({...}).from(supplementSchedules)...
+
+  // 3. Logika biznesowa - TO NIE POWINNO TU BYĆ
+  for (const row of rows) {
+    const daysRemaining = forecastDaysInStock(stock, schedules, today);
+    if (daysRemaining <= effectiveThreshold) {
+      mustBuyItems.push(item);
+    } else if (daysRemaining <= SUGGEST_ADD_DAYS) {
+      suggestAddItems.push(item);
+    }
+  }
+
+  // 4. Grupowanie po sklepach, sortowanie - TEŻ NIE
+  const groupMap = new Map<string | null, ShoppingItem[]>();
+  for (const item of allItems) { /* ... */ }
+
+  // 5. Fetch sklepów, budowanie wynikowej struktury
+  const shopsData = await db.select({...}).from(shops)...
+  // ...jeszcze 40 linii
+}
+```
+
+Po refaktorze - query robi tylko fetch, pure function robi resztę:
+
+```ts
+// get-shopping-list.ts - 101 linii, query i nic więcej
+export async function getShoppingList(userId: string): Promise<ShoppingGroup[]> {
+  const rows = await db.select({...}).from(supplements)...
+  const scheduleRows = await db.select({...}).from(supplementSchedules)...
+  const shopsData = await db.select({...}).from(shops)...
+
+  return buildShoppingList(rows, scheduleRows, shopsData);
+}
+
+// build-shopping-list.ts - 151 linii, pure function
+// ZERO importów z bazy, ZERO async, ZERO side-effects
+export function buildShoppingList(
+  rows: RawSupplement[],
+  schedules: ScheduleRow[],
+  shops: ShopInfo[],
+): ShoppingGroup[] {
+  // cała logika biznesowa tutaj
+}
+```
+
+```ts
+// build-shopping-list.test.ts - testowalność bez bazy
+it("groups items by shop", () => {
+  const result = buildShoppingList(
+    [mockSupplement({ shopId: "shop-1" })],
+    [mockSchedule({ supplementId: "supp-1" })],
+    [mockShop({ id: "shop-1" })],
+  );
+  expect(result[0].shop?.id).toBe("shop-1");
+});
+```
+
+Ten sam wzorzec zastosowałem w `build-stock-list.ts`, `build-daily-context.ts`, `collect-timers.ts` i `checkable-entries.ts`. Łącznie ponad 1000 linii nowych testów. Refaktor z największym ROI.
+
+## Wiele źródeł prawdy
+
+Agent tworzył akcję `manage-shop` z parametrem `action: "create" | "update" | "delete"` i trzema ścieżkami w jednej funkcji. Route handlery po 150+ linii w jednym `route.ts` - parsowanie requestu, budowanie promptu AI, wywołanie API, parsowanie odpowiedzi, zapis do bazy. Logika rozsiana po wielu warstwach bez jasnego podziału odpowiedzialności.
+
+Rozbiłem `manage-shop` na trzy pliki: `create-shop.ts`, `update-shop.ts`, `delete-shop.ts`. Z route handlerów wydzieliłem serwisy: `build-ai-prompts.ts`, `protocol-parse-service.ts`, `cart-parse-service.ts`, `push-send-service.ts`. Route handler robi teraz to, co powinien - przyjmuje request, woła serwis, zwraca response.
+
+## Zduplikowane komponenty
+
+Agent w różnych sesjach tworzył podobne komponenty, nie wiedząc, że analogiczny już istnieje. Dwa różne sposoby wyświetlania badge'ów suplementów, dwa podejścia do dialogów potwierdzających, dwie implementacje formatowania czasu. Bez aktualnego `CLAUDE.md` z opisem istniejących komponentów, agent po prostu pisał od nowa.
+
+Tu nie było jednego fixa - to wymagało przejrzenia codebase'u i zdecydowania, która wersja zostaje. Czasem lepsza była nowsza, czasem starsza. Ważniejsze od samego czyszczenia było dodanie konwencji do `CLAUDE.md`, żeby agent wiedział, co już istnieje.
+
+## Deprecated użycia bibliotek
+
+Agent korzystał z API bibliotek, które zna z danych treningowych, a nie z aktualnej dokumentacji. Stare patterny w shadcn/ui, nieaktualne użycia Drizzle, przestarzałe podejścia w Next.js. Kod działał, bo biblioteki zachowują backward compatibility, ale generował warningi i nie korzystał z nowych, lepszych API.
+
+Naprawiłem to, podpinając agentowi dostęp do aktualnej dokumentacji przez context7 MCP i dodając w `CLAUDE.md` regułę, żeby zawsze sprawdzał dokumentację zamiast polegać na wiedzy z treningu.
+
+## Dlaczego AI robi te błędy?
+
+LLM generuje kod bez kontekstu architektonicznego projektu. Nie wie, że hooki żyją w osobnych plikach, że masz konwencję folder + barrel export, ani jak wygląda drzewo zależności. Widzi jeden plik i optymalizuje na jedno: żeby kod działał. Prompt mówi "zrób X", nie "zrób X zgodnie z konwencjami Y", więc LLM robi X najkrótszą drogą.
+
+Ale to tylko połowa problemu. Druga połowa to ja. Nie utrzymywałem `CLAUDE.md` na bieżąco, więc agent nie miał aktualnego kontekstu. Nie aktualizowałem roadmapy, więc nie było jednego źródła prawdy o tym, co jest zrobione, a co nie. Zlecałem kilka feature'ów naraz bez planowania, jak mają ze sobą współgrać. AI robiło co mogło z tym, co dostało - a dostało za mało.
+
+Rozwiązanie? Daj AI kontekst i pilnuj go. Napisałem `CLAUDE.md` z konwencjami projektu - co-lokacja, folder convention, feature public API, rozdzielenie queries od logiki. Po tym refaktor z AI był znacznie łatwiejszy, bo Claude wiedział *jak* ma wyglądać kod docelowy. Ale sam `CLAUDE.md` nie wystarczy - trzeba go aktualizować za każdym razem, gdy AI zrobi coś nie tak. Iterowanie: AI się myli → dodajesz regułę do `CLAUDE.md` → AI nie powtarza błędu.
+
+## Liczby
+
+- 10 commitów w kilka dni
+- Największy commit: 3900 linii zmian (moduł shopping)
+- Ponad 1000 linii nowych testów
+- Rozbicie 3 komponentów 400-600 linii na ~30 mniejszych plików
+- Wydzielenie 5 pure functions z query/handlerów
+- Przeniesienie ~10 plików z `shared/` do feature'ów
+
+Zero zmian w funkcjonalności. Apka robi dokładnie to samo. Ale teraz mogę otworzyć dowolny plik i w 10 sekund wiedzieć, co robi.
+
+## Czego się nauczyłem
+
+Największa lekcja nie dotyczy kodu, tylko procesu. Robiłem za dużo, za szybko, bez wystarczającego planowania. Kazałem agentom implementować feature'y, których szczegółów sam do końca nie przemyślałem. Nie czytałem generowanego kodu na bieżąco, więc problemy kumulowały się w ciszy. I przede wszystkim - traktowałem AI jak autorytet zamiast jak narzędzie. To ty musisz myśleć i nadawać tor, nie odwrotnie. Następnym razem planuję robić wszystko wolniej - dużo więcej czytania kodu, dużo więcej planowania przed implementacją, mniejsze kawałki pracy i dokładne czytanie własnych dokumentów zanim zlecę cokolwiek agentowi.
+
+Technicznie: najłatwiejszy refaktor z największym ROI to wyciągnięcie pure functions z query i handlerów. Co-lokacja powinna być domyślna, a shared zarezerwowany dla kodu faktycznie używanego w wielu miejscach. Single responsibility dotyczy też server actions.
+
+Ale ważniejsze od technikaliów jest jedno: context is king. Dobrze zaprojektowana aplikacja od początku - przemyślany `CLAUDE.md`, aktualna roadmapa, konwencje spisane *przed* generowaniem kodu - to oszczędza wielokrotnie więcej czasu niż refaktor po fakcie. Wiadomo, że nie da się wszystkiego przewidzieć i że wiele rzeczy wychodzi w trakcie. Dlatego kluczowe jest iterowanie: AI się myli, dodajesz regułę, AI nie powtarza błędu. Czasem warto trochę wolniej.

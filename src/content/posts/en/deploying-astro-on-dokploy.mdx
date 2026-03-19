@@ -21,12 +21,12 @@ In this guide I will walk you through the process of deploying an Astro 5 site w
 
 ## Why Self-Host?
 
-Vercel is great for deploys but self-hosting gives you:
+Vercel works, but self-hosting gives you:
 
-- **Control over costs** - one VPS can run many apps instead of paying for each project
-- **Full control over your infrastructure** - no surprises, no limits, no vendor lock-in
-- **A chance to learn** - understanding Docker, reverse proxies and networking makes you a better developer
-- **Privacy** - your data stays on your machine
+- Control over costs - one VPS can run many apps instead of paying for each project
+- Full control over your infrastructure - no surprises, no limits, no vendor lock-in
+- A chance to learn - understanding Docker, reverse proxies and networking
+- Privacy - your data stays on your machine
 
 I am running my portfolio, two Next.js apps and a database server all on a single €7/month VPS.
 
@@ -93,9 +93,9 @@ CMD ["node", "./dist/server/entry.mjs"]
 
 Key decisions here:
 
-- **Multi-stage build** - the `deps` stage caches `node_modules`, the `build` stage compiles and the `runtime` stage only contains what is needed to run
-- **`HOST=0.0.0.0`** - critical. Without this the server only listens on localhost inside the container and Traefik cannot reach it
-- **`PORT=3000`** - match this with your Dokploy domain config
+- Multi-stage build - the `deps` stage caches `node_modules`, the `build` stage compiles and the `runtime` stage only contains what is needed to run
+- `HOST=0.0.0.0` - without this the server only listens on localhost inside the container and Traefik cannot reach it
+- `PORT=3000` - match this with your Dokploy domain config
 
 Do not forget the `.dockerignore`:
 
@@ -237,9 +237,9 @@ Hit **Deploy** in Dokploy. It will:
 
 Check the build logs for any errors. Common problems:
 
-- **Build fails** - missing build args for `PUBLIC_*` env vars
-- **Container starts but 502** - wrong port or `HOST` not set to `0.0.0.0`
-- **SSL not working** - DNS not propagated yet or using Cloudflare proxy mode
+- Build fails - missing build args for `PUBLIC_*` env vars
+- Container starts but 502 - wrong port or `HOST` not set to `0.0.0.0`
+- SSL not working - DNS not propagated yet or using Cloudflare proxy mode
 
 ## Step 8: Set Up Auto-Deploy
 
@@ -251,9 +251,9 @@ In Dokploy enable auto-deploy from your GitHub repository:
 
 ## SMTP Problem
 
-If your app sends emails (like a contact form) be aware that many VPS providers **block outbound SMTP ports** (25, 465, 587). I found this out when my Nodemailer setup hung indefinitely.
+If your app sends emails (like a contact form) be aware that many VPS providers block outbound SMTP ports (25, 465, 587). I found this out when my Nodemailer setup hung indefinitely.
 
-The fix: use an API-based email service like **Resend** instead of SMTP. It uses HTTPS (port 443) which is never blocked.
+The fix: use an API-based email service like Resend instead of SMTP. It uses HTTPS (port 443) which is never blocked.
 
 ```ts
 import { Resend } from 'resend'
@@ -270,15 +270,8 @@ await resend.emails.send({
 
 ## Final Result
 
-I have my Astro 5 site deployed on Dokploy and it works great. I can run multiple apps on one VPS and I have full control over my infrastructure.
+My portfolio runs on a Hetzner VPS alongside two other apps with automatic SSL via Let's Encrypt, gzip compression via Traefik and auto-deploy from GitHub. All for €7/month.
 
-My portfolio is running on a Hetzner VPS alongside two other apps with:
-
-- Automatic SSL via Let's Encrypt
-- Gzip compression via Traefik
-- Auto-deploy from GitHub
-- Zero monthly cost beyond the VPS (€7/month for everything)
-
-It took me about one hour to set everything up and it has been running solid since then. If you know the basics of Docker there is no reason to stay on Vercel's free tier with its limitations.
+It took me about one hour to set everything up and I haven't had to touch it since. If you know the basics of Docker there is no reason to stay on Vercel's free tier with its limitations.
 
 The source code for my portfolio is on [GitHub](https://github.com/jaqubowsky/portfolio) if you want to see the Dockerfile and configuration.

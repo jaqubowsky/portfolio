@@ -1,0 +1,222 @@
+---
+title: 'Refactoring AI-generated code - what I learned'
+pubDate: 2026-03-19
+description: 'I built an app with AI agents, the code spiraled out of control. Here are the specific mistakes and how I fixed them.'
+author: 'Jakub Nalewajk'
+image:
+  {
+    url: '../../../assets/images/blog/refactoring-ai-code-cover.webp',
+    alt: 'Illustration of refactoring AI-generated code',
+  }
+category: 'programming'
+tags: ['ai', 'refactoring', 'react', 'nextjs', 'clean-code']
+draft: false
+lang: 'en'
+translationKey: 'refactoring-ai-code'
+---
+
+A few days ago I finished refactoring PillPilot - a PWA for tracking supplementation that I built almost entirely with AI agents. I prepared a PRD, design system, technical requirements, roadmap and had agents implement feature by feature. The code worked. The app built and users could use it. Then I opened one component and saw 600 lines of spaghetti.
+
+## How it happened
+
+The main problem was on my side. I was delegating too many things to agents at once, without planning the details upfront. The roadmap went stale after a few days and I didn't update it. I didn't tell agents to update `CLAUDE.md` after each important decision, so in the next session the AI lost context and did things its own way. I left agents unsupervised and didn't read the generated code as it came in.
+
+Second problem: I was skimming my own PRD and roadmap. Then things went sideways - the agent implemented features that turned out to be ones I didn't want, or wanted to do differently. I wasted time on unnecessary refactors of logic, components, and sometimes even the database model. I treated AI like a guru that knows better, instead of steering it myself. The project spiraled out of control faster than I expected.
+
+I took this codebase and put it through a series of refactors, again with AI help, but this time with my architectural direction. Here are the specific mistakes AI made during implementation and how I approached fixing them.
+
+## Components that do everything
+
+You ask the agent for a shopping cart component and get a single file that holds all state, contains business logic and renders UI. `cart-price-sheet.tsx` was over 600 lines - upload form, scan list, supplement picker, shop selector, price calculations. Every change to one aspect required understanding the entire file.
+
+The beginning of the AI-generated file - 17 imports from lucide-react, all state in one place:
+
+```tsx
+// cart-price-sheet.tsx - 678 lines, BEFORE refactor
+"use client";
+
+import {
+  AlertTriangle, ChevronDown, Clock, Link2, Loader2,
+  Pencil, Plus, RotateCcw, Search, ShoppingCart,
+  Store, Trash2, X,
+} from "lucide-react";
+import { useRef, useState } from "react";
+// ...20 more imports
+
+// Inline sub-component - SupplementPicker, ~80 lines
+function SupplementPicker({ supplements, value, onChange, ... }) { /* ... */ }
+
+// Inline sub-component - ShopSelector, ~60 lines
+function ShopSelector({ shops, value, onChange, ... }) { /* ... */ }
+
+// Inline sub-component - CartItemRow, ~90 lines
+function CartItemRow({ item, onUpdate, onDelete, ... }) { /* ... */ }
+
+// Main component - rest of the file
+export function CartPriceSheet({ supplements, shops, recentScans }) {
+  const [items, setItems] = useState([]);
+  const [selectedShop, setSelectedShop] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [scanToDelete, setScanToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  // ...15 more state variables
+}
+```
+
+After refactoring - 12 files, each with one responsibility:
+
+```
+cart-price-sheet/
+├── cart-price-sheet.tsx      # 102 lines - composition
+├── cart-error-state.tsx
+├── cart-item-row.tsx
+├── cart-items-list.tsx
+├── use-cart-items.ts
+├── use-cart-price-sheet.ts
+├── use-cart-shop.ts
+├── cart-upload/
+│   ├── cart-upload-trigger.tsx
+│   └── use-cart-upload.ts
+├── recent-scans-list/
+│   ├── recent-scans-list.tsx
+│   ├── scan-card.tsx
+│   └── delete-scan-dialog.tsx
+├── shop-selector/
+│   ├── shop-selector.tsx
+│   └── use-shop-selector.ts
+└── supplement-picker/
+    ├── supplement-picker.tsx
+    └── use-supplement-picker.ts
+```
+
+`protocol-card.tsx` in settings looked the same - card rendering, status badges, confirmation dialogs for archiving and deletion, actions per status. Same with `parsed-preview.tsx` in the protocol wizard - parsed protocol preview, approval, rejection, supplement editing, verification. Same pattern - split into small files with clear responsibility.
+
+## Breaking feature boundaries
+
+AI doesn't understand boundaries between modules. A component used only in the dashboard ended up in `shared/components/`. A query specific to shopping lived in `features/shopping/` but was imported by `features/stock/`. The push notification service lived in `shared/lib/` even though it only concerned settings.
+
+I moved `pill-bottle-icon` to `features/dashboard/`, `info-hint` to `features/supplements/`, `web-push.ts` to `features/settings/`, `time-block-icons.ts` to `features/settings/`. A few components like `truncated-note` turned out to be unnecessary after splitting larger files. Rule: start with co-location, promote to shared only when used in two or more places.
+
+## No tests for critical business logic
+
+The agent didn't write a single test for business logic. Shopping list calculation, grouping supplements by time blocks, collecting active timers, checking whether a schedule is checkable - all of this sat directly in database queries or component hooks. Makes sense on the surface - data goes in, processed data comes out. Problem? You can't test it without a database or rendering a component.
+
+Example - `get-shopping-list.ts` before refactoring. One query, 227 lines, business logic (forecast, grouping, sorting) mixed with database fetching:
+
+```ts
+// get-shopping-list.ts - 227 lines, BEFORE refactor
+export async function getShoppingList(userId: string): Promise<ShoppingGroup[]> {
+  // 1. Database query - fine
+  const rows = await db
+    .select({ /* ...8 columns + SQL aggregation */ })
+    .from(supplements)
+    .leftJoin(supplementSchedules, ...)
+    .leftJoin(protocols, ...)
+    .where(...)
+    .groupBy(supplements.id)
+    .having(...);
+
+  // 2. Second query for schedules
+  const scheduleRows = await db.select({...}).from(supplementSchedules)...
+
+  // 3. Business logic - SHOULDN'T BE HERE
+  for (const row of rows) {
+    const daysRemaining = forecastDaysInStock(stock, schedules, today);
+    if (daysRemaining <= effectiveThreshold) {
+      mustBuyItems.push(item);
+    } else if (daysRemaining <= SUGGEST_ADD_DAYS) {
+      suggestAddItems.push(item);
+    }
+  }
+
+  // 4. Grouping by shops, sorting - ALSO NOT HERE
+  const groupMap = new Map<string | null, ShoppingItem[]>();
+  for (const item of allItems) { /* ... */ }
+
+  // 5. Fetch shops, build result structure
+  const shopsData = await db.select({...}).from(shops)...
+  // ...40 more lines
+}
+```
+
+After refactoring - query only fetches, pure function does the rest:
+
+```ts
+// get-shopping-list.ts - 101 lines, query and nothing else
+export async function getShoppingList(userId: string): Promise<ShoppingGroup[]> {
+  const rows = await db.select({...}).from(supplements)...
+  const scheduleRows = await db.select({...}).from(supplementSchedules)...
+  const shopsData = await db.select({...}).from(shops)...
+
+  return buildShoppingList(rows, scheduleRows, shopsData);
+}
+
+// build-shopping-list.ts - 151 lines, pure function
+// ZERO database imports, ZERO async, ZERO side-effects
+export function buildShoppingList(
+  rows: RawSupplement[],
+  schedules: ScheduleRow[],
+  shops: ShopInfo[],
+): ShoppingGroup[] {
+  // all business logic here
+}
+```
+
+```ts
+// build-shopping-list.test.ts - testable without a database
+it("groups items by shop", () => {
+  const result = buildShoppingList(
+    [mockSupplement({ shopId: "shop-1" })],
+    [mockSchedule({ supplementId: "supp-1" })],
+    [mockShop({ id: "shop-1" })],
+  );
+  expect(result[0].shop?.id).toBe("shop-1");
+});
+```
+
+I applied the same pattern to `build-stock-list.ts`, `build-daily-context.ts`, `collect-timers.ts` and `checkable-entries.ts`. Over 1000 lines of new tests total. Highest ROI refactor.
+
+## Multiple sources of truth
+
+The agent created a `manage-shop` action with an `action: "create" | "update" | "delete"` parameter and three code paths in one function. Route handlers were 150+ lines in a single `route.ts` - request parsing, AI prompt building, API call, response parsing, database write. Logic scattered across layers with no clear separation of responsibility.
+
+I split `manage-shop` into three files: `create-shop.ts`, `update-shop.ts`, `delete-shop.ts`. From route handlers I extracted services: `build-ai-prompts.ts`, `protocol-parse-service.ts`, `cart-parse-service.ts`, `push-send-service.ts`. The route handler now does what it should - accepts a request, calls a service, returns a response.
+
+## Duplicated components
+
+The agent in different sessions created similar components without knowing an analogous one already existed. Two different ways to display supplement badges, two approaches to confirmation dialogs, two time formatting implementations. Without an up-to-date `CLAUDE.md` describing existing components, the agent just wrote from scratch.
+
+There was no single fix here - it required reviewing the codebase and deciding which version stays. Sometimes the newer one was better, sometimes the older one. More important than the cleanup itself was adding conventions to `CLAUDE.md` so the agent knows what already exists.
+
+## Deprecated library usage
+
+The agent used library APIs it knows from training data, not from current documentation. Old patterns in shadcn/ui, outdated Drizzle usage, deprecated approaches in Next.js. The code worked because libraries maintain backward compatibility, but it generated warnings and didn't use newer, better APIs.
+
+I fixed this by connecting the agent to current documentation via context7 MCP and adding a rule in `CLAUDE.md` to always check docs instead of relying on training knowledge.
+
+## Why AI makes these mistakes
+
+An LLM generates code without architectural context of your project. It doesn't know that hooks live in separate files, that you have a folder + barrel export convention, or what your dependency tree looks like. It sees one file and optimizes for one thing: making the code work. The prompt says "do X", not "do X following conventions Y", so the LLM does X the shortest way.
+
+But that's only half the problem. The other half was me. I wasn't keeping `CLAUDE.md` up to date, so the agent didn't have current context. I wasn't updating the roadmap, so there was no single source of truth about what's done and what isn't. I was delegating multiple features at once without planning how they should work together. The AI did what it could with what it got - and it got too little.
+
+The fix? Give AI context and maintain it. I wrote `CLAUDE.md` with project conventions - co-location, folder convention, feature public API, separation of queries from logic. After that, refactoring with AI was much easier because Claude knew *how* the target code should look. But `CLAUDE.md` alone isn't enough - you need to update it every time AI does something wrong. The loop: AI makes a mistake → you add a rule to `CLAUDE.md` → AI doesn't repeat it.
+
+## Numbers
+
+- 10 commits over a few days
+- Largest commit: 3900 lines changed (shopping module)
+- Over 1000 lines of new tests
+- Split 3 components of 400-600 lines into ~30 smaller files
+- Extracted 5 pure functions from queries/handlers
+- Moved ~10 files from `shared/` to features
+
+Zero changes in functionality. The app does exactly the same thing. But now I can open any file and know what it does in 10 seconds.
+
+## What I learned
+
+The biggest lesson isn't about code, it's about process. I was doing too much, too fast, without enough planning. I had agents implement features whose details I hadn't fully thought through myself. I wasn't reading the generated code as it came in, so problems accumulated silently. And above all - I treated AI like an authority instead of a tool. You have to think and set the direction, not the other way around. Next time I plan to do everything slower - much more code reading, much more planning before implementation, smaller chunks of work and thoroughly reading my own documents before delegating anything to an agent.
+
+Technically: the highest ROI refactor is extracting pure functions from queries and handlers. Co-location should be the default, with shared reserved for code actually used in multiple places. Single responsibility applies to server actions too.
+
+But more important than the technical stuff: context is king. A well-designed application from the start - a thoughtful `CLAUDE.md`, an up-to-date roadmap, conventions written *before* generating code - saves far more time than refactoring after the fact. You can't predict everything and many things come up along the way. That's why iteration is key: AI makes a mistake, you add a rule, AI doesn't repeat it. Sometimes it's worth going a bit slower.

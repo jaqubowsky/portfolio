@@ -728,14 +728,6 @@ Every entry in `PATHNAMES` is automatically included in the sitemap hreflang map
 
 ## Summary
 
-The pattern boils down to a few principles:
+One config file defines all locale data. `[...locale]` rest params handle routing - `undefined` for default, locale string for others. Translation files are plain TypeScript objects with `as const` for type safety. Content collections use `lang` field for filtering and `translationKey` for linking translations. Hreflang links in `<head>` serve double duty - SEO and language switcher navigation. Browser detection runs once and respects the user's cookie preference. `PATHNAMES` is the single source of truth for localized URLs - navigation, hreflang, and sitemap all derive from it.
 
-1. **One config file** defines all locale data - add a language in one place
-2. **`[...locale]` rest params** handle routing - `undefined` for default, locale string for others
-3. **Translation files** are plain TypeScript objects with `as const` for type safety
-4. **Content collections** use `lang` field for filtering and `translationKey` for linking translations
-5. **Hreflang links** in `<head>` serve double duty - SEO and language switcher navigation
-6. **Browser detection** runs once and respects the user's cookie preference
-7. **`PATHNAMES`** is the single source of truth for localized URLs - navigation, hreflang, and sitemap all derive from it
-
-No external i18n library needed. The whole system is about 200 lines of utility code, fully type-safe, and works with Astro's static generation out of the box.
+The whole system is about 200 lines of utility code, fully type-safe, no external i18n libraries.

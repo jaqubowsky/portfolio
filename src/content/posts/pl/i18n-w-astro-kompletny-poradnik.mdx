@@ -730,12 +730,6 @@ Każdy wpis w `PATHNAMES` jest automatycznie uwzględniony w mapie hreflang site
 
 Wzorzec sprowadza się do kilku zasad:
 
-1. **Jeden plik konfiguracyjny** definiuje wszystkie obsługiwane języki - dodajesz nowy język w jednym miejscu
-2. **Parametry rest `[...locale]`** obsługują routing - `undefined` dla domyślnego, kod języka dla pozostałych
-3. **Pliki tłumaczeń** to zwykłe obiekty TypeScript z `as const` dla bezpieczeństwa typów
-4. **Kolekcje treści** używają pola `lang` do filtrowania i `translationKey` do łączenia tłumaczeń
-5. **Linki hreflang** w `<head>` służą podwójnie - SEO i nawigacja przełącznika języka
-6. **Detekcja przeglądarki** uruchamia się raz i respektuje preferencję ciasteczka użytkownika
-7. **`PATHNAMES`** to jedyne źródło prawdy dla zlokalizowanych URLi - nawigacja, hreflang i sitemap wyprowadzają dane z niego
+Jeden plik konfiguracyjny definiuje wszystkie obsługiwane języki. Parametry rest `[...locale]` obsługują routing - `undefined` dla domyślnego, kod języka dla pozostałych. Pliki tłumaczeń to zwykłe obiekty TypeScript z `as const` dla bezpieczeństwa typów. Kolekcje treści używają pola `lang` do filtrowania i `translationKey` do łączenia tłumaczeń. Linki hreflang w `<head>` służą podwójnie - SEO i nawigacja przełącznika języka. Detekcja przeglądarki uruchamia się raz i respektuje preferencję ciasteczka użytkownika. `PATHNAMES` to jedyne źródło prawdy dla zlokalizowanych URLi - nawigacja, hreflang i sitemap wyprowadzają dane z niego.
 
-Żadna zewnętrzna biblioteka i18n nie jest potrzebna. Cały system to około 200 linii kodu narzędziowego, w pełni type-safe i działa z generowaniem statycznym Astro od razu.
+Cały system to około 200 linii kodu narzędziowego, w pełni type-safe, bez zewnętrznych bibliotek i18n.

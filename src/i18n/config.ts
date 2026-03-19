@@ -46,6 +46,10 @@ export const PATHNAMES = {
     pl: '/blog/ile-kosztuje-strona-internetowa',
     en: '/blog/how-much-does-website-cost',
   },
+  '/blog/refactoring-ai-code': {
+    pl: '/blog/refaktoryzacja-kodu-ai',
+    en: '/blog/refactoring-ai-code',
+  },
   '/category/programming': {
     pl: '/category/programowanie',
     en: '/category/programming',

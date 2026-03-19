@@ -21,12 +21,12 @@ W tym poradniku przeprowadzę cię przez proces wdrażania strony Astro 5 z SSR 
 
 ## Dlaczego self-hosting?
 
-Vercel jest świetny do wdrożeń, ale self-hosting daje ci:
+Vercel działa, ale self-hosting daje ci:
 
-- **Kontrolę nad kosztami** - jeden VPS może obsługiwać wiele aplikacji zamiast płacenia za każdy projekt
-- **Pełną kontrolę nad infrastrukturą** - żadnych niespodzianek, limitów ani vendor lock-in
-- **Szansę na naukę** - zrozumienie Dockera, reverse proxy i sieci czyni cię lepszym developerem
-- **Prywatność** - twoje dane zostają na twoim serwerze
+- Kontrolę nad kosztami - jeden VPS może obsługiwać wiele aplikacji zamiast płacenia za każdy projekt
+- Pełną kontrolę nad infrastrukturą - żadnych niespodzianek, limitów ani vendor lock-in
+- Szansę na naukę - zrozumienie Dockera, reverse proxy i sieci
+- Prywatność - twoje dane zostają na twoim serwerze
 
 Uruchamiam swoje portfolio, dwie aplikacje Next.js i serwer bazy danych na jednym VPS za €7/miesiąc.
 
@@ -93,9 +93,9 @@ CMD ["node", "./dist/server/entry.mjs"]
 
 Kluczowe decyzje:
 
-- **Wieloetapowy build** - etap `deps` cachuje `node_modules`, etap `build` kompiluje, a etap `runtime` zawiera tylko to, co potrzebne do uruchomienia
-- **`HOST=0.0.0.0`** - krytyczne. Bez tego serwer nasłuchuje tylko na localhost wewnątrz kontenera i Traefik nie może do niego dotrzeć
-- **`PORT=3000`** - dopasuj to do konfiguracji domeny w Dokploy
+- Wieloetapowy build - etap `deps` cachuje `node_modules`, etap `build` kompiluje, a etap `runtime` zawiera tylko to, co potrzebne do uruchomienia
+- `HOST=0.0.0.0` - bez tego serwer nasłuchuje tylko na localhost wewnątrz kontenera i Traefik nie może do niego dotrzeć
+- `PORT=3000` - dopasuj to do konfiguracji domeny w Dokploy
 
 Nie zapomnij o `.dockerignore`:
 
@@ -237,9 +237,9 @@ Kliknij **Deploy** w Dokploy. Wykona:
 
 Sprawdź logi budowania pod kątem błędów. Częste problemy:
 
-- **Build nie działa** - brakujące build args dla zmiennych `PUBLIC_*`
-- **Kontener startuje, ale 502** - zły port lub `HOST` nie ustawiony na `0.0.0.0`
-- **SSL nie działa** - DNS jeszcze się nie propagował lub używasz trybu proxy Cloudflare
+- Build nie działa - brakujące build args dla zmiennych `PUBLIC_*`
+- Kontener startuje, ale 502 - zły port lub `HOST` nie ustawiony na `0.0.0.0`
+- SSL nie działa - DNS jeszcze się nie propagował lub używasz trybu proxy Cloudflare
 
 ## Krok 8: Auto-Deploy
 
@@ -270,15 +270,8 @@ await resend.emails.send({
 
 ## Efekt końcowy
 
-Mam swoją stronę Astro 5 wdrożoną na Dokploy i działa świetnie. Mogę uruchamiać wiele aplikacji na jednym VPS i mam pełną kontrolę nad infrastrukturą.
+Moje portfolio działa na VPS Hetzner obok dwóch innych aplikacji z automatycznym SSL przez Let's Encrypt, kompresją gzip przez Traefik i auto-deploy z GitHub. Wszystko za €7/miesiąc.
 
-Moje portfolio działa na VPS Hetzner obok dwóch innych aplikacji z:
-
-- Automatycznym SSL przez Let's Encrypt
-- Kompresją gzip przez Traefik
-- Auto-deploy z GitHub
-- Zerowym kosztem miesięcznym poza VPS (€7/miesiąc za wszystko)
-
-Konfiguracja zajęła mi około godziny i od tamtej pory działa stabilnie. Jeśli znasz podstawy Dockera, nie ma powodu, żeby zostawać na darmowym planie Vercel z jego ograniczeniami.
+Konfiguracja zajęła mi około godziny i od tamtej pory nie musiałem przy tym nic ruszać. Jeśli znasz podstawy Dockera, nie ma powodu, żeby zostawać na darmowym planie Vercel z jego ograniczeniami.
 
 Kod źródłowy mojego portfolio jest na [GitHubie](https://github.com/jaqubowsky/portfolio), jeśli chcesz zobaczyć Dockerfile i konfigurację.
