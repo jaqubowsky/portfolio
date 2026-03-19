@@ -11,9 +11,9 @@ import {
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
 import { Icon } from "astro-icon/components";
+import pillPilotImg from "@images/projects/pill-pilot.webp";
 import jobzImg from "@images/projects/jobz.webp";
 import substatzImg from "@images/projects/substatz.webp";
-import createNextjsImg from "@images/projects/create-nextjs-app.webp";
 import { t, getLocale } from "@i18n";
 
 const locale = getLocale(Astro.currentLocale);
@@ -22,38 +22,35 @@ const strings = t(locale);
 const projects = [
   {
     number: "01",
-    title: "jobZ",
+    title: "PillPilot",
     description: strings.projects.items[0].description,
+    tech: ["Next.js 16", "Vercel AI SDK", "Drizzle ORM", "PWA", "web-push"],
+    github: "https://github.com/jaqubowsky/pill-pilot",
+    live: "https://pillpilot.jnalewajk.me",
+    image: pillPilotImg,
+    featured: true as const,
+  },
+  {
+    number: "02",
+    title: "jobZ",
+    description: strings.projects.items[1].description,
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
     github: "https://github.com/jaqubowsky/jobZ",
     live: "https://jobzzz.jnalewajk.me",
     image: jobzImg,
-  },
-  {
-    number: "02",
-    title: "SubStatZ",
-    description: strings.projects.items[1].description,
-    tech: ["Next.js", "Prisma", "Stripe", "Sentry", "Docker"],
-    github: "https://github.com/jaqubowsky/substatz",
-    live: "https://substatz.jnalewajk.me",
-    image: substatzImg,
+    featured: false as const,
   },
   {
     number: "03",
-    title: "NextJS Scaffolding Template",
+    title: "SubStatZ",
     description: strings.projects.items[2].description,
-    tech: [
-      "Next.js 15",
-      "Drizzle ORM",
-      "Better Auth",
-      "Docker",
-      "GitHub Actions",
-    ],
-    github: "https://github.com/jaqubowsky/create-nextjs-app",
-    live: null,
-    image: createNextjsImg,
+    tech: ["Next.js 16", "Prisma", "Stripe", "Sentry", "Docker"],
+    github: "https://github.com/jaqubowsky/substatz",
+    live: "https://substatz.jnalewajk.me",
+    image: substatzImg,
+    featured: false as const,
   },
-] as const;
+];
 ---
 
 <Section class="gap-10" id="projects">

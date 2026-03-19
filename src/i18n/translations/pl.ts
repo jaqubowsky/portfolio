@@ -1,8 +1,8 @@
 export default {
   meta: {
-    title: 'Jakub Nalewajk - Programista Frontend & Next.js Developer',
+    title: 'Jakub Nalewajk - Fullstack & Next.js Developer',
     description:
-      'Programista frontend z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js. 4+ lata doświadczenia. Napisz do mnie.',
+      'Fullstack developer z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js — od bazy danych po wdrożenie. 4+ lata doświadczenia. Napisz do mnie.',
     keywords:
       'Jakub Nalewajk, Jakub Nalewajk programista, Strona na Miarę, programista, programista frontend, programista Pułtusk, programista w okolicy Pułtuska, programista mazowieckie, programista w okolicy, strona internetowa na zamówienie, strona na zlecenie, strona na zlecenie Pułtusk, tworzenie stron internetowych, tworzenie stron Pułtusk, aplikacje webowe na zamówienie, strona na zamówienie, strona internetowa na zlecenie, pozycjonowanie SEO, React, Next.js, Next.js developer, programista Next.js, TypeScript, portfolio, frontend developer, frontend developer Next.js, tworzenie aplikacji webowych, programista Warszawa, web developer Pułtusk, strony internetowe na zlecenie, freelancer programista',
     blogTitle: 'Blog - Jakub Nalewajk',
@@ -23,9 +23,9 @@ export default {
     closeMenu: 'Zamknij menu',
   },
   hero: {
-    jobTitle: 'Frontend Developer',
+    jobTitle: 'Fullstack Developer',
     description:
-      'Programista frontend i Next.js developer z ponad 4-letnim doświadczeniem. Buduję szybkie aplikacje webowe i strony internetowe na zamówienie - od architektury po wdrożenie. Dostępny jako freelancer i jako developer w zespole.',
+      'Fullstack i Next.js developer z ponad 4-letnim doświadczeniem. Buduję szybkie aplikacje webowe i strony internetowe na zamówienie — od projektowania bazy danych po wdrożenie. Dostępny jako freelancer i jako developer w zespole.',
     cta: 'Napisz do mnie',
     downloadCv: 'Pobierz CV',
   },
@@ -73,15 +73,15 @@ export default {
     items: [
       {
         description:
-          'Miałem dość ręcznego przeglądania ofert pracy na kilku portalach. Zbudowałem platformę, która scrapuje polskie portale i rankinguje oferty względem mojego profilu za pomocą embeddingów wektorowych i re-rankingu AI.',
+          'Lecząc jelita z dietetykiem klinicznym, brałem 20+ suplementów i antybiotyków z kilku protokołów — totalny chaos. Zbudowałem fullstackową PWA, gdzie AI parsuje protokoły od lekarza (PDF, Excel, zdjęcia), łączy je z moim inwentarzem i tworzy dzienny plan — z prognozą zapasów, powiadomieniami push i odhaczaniem jednym tapnięciem.',
       },
       {
         description:
-          'Straciłem kontrolę nad subskrypcjami - nie wiedziałem ile płacę miesięcznie. Stworzyłem apkę do śledzenia i zarządzania subskrypcjami z płatnościami Stripe i monitoringiem Sentry.',
+          'Miałem dość ręcznego przeglądania ofert pracy na kilku portalach. Zbudowałem fullstackową platformę w monorepo Turborepo — scrapuje polskie portale, generuje embeddingi wektorowe przez Transformers.js i re-rankinguje oferty. Supabase z pgvector do wyszukiwania podobieństwa, cała inferencja AI działa lokalnie w TypeScript.',
       },
       {
         description:
-          'Przy każdym nowym projekcie konfigurowałem to samo od zera. Zbudowałem gotowy szablon z Better Auth (Google OAuth), Stripe, Sentry, Docker i CI/CD - teraz startuję nowy projekt w minuty zamiast godzin.',
+          'Straciłem kontrolę nad subskrypcjami — nie wiedziałem ile płacę miesięcznie. Zbudowałem fullstackową apkę z MySQL + Prisma, płatnościami Stripe za premium, synchronizacją kursów walut i analityką wydatków w Recharts. Warstwowe server actions z auth, rate limitingiem i Sentry.',
       },
     ],
   },

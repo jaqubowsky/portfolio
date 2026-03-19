@@ -1,10 +1,10 @@
 export default {
   meta: {
-    title: 'Jakub Nalewajk - Frontend & Next.js Developer for Hire',
+    title: 'Jakub Nalewajk - Fullstack & Next.js Developer for Hire',
     description:
-      'Freelance frontend & Next.js developer from Poland. I build fast web apps and custom websites in React and Next.js. 4+ years of experience. Get in touch.',
+      'Fullstack & Next.js developer from Poland. I build fast web apps and custom websites — from database design to deployment. 4+ years of experience. Get in touch.',
     keywords:
-      'Jakub Nalewajk, Frontend Developer, Next.js developer, React developer, hire Next.js developer, hire frontend developer, freelance frontend developer, freelance Next.js developer, freelance React developer, TypeScript developer, portfolio, web developer, web developer Poland, custom websites, web applications, SEO optimization, freelance developer Poland, Next.js developer for hire, React developer for hire, frontend developer for hire, web developer for hire',
+      'Jakub Nalewajk, Fullstack Developer, Next.js developer, React developer, hire fullstack developer, hire Next.js developer, freelance fullstack developer, freelance Next.js developer, freelance React developer, TypeScript developer, portfolio, web developer, web developer Poland, custom websites, web applications, SEO optimization, freelance developer Poland, fullstack developer for hire, Next.js developer for hire, React developer for hire, web developer for hire',
     blogTitle: 'Blog - Jakub Nalewajk',
     blogDescription:
       'Practical articles about Next.js, React, TypeScript, and building websites. Tutorials, problem-solving, and lessons from real projects.',
@@ -23,9 +23,9 @@ export default {
     closeMenu: 'Close menu',
   },
   hero: {
-    jobTitle: 'Frontend Developer',
+    jobTitle: 'Fullstack Developer',
     description:
-      'Frontend & Next.js Developer with 4+ years of experience. I build fast web applications and custom websites - from architecture to deployment. Available as a freelancer or as a developer on your team.',
+      'Fullstack & Next.js Developer with 4+ years of experience. I build fast web applications and custom websites - from database design to deployment. Available as a freelancer or as a developer on your team.',
     cta: 'Get in Touch',
     downloadCv: 'Download CV',
   },
@@ -73,15 +73,15 @@ export default {
     items: [
       {
         description:
-          'Got tired of manually browsing job offers across multiple boards. Built a platform that scrapes Polish job portals and ranks offers against my profile using vector embeddings and AI re-ranking.',
+          'While treating gut issues with a clinical dietitian, I was juggling 20+ supplements and antibiotics across multiple protocols. Built a fullstack PWA where AI parses doctor protocols (PDF, Excel, images), links them to my inventory, and builds a daily plan — with stock forecasting, push notifications, and one-tap check-off.',
       },
       {
         description:
-          'Lost track of my subscriptions - had no idea how much I was paying monthly. Built an app to track and manage them with Stripe payments and Sentry monitoring.',
+          'Got tired of manually browsing job offers across multiple boards. Built a fullstack platform with a Turborepo monorepo — scrapes Polish job portals, generates vector embeddings with Transformers.js, and re-ranks offers against my profile. Supabase with pgvector for similarity search, all AI inference runs locally in TypeScript.',
       },
       {
         description:
-          'Was setting up the same boilerplate for every new project. Built a production-ready template with Better Auth (Google OAuth), Stripe, Sentry, Docker and CI/CD - now I start a new project in minutes instead of hours.',
+          'Lost track of my subscriptions — had no idea how much I was paying monthly. Built a fullstack app with MySQL + Prisma, Stripe payments for premium, multi-currency exchange rate syncing, and spending analytics with Recharts. Tiered server actions with auth, rate limiting, and Sentry error capture.',
       },
     ],
   },
@@ -288,7 +288,7 @@ export default {
     },
   },
   seo: {
-    jobTitle: 'Frontend Developer / Next.js Developer',
+    jobTitle: 'Fullstack Developer / Next.js Developer',
     knowsAbout: [
       'web development',
       'web applications',
