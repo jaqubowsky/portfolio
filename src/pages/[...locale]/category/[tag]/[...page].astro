@@ -7,6 +7,7 @@ import type { PaginateFunction } from "astro";
 import { Icon } from "astro-icon/components";
 import { getPostData, getPostsForLocale } from "@utils/posts";
 import { t, getLocaleParam } from "@i18n";
+import { getAlternateCategoryPath } from "@i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { LOCALES } from "@i18n/config";
 import type { InferGetStaticPropsType } from "astro";
@@ -43,6 +44,7 @@ const { locale, page } = Astro.props;
 const { tag } = Astro.params;
 
 const strings = t(locale);
+const alternateHref = getAlternateCategoryPath(tag!, locale);
 const siteUrl = Astro.site?.toString() ?? "";
 const breadcrumbs = [
   {
@@ -68,6 +70,7 @@ const breadcrumbs = [
   description={`${strings.blog.postsTagged} ${tag} - Jakub Nalewajk.`}
   noindex={page.currentPage > 1}
   breadcrumbs={breadcrumbs}
+  alternateHref={alternateHref}
 >
   <Section id="blog" class="gap-12">
     <Flex class="flex-wrap gap-4 flex-col items-start justify-start mt-4 w-full animate-on-scroll">

@@ -27,6 +27,7 @@ export const AUTHOR = {
   socials: [
     "https://github.com/jaqubowsky",
     "https://www.linkedin.com/in/jakub-nalewajk/",
+    "https://share.google/AucDHNnwoLu5qzpS8",
   ],
   address: {
     locality: "Pułtusk",
@@ -219,7 +220,10 @@ function getJsonLd(options: JsonLdOptions) {
     image: imageUrl,
     url: canonicalUrl,
     inLanguage: lang,
-    ...(publishedDate && { datePublished: publishedDate.toISOString() }),
+    ...(publishedDate && {
+      datePublished: publishedDate.toISOString(),
+      dateModified: publishedDate.toISOString(),
+    }),
     author: {
       "@type": "Person",
       "@id": `${siteUrl}#person`,

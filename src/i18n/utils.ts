@@ -101,6 +101,24 @@ export function buildLastmodMap(siteUrl: string, postsDir: string): Map<string, 
   return map
 }
 
+export function getAlternateCategoryPath(tag: string, locale: Locale): string | undefined {
+  const [altLocale] = LOCALES.filter((l) => l !== locale)
+  const currentCategoryPath = `/category/${tag}`
+
+  for (const entry of Object.values(PATHNAMES)) {
+    if (typeof entry === 'string') {
+      if (entry === currentCategoryPath) {
+        return getLocalizedPathname(entry, altLocale)
+      }
+      continue
+    }
+    if (entry[locale] === currentCategoryPath) {
+      return getLocalizedPathname(entry[altLocale], altLocale)
+    }
+  }
+  return undefined
+}
+
 export function formatDate(date: Date | string, locale: Locale = DEFAULT_LOCALE) {
   return new Intl.DateTimeFormat(LOCALE_BCP47[locale], {
     year: 'numeric',

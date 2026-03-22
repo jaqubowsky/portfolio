@@ -62,6 +62,7 @@ export default defineConfig({
     mode: 'standalone',
   }),
 
+  trailingSlash: 'always',
   compressHTML: true,
 
   env: {
