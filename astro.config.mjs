@@ -13,6 +13,7 @@ const SITE = 'https://jnalewajk.me'
 const legacyRedirects = {
   '/blog/deploying-astro-on-dokploy/': '/en/blog/deploying-astro-on-dokploy/',
   '/blog/my-programming-journey/': '/en/blog/my-programming-journey/',
+  '/en/category/programowanie/': '/en/category/programming/',
 }
 
 const hreflangMap = buildHreflangMap(SITE)
