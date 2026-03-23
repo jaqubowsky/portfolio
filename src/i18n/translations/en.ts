@@ -2,7 +2,7 @@ export default {
   meta: {
     title: 'Jakub Nalewajk - Fullstack & Next.js Developer for Hire',
     description:
-      'Fullstack & Next.js developer from Poland. I build fast web apps and custom websites — from database design to deployment. 4+ years of experience. Get in touch.',
+      'Fullstack & Next.js developer from Poland. I build fast web apps and custom websites - from database design to deployment. 4+ years of experience. Get in touch.',
     keywords:
       'Jakub Nalewajk, Fullstack Developer, Next.js developer, React developer, hire fullstack developer, hire Next.js developer, freelance fullstack developer, freelance Next.js developer, freelance React developer, TypeScript developer, portfolio, web developer, web developer Poland, custom websites, web applications, SEO optimization, freelance developer Poland, fullstack developer for hire, Next.js developer for hire, React developer for hire, web developer for hire',
     blogTitle: 'Blog - Jakub Nalewajk',
@@ -42,25 +42,25 @@ export default {
       {
         company: 'CodeYourBrand',
         role: 'Frontend Developer',
-        tech: 'Next.js, Nx, Turborepo',
+        tech: 'Next.js, Strapi, Nx, Turborepo',
         period: 'Oct 2025 – Present',
         location: 'Remote',
         bullets: [
-          "Owned frontend development of Maspex Photo Service for one of Central Europe's largest FMCG companies and built customer-facing application and admin panel using Turborepo and Next.js; delivered in under 6 months and approved by the client.",
-          'Led frontend development for a Dubai Real Estate platform as project owner, implementing layered architecture with Nx, Next.js 16, and Strapi CMS; built a reusable component library documented with Storybook.',
-          'Shipped features and reviewed PRs across the frontend team for the TwoContinents travel platform, improving code quality and consistency.',
+          "Owned development of Maspex Photo Service for one of Central Europe's largest FMCG companies; built customer-facing app and admin panel using Turborepo and Next.js, delivered in under 6 months.",
+          'Led development of a Dubai Real Estate platform as project owner - designed layered architecture with Nx, Next.js 16, and Strapi CMS, and built a reusable component library documented with Storybook.',
+          'Shipped features and reviewed PRs across the team for the TwoContinents travel platform.',
         ],
       },
       {
-        company: 'Haergi',
+        company: 'Instago Inc.',
         role: 'Fullstack Developer',
         tech: 'Next.js, Express',
         period: 'Aug 2023 – Oct 2025',
         location: 'Warsaw, Poland',
         bullets: [
           'Built e-commerce platform for B2B food ordering that handled 3,500+ orders monthly.',
-          'Created intuitive ordering interface for Mezze Foods restaurant B2B clients that replaced manual phone orders, with integrated PayU and Stripe payments.',
-          'Developed InstagoAI - an AI-powered website builder enabling non-technical users to create sites in under 15 minutes.',
+          'Built ordering interface for Mezze Foods restaurant B2B clients - replaced phone orders. PayU and Stripe payments.',
+          'Built InstagoAI - an AI website builder. Non-technical users can put up a site in under 15 minutes.',
         ],
       },
     ],
@@ -73,15 +73,15 @@ export default {
     items: [
       {
         description:
-          'While treating gut issues with a clinical dietitian, I was juggling 20+ supplements and antibiotics across multiple protocols. Built a fullstack PWA where AI parses doctor protocols (PDF, Excel, images), links them to my inventory, and builds a daily plan — with stock forecasting, push notifications, and one-tap check-off.',
+          'While treating gut issues with a clinical dietitian, I was juggling 20+ supplements and antibiotics across multiple protocols. Built a fullstack PWA where AI parses doctor protocols (PDF, Excel, images), links them to my inventory, and builds a daily plan - with stock forecasting, push notifications, and one-tap check-off.',
       },
       {
         description:
-          'Got tired of manually browsing job offers across multiple boards. Built a fullstack platform with a Turborepo monorepo — scrapes Polish job portals, generates vector embeddings with Transformers.js, and re-ranks offers against my profile. Supabase with pgvector for similarity search, all AI inference runs locally in TypeScript.',
+          'Got tired of manually browsing job offers across multiple boards. Built a fullstack platform with a Turborepo monorepo - scrapes Polish job portals, generates vector embeddings with Transformers.js, and re-ranks offers against my profile. Supabase with pgvector for similarity search, all AI inference runs locally in TypeScript.',
       },
       {
         description:
-          'Lost track of my subscriptions — had no idea how much I was paying monthly. Built a fullstack app with MySQL + Prisma, Stripe payments for premium, multi-currency exchange rate syncing, and spending analytics with Recharts. Tiered server actions with auth, rate limiting, and Sentry error capture.',
+          'Lost track of my subscriptions - had no idea how much I was paying monthly. Built a fullstack app with MySQL + Prisma, Stripe payments for premium, currency exchange rate syncing, and spending analytics with Recharts. Tiered server actions with auth, rate limiting, and Sentry.',
       },
     ],
   },
@@ -89,7 +89,7 @@ export default {
     badge: 'Services',
     title: 'What I Can Build for You',
     description:
-      'I build custom websites and web applications for businesses and individuals. Hairdresser, gardener, online store - every business deserves a professional web presence.',
+      'I build custom websites and web applications for businesses and individuals. Hairdresser, gardener, online store - I get you online.',
     items: [
       {
         icon: 'mdi:web',
@@ -101,13 +101,13 @@ export default {
         icon: 'mdi:application-outline',
         title: 'Online System',
         description:
-          'Custom solution tailored to your business - booking system, order management panel, or a client-facing form.',
+          'More than a website - booking system, order management panel, or a form for your clients. Built around how your business works.',
       },
       {
         icon: 'mdi:chart-line',
         title: 'Google-Ready',
         description:
-          'Every project is built with search engines in mind from day one - speed, proper structure, meta tags. A solid foundation so Google can find you.',
+          'Every project is built with search engines in mind from day one - speed, proper structure, meta tags. So Google can find you.',
       },
     ],
     processBadge: 'Process',
@@ -148,9 +148,9 @@ export default {
       name: 'jnalewajk.me',
       subtitle: 'Business website with blog',
       problem:
-        'I needed a professional site to showcase my services, experience, and projects - with a blog, contact form, and two languages.',
+        'I needed a site that shows what I do and what I have worked on - with a blog, contact form, and two languages.',
       solution:
-        'The site loads lightning-fast, ranks well on Google, and looks great on any device. It has a contact form, a blog with articles, and automatic language switching. Everything designed and built by me from scratch.',
+        'Loads in under 1.5 seconds, ranks on Google, works on mobile. Contact form, blog, and automatic language switching. Built by me from scratch.',
       results: [
         { value: '95+', label: 'Google Performance' },
         { value: '<1.5s', label: 'Load time' },
@@ -165,7 +165,7 @@ export default {
   skills: {
     badge: 'Skills',
     title: 'What I Work With',
-    description: 'Technologies I use daily to build fast, scalable web applications.',
+    description: 'Technologies I use daily.',
     categories: {
       frontend: 'Frontend',
       backend: 'Backend',
@@ -177,7 +177,7 @@ export default {
     badge: 'Contact',
     title: "Let's Work Together",
     description:
-      "Looking to hire a frontend or Next.js developer for your team? Need a custom website for your business? Drop me a message - I'll respond within 24 hours.",
+      "Looking to hire a fullstack developer for your team? Need a custom website or web app? Drop me a message - I'll respond within 24 hours.",
     sendMessage: 'Send a Message',
     responseTime: "I'll respond within 24 hours.",
     reachOut: 'Reach Out Directly',
@@ -222,9 +222,9 @@ export default {
   servicesPage: {
     metaTitle: 'Services - Custom Websites & Web Apps | Jakub Nalewajk',
     metaDescription:
-      'I build custom websites and web applications for businesses and individuals. Hairdresser, gardener, online store - every business deserves a professional web presence.',
+      'I build custom websites and web applications for businesses and individuals. Hairdresser, gardener, online store - I get you online.',
     metaKeywords:
-      'custom websites, web development Poland, freelance frontend developer, business website, web applications, booking system, SEO optimization, React developer, Next.js developer, affordable website, professional website, website for small business',
+      'custom websites, web development Poland, freelance fullstack developer, business website, web applications, booking system, SEO optimization, React developer, Next.js developer, Node.js developer, affordable website, professional website, website for small business',
     heroTitle: 'A Professional Website for Your Business',
     heroDescription:
       'Need a website that attracts customers? Tell me what you need - I\'ll build it. Fast, no jargon, exactly the way you want it.',
@@ -293,16 +293,19 @@ export default {
       'web development',
       'web applications',
       'custom websites',
-      'frontend development',
+      'fullstack development',
+      'Node.js',
+      'Drizzle',
+      'PostgreSQL',
       'Next.js',
       'React',
       'TypeScript',
       'technical SEO optimization',
     ],
-    serviceName: 'Strona na Miarę – Jakub Nalewajk | Frontend & Next.js Developer',
+    serviceName: 'Strona na Miarę – Jakub Nalewajk | Fullstack & Next.js Developer',
     serviceType: 'Web development, custom websites, and web applications',
     serviceDescription:
-      'Freelance frontend and Next.js developer from Pułtusk, Poland - available for hire. Building custom websites, online systems, and web applications with React and Next.js.',
+      'Freelance fullstack and Next.js developer from Pułtusk, Poland - available for hire. Building custom websites, online systems, and web applications with React, Next.js, and Node.js.',
     countryName: 'Poland',
     offerCatalogName: 'Development services',
     offers: [

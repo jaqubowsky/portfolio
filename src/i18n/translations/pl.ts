@@ -2,9 +2,9 @@ export default {
   meta: {
     title: 'Jakub Nalewajk - Fullstack & Next.js Developer',
     description:
-      'Fullstack developer z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js — od bazy danych po wdrożenie. 4+ lata doświadczenia. Napisz do mnie.',
+      'Fullstack developer z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js - od bazy danych po wdrożenie. 4+ lata doświadczenia. Napisz do mnie.',
     keywords:
-      'Jakub Nalewajk, Jakub Nalewajk programista, Strona na Miarę, programista, programista frontend, programista Pułtusk, programista w okolicy Pułtuska, programista mazowieckie, programista w okolicy, strona internetowa na zamówienie, strona na zlecenie, strona na zlecenie Pułtusk, tworzenie stron internetowych, tworzenie stron Pułtusk, aplikacje webowe na zamówienie, strona na zamówienie, strona internetowa na zlecenie, pozycjonowanie SEO, React, Next.js, Next.js developer, programista Next.js, TypeScript, portfolio, frontend developer, frontend developer Next.js, tworzenie aplikacji webowych, programista Warszawa, web developer Pułtusk, strony internetowe na zlecenie, freelancer programista',
+      'Jakub Nalewajk, Jakub Nalewajk programista, Strona na Miarę, programista, programista fullstack, fullstack developer, programista Pułtusk, programista w okolicy Pułtuska, programista mazowieckie, programista w okolicy, strona internetowa na zamówienie, strona na zlecenie, strona na zlecenie Pułtusk, tworzenie stron internetowych, tworzenie stron Pułtusk, aplikacje webowe na zamówienie, strona na zamówienie, strona internetowa na zlecenie, pozycjonowanie SEO, React, Next.js, Next.js developer, programista Next.js, TypeScript, Node.js, Express, PostgreSQL, portfolio, fullstack developer Next.js, tworzenie aplikacji webowych, programista Warszawa, web developer Pułtusk, strony internetowe na zlecenie, freelancer programista',
     blogTitle: 'Blog - Jakub Nalewajk',
     blogDescription:
       'Praktyczne artykuły o Next.js, React, TypeScript i tworzeniu stron internetowych. Poradniki, rozwiązania problemów i lekcje z realnych projektów.',
@@ -25,7 +25,7 @@ export default {
   hero: {
     jobTitle: 'Fullstack Developer',
     description:
-      'Fullstack i Next.js developer z ponad 4-letnim doświadczeniem. Buduję szybkie aplikacje webowe i strony internetowe na zamówienie — od projektowania bazy danych po wdrożenie. Dostępny jako freelancer i jako developer w zespole.',
+      'Fullstack i Next.js developer z ponad 4-letnim doświadczeniem. Buduję szybkie aplikacje webowe i strony internetowe na zamówienie - od projektowania bazy danych po wdrożenie. Dostępny jako freelancer i jako developer w zespole.',
     cta: 'Napisz do mnie',
     downloadCv: 'Pobierz CV',
   },
@@ -42,25 +42,25 @@ export default {
       {
         company: 'CodeYourBrand',
         role: 'Frontend Developer',
-        tech: 'Next.js, Nx, Turborepo',
+        tech: 'Next.js, Strapi, Nx, Turborepo',
         period: 'Paź 2025 – Obecnie',
         location: 'Zdalnie',
         bullets: [
-          'Odpowiadałem za frontend Maspex Photo Service dla jednej z największych firm FMCG w Europie Środkowej - zbudowałem aplikację kliencką i panel administracyjny w Turborepo i Next.js; dostarczono w mniej niż 6 miesięcy i zaakceptowano przez klienta.',
-          'Prowadziłem rozwój frontendu platformy Dubai Real Estate jako właściciel projektu, wdrażając warstwową architekturę z Nx, Next.js 16 i Strapi CMS; zbudowałem bibliotekę komponentów udokumentowaną w Storybook.',
-          'Dostarczałem funkcjonalności i przeglądałem PR-y w zespole frontendowym platformy turystycznej TwoContinents, poprawiając jakość i spójność kodu.',
+          'Odpowiadałem za rozwój Maspex Photo Service dla jednej z największych firm FMCG w Europie Środkowej - zbudowałem aplikację kliencką i panel administracyjny w Turborepo i Next.js; dostarczono w mniej niż 6 miesięcy.',
+          'Prowadziłem rozwój platformy Dubai Real Estate jako właściciel projektu - zaprojektowałem warstwową architekturę z Nx, Next.js 16 i Strapi CMS; zbudowałem bibliotekę komponentów udokumentowaną w Storybook.',
+          'Dostarczałem funkcjonalności i przeglądałem PR-y w zespole platformy turystycznej TwoContinents.',
         ],
       },
       {
-        company: 'Haergi',
+        company: 'Instago Inc.',
         role: 'Fullstack Developer',
         tech: 'Next.js, Express',
         period: 'Sie 2023 – Paź 2025',
         location: 'Warszawa',
         bullets: [
           'Zbudowałem platformę e-commerce do zamawiania jedzenia B2B obsługującą ponad 3500 zamówień miesięcznie.',
-          'Stworzyłem intuicyjny interfejs zamawiania dla klientów B2B restauracji Mezze Foods, zastępujący telefoniczne zamówienia, z zintegrowanymi płatnościami PayU i Stripe.',
-          'Opracowałem InstagoAI - kreator stron internetowych oparty na AI, umożliwiający nietechnicznym użytkownikom tworzenie stron w mniej niż 15 minut.',
+          'Zbudowałem interfejs zamawiania dla klientów B2B restauracji Mezze Foods - zastąpił telefoniczne zamówienia. Płatności przez PayU i Stripe.',
+          'Zbudowałem InstagoAI - kreator stron oparty na AI. Osoby bez wiedzy technicznej stawiają stronę w mniej niż 15 minut.',
         ],
       },
     ],
@@ -73,15 +73,15 @@ export default {
     items: [
       {
         description:
-          'Lecząc jelita z dietetykiem klinicznym, brałem 20+ suplementów i antybiotyków z kilku protokołów — totalny chaos. Zbudowałem fullstackową PWA, gdzie AI parsuje protokoły od lekarza (PDF, Excel, zdjęcia), łączy je z moim inwentarzem i tworzy dzienny plan — z prognozą zapasów, powiadomieniami push i odhaczaniem jednym tapnięciem.',
+          'Lecząc jelita z dietetykiem klinicznym, brałem 20+ suplementów i antybiotyków z kilku protokołów - totalny chaos. Zbudowałem fullstackową PWA, gdzie AI parsuje protokoły od lekarza (PDF, Excel, zdjęcia), łączy je z moim inwentarzem i tworzy dzienny plan - z prognozą zapasów, powiadomieniami push i odhaczaniem jednym tapnięciem.',
       },
       {
         description:
-          'Miałem dość ręcznego przeglądania ofert pracy na kilku portalach. Zbudowałem fullstackową platformę w monorepo Turborepo — scrapuje polskie portale, generuje embeddingi wektorowe przez Transformers.js i re-rankinguje oferty. Supabase z pgvector do wyszukiwania podobieństwa, cała inferencja AI działa lokalnie w TypeScript.',
+          'Miałem dość ręcznego przeglądania ofert pracy na kilku portalach. Zbudowałem fullstackową platformę w monorepo Turborepo - scrapuje polskie portale, generuje embeddingi wektorowe przez Transformers.js i re-rankinguje oferty. Supabase z pgvector do wyszukiwania podobieństwa, cała inferencja AI działa lokalnie w TypeScript.',
       },
       {
         description:
-          'Straciłem kontrolę nad subskrypcjami — nie wiedziałem ile płacę miesięcznie. Zbudowałem fullstackową apkę z MySQL + Prisma, płatnościami Stripe za premium, synchronizacją kursów walut i analityką wydatków w Recharts. Warstwowe server actions z auth, rate limitingiem i Sentry.',
+          'Straciłem kontrolę nad subskrypcjami - nie wiedziałem ile płacę miesięcznie. Zbudowałem fullstackową apkę z MySQL + Prisma, płatnościami Stripe za premium, synchronizacją kursów walut i analityką wydatków w Recharts. Warstwowe server actions z auth, rate limitingiem i Sentry.',
       },
     ],
   },
@@ -89,7 +89,7 @@ export default {
     badge: 'Usługi',
     title: 'Co mogę dla Ciebie zbudować',
     description:
-      'Tworzę strony internetowe i aplikacje webowe na zamówienie dla firm i osób prywatnych. Fryzjer, ogrodnik, sklep online - każdy biznes zasługuje na profesjonalną obecność w sieci.',
+      'Tworzę strony internetowe i aplikacje webowe na zamówienie dla firm i osób prywatnych. Fryzjer, ogrodnik, sklep online - postawię Cię w sieci.',
     items: [
       {
         icon: 'mdi:web',
@@ -101,13 +101,13 @@ export default {
         icon: 'mdi:application-outline',
         title: 'System online',
         description:
-          'Dedykowane rozwiązanie dopasowane do Twojego biznesu - system rezerwacji, panel do zarządzania zamówieniami czy formularz dla klientów.',
+          'Coś więcej niż strona - system rezerwacji, panel do zarządzania zamówieniami czy formularz dla klientów. Dopasowane pod Twój biznes.',
       },
       {
         icon: 'mdi:chart-line',
         title: 'Gotowość pod Google',
         description:
-          'Każdy projekt buduję z myślą o wyszukiwarkach od pierwszego dnia - szybkość, poprawna struktura, meta tagi. Solidny fundament, żeby Google mógł Cię znaleźć.',
+          'Każdy projekt buduję z myślą o wyszukiwarkach od pierwszego dnia - szybkość, poprawna struktura, meta tagi. Żeby Google Cię znalazł.',
       },
     ],
     processBadge: 'Współpraca',
@@ -148,9 +148,9 @@ export default {
       name: 'jnalewajk.me',
       subtitle: 'Strona firmowa z blogiem',
       problem:
-        'Potrzebowałem profesjonalnej strony, która pokaże moje usługi, doświadczenie i projekty - z blogiem, formularzem kontaktowym i obsługą dwóch języków.',
+        'Potrzebowałem strony, która pokaże co robię i jakie mam doświadczenie - z blogiem, formularzem kontaktowym i dwoma językami.',
       solution:
-        'Strona działa błyskawicznie, jest widoczna w Google i wygodna na każdym urządzeniu. Ma formularz kontaktowy, blog z artykułami i automatyczne przełączanie języka. Wszystko zaprojektowane i zbudowane przeze mnie od zera.',
+        'Ładuje się w mniej niż 1.5 sekundy, jest widoczna w Google i wygodna na telefonie. Formularz kontaktowy, blog i automatyczne przełączanie języka. Wszystko zbudowane przeze mnie od zera.',
       results: [
         { value: '95+', label: 'Wydajność Google' },
         { value: '<1.5s', label: 'Czas ładowania' },
@@ -166,7 +166,7 @@ export default {
     badge: 'Umiejętności',
     title: 'Z czym pracuję',
     description:
-      'Technologie, których używam na co dzień do budowania szybkich, skalowalnych aplikacji webowych.',
+      'Technologie, z których korzystam na co dzień.',
     categories: {
       frontend: 'Frontend',
       backend: 'Backend',
@@ -178,7 +178,7 @@ export default {
     badge: 'Kontakt',
     title: 'Współpracujmy',
     description:
-      'Szukasz programisty frontend lub Next.js developera do zespołu? Potrzebujesz strony internetowej na zlecenie dla swojej firmy? Napisz - odpowiem w ciągu 24 godzin.',
+      'Szukasz fullstack developera do zespołu? Potrzebujesz strony internetowej lub aplikacji webowej na zlecenie? Napisz - odpowiem w ciągu 24 godzin.',
     sendMessage: 'Wyślij wiadomość',
     responseTime: 'Odpowiem w ciągu 24 godzin.',
     reachOut: 'Skontaktuj się bezpośrednio',
@@ -223,9 +223,9 @@ export default {
   servicesPage: {
     metaTitle: 'Usługi - Strony internetowe na zamówienie | Jakub Nalewajk',
     metaDescription:
-      'Tworzę strony internetowe i aplikacje webowe na zamówienie dla firm i osób prywatnych. Fryzjer, ogrodnik, sklep online - każdy biznes zasługuje na profesjonalną obecność w sieci.',
+      'Tworzę strony internetowe i aplikacje webowe na zamówienie dla firm i osób prywatnych. Fryzjer, ogrodnik, sklep online - postawię Cię w sieci.',
     metaKeywords:
-      'strony internetowe na zamówienie, strony internetowe Pułtusk, tworzenie stron Pułtusk, strona dla firmy, strona internetowa dla firmy, strona wizytówka, strona na zlecenie, programista Pułtusk, programista Warszawa, frontend developer na zlecenie, strony internetowe mazowieckie, tania strona internetowa, profesjonalna strona www, strona dla fryzjera, strona dla mechanika, strona dla ogrodnika, aplikacja webowa na zamówienie, system rezerwacji online, SEO optymalizacja',
+      'strony internetowe na zamówienie, strony internetowe Pułtusk, tworzenie stron Pułtusk, strona dla firmy, strona internetowa dla firmy, strona wizytówka, strona na zlecenie, programista Pułtusk, programista Warszawa, fullstack developer na zlecenie, strony internetowe mazowieckie, tania strona internetowa, profesjonalna strona www, strona dla fryzjera, strona dla mechanika, strona dla ogrodnika, aplikacja webowa na zamówienie, system rezerwacji online, SEO optymalizacja',
     heroTitle: 'Profesjonalna strona internetowa dla Twojej firmy',
     heroDescription:
       'Potrzebujesz strony internetowej, która przyciągnie klientów? Powiedz mi czego potrzebujesz - ja to zbuduję. Szybko, bez zbędnego żargonu, dokładnie po Twojej myśli.',
@@ -289,21 +289,24 @@ export default {
     },
   },
   seo: {
-    jobTitle: 'Programista Frontend / Next.js Developer',
+    jobTitle: 'Programista Fullstack / Next.js Developer',
     knowsAbout: [
       'tworzenie stron internetowych',
       'aplikacje webowe',
       'strony na zamówienie',
       'strony na zlecenie',
-      'programowanie frontend',
+      'programowanie fullstack',
+      'Node.js',
+      'Drizzle',
+      'PostgreSQL',
       'Next.js',
       'React',
       'optymalizacja techniczna pod Google',
     ],
-    serviceName: 'Strona na Miarę – Jakub Nalewajk | Programista Frontend & Next.js Developer',
+    serviceName: 'Strona na Miarę – Jakub Nalewajk | Programista Fullstack & Next.js Developer',
     serviceType: 'Tworzenie stron internetowych i aplikacji webowych na zamówienie i zlecenie',
     serviceDescription:
-      'Strona na Miarę – programista frontend i Next.js developer z Pułtuska (mazowieckie). Tworzę strony internetowe na zamówienie i zlecenie, systemy online i aplikacje webowe w React i Next.js. Obsługuję firmy z Pułtuska, Warszawy i całej Polski.',
+      'Strona na Miarę – programista fullstack i Next.js developer z Pułtuska (mazowieckie). Tworzę strony internetowe na zamówienie i zlecenie, systemy online i aplikacje webowe w React i Next.js. Obsługuję firmy z Pułtuska, Warszawy i całej Polski.',
     countryName: 'Polska',
     offerCatalogName: 'Usługi programistyczne',
     offers: [
