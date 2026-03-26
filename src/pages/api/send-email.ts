@@ -12,6 +12,10 @@ import { Resend } from "resend";
 const resend = new Resend(RESEND_API_KEY);
 
 export const POST: APIRoute = async ({ request }) => {
+  console.log('URL:', request.url);
+  console.log('Origin:', request.headers.get('origin'));
+  console.log('Host:', request.headers.get('host'));
+  console.log('X-Forwarded-Proto:', request.headers.get('x-forwarded-proto'));
   try {
     const data = await request.formData();
     const email = data.get("email") as string | null;
