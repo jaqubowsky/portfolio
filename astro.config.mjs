@@ -60,8 +60,11 @@ export default defineConfig({
 
   adapter: node({
     mode: 'standalone',
-    allowedDomains: [new URL(SITE).hostname],
   }),
+
+  security: {
+    checkOrigin: false,
+  },
 
   trailingSlash: 'always',
   compressHTML: true,
