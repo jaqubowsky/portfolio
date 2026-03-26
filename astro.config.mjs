@@ -49,7 +49,6 @@ export default defineConfig({
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: [...LOCALES],
-    fallback: { en: DEFAULT_LOCALE },
     routing: {
       prefixDefaultLocale: false,
     },
@@ -61,6 +60,7 @@ export default defineConfig({
 
   adapter: node({
     mode: 'standalone',
+    allowedDomains: [new URL(SITE).hostname],
   }),
 
   trailingSlash: 'always',

@@ -108,7 +108,6 @@ export default defineConfig({
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: [...LOCALES],
-    fallback: { en: DEFAULT_LOCALE },
     routing: {
       prefixDefaultLocale: false,
     },
@@ -117,7 +116,7 @@ export default defineConfig({
 })
 ```
 
-With `prefixDefaultLocale: false`, the default locale (Polish) lives at `/` and `/blog/...`, while English gets `/en/` and `/en/blog/...`. This keeps existing URLs stable when you add i18n to an existing site. The `fallback` config tells Astro that English pages should fall back to Polish content when a translation is missing.
+With `prefixDefaultLocale: false`, the default locale (Polish) lives at `/` and `/blog/...`, while English gets `/en/` and `/en/blog/...`. This keeps existing URLs stable when you add i18n to an existing site.
 
 ## Step 3: Translation Strings
 

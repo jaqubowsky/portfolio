@@ -108,7 +108,6 @@ export default defineConfig({
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: [...LOCALES],
-    fallback: { en: DEFAULT_LOCALE },
     routing: {
       prefixDefaultLocale: false,
     },
@@ -117,7 +116,7 @@ export default defineConfig({
 })
 ```
 
-Z `prefixDefaultLocale: false` domyślny język (polski) żyje pod `/` i `/blog/...`, podczas gdy angielski dostaje `/en/` i `/en/blog/...`. To pozwala zachować istniejące URLe stabilne, gdy dodajesz i18n do istniejącej strony. Konfiguracja `fallback` mówi Astro, że strony angielskie powinny spadać do treści polskich, gdy tłumaczenie nie istnieje.
+Z `prefixDefaultLocale: false` domyślny język (polski) żyje pod `/` i `/blog/...`, podczas gdy angielski dostaje `/en/` i `/en/blog/...`. To pozwala zachować istniejące URLe stabilne, gdy dodajesz i18n do istniejącej strony.
 
 ## Krok 3: Teksty tłumaczeń
 
