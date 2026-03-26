@@ -1,7 +1,7 @@
 ---
-title: 'How to Add i18n to Astro 5 Without Libraries (Step-by-Step)'
+title: 'Astro 5 i18n Guide - Multilingual Site Without Libraries'
 pubDate: 2026-03-11
-description: 'Build a fully multilingual Astro 5 site from scratch - routing, translations, SEO hreflang, sitemap, content collections, and language switcher. No next-intl, no plugins.'
+description: 'Complete guide to adding i18n to Astro 5 from scratch. Routing, translations, hreflang, sitemap, content collections - no next-intl, no plugins needed.'
 author: 'Jakub Nalewajk'
 image: { url: '../../../assets/images/blog/i18n-in-astro-guide-cover.webp', alt: 'i18n in Astro 5' }
 category: 'tutorial'
@@ -730,3 +730,5 @@ Every entry in `PATHNAMES` is automatically included in the sitemap hreflang map
 One config file defines all locale data. `[...locale]` rest params handle routing - `undefined` for default, locale string for others. Translation files are plain TypeScript objects with `as const` for type safety. Content collections use `lang` field for filtering and `translationKey` for linking translations. Hreflang links in `<head>` serve double duty - SEO and language switcher navigation. Browser detection runs once and respects the user's cookie preference. `PATHNAMES` is the single source of truth for localized URLs - navigation, hreflang, and sitemap all derive from it.
 
 The whole system is about 200 lines of utility code, fully type-safe, no external i18n libraries.
+
+If you're looking to self-host your Astro site after setting up i18n, check out my guide on [deploying Astro 5 on Dokploy](/en/blog/deploying-astro-on-dokploy/) - the same site this i18n system runs on.

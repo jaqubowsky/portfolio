@@ -50,6 +50,10 @@ export const PATHNAMES = {
     pl: '/blog/refaktoryzacja-kodu-ai',
     en: '/blog/refactoring-ai-code',
   },
+  '/blog/ai-as-a-learning-coach': {
+    pl: '/blog/ai-jako-trener-nauki-programowania',
+    en: '/blog/ai-as-a-learning-coach',
+  },
   '/category/programming': {
     pl: '/category/programowanie',
     en: '/category/programming',
@@ -91,4 +95,10 @@ export const PATHNAMES = {
   '/category/react': '/category/react',
   '/category/nextjs': '/category/nextjs',
   '/category/clean-code': '/category/clean-code',
+  '/category/learning': {
+    pl: '/category/nauka',
+    en: '/category/learning',
+  },
+  '/category/nestjs': '/category/nestjs',
+  '/category/claude-code': '/category/claude-code',
 } as const satisfies Record<string, string | Record<Locale, string>>

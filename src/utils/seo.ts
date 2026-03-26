@@ -51,6 +51,7 @@ type SeoInput = {
   image?: string;
   type?: "website" | "article";
   publishedDate?: Date;
+  modifiedDate?: Date;
   alternateHref?: string;
 };
 
@@ -63,6 +64,7 @@ export function getSeoData(input: SeoInput) {
     image = "/og-image.png",
     type = "website",
     publishedDate,
+    modifiedDate,
     alternateHref,
   } = input;
 
@@ -90,6 +92,7 @@ export function getSeoData(input: SeoInput) {
     imageUrl: imageURL,
     canonicalUrl: canonicalURL,
     publishedDate,
+    modifiedDate,
   });
 
   return {
@@ -115,6 +118,7 @@ type JsonLdOptions = {
   imageUrl: string;
   canonicalUrl: string;
   publishedDate?: Date;
+  modifiedDate?: Date;
 };
 
 function getJsonLd(options: JsonLdOptions) {
@@ -127,6 +131,7 @@ function getJsonLd(options: JsonLdOptions) {
     imageUrl,
     canonicalUrl,
     publishedDate,
+    modifiedDate,
   } = options;
   const lang = LOCALE_HTML_LANG[locale];
   const strings = t(locale);
@@ -225,7 +230,7 @@ function getJsonLd(options: JsonLdOptions) {
     inLanguage: lang,
     ...(publishedDate && {
       datePublished: publishedDate.toISOString(),
-      dateModified: publishedDate.toISOString(),
+      dateModified: (modifiedDate ?? publishedDate).toISOString(),
     }),
     author: {
       "@type": "Person",

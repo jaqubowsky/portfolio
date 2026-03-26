@@ -1,0 +1,73 @@
+---
+title: 'Jak skonfigurowałem Claude Code jako trenera do nauki backendu'
+pubDate: 2026-03-26
+description: 'Miesiącami czytałem kod generowany przez AI i myślałem, że się uczę. Zbudowałem system, w którym Claude Code odmawia pisania kodu za mnie.'
+author: 'Jakub Nalewajk'
+image:
+  {
+    url: '../../../assets/images/blog/ai-learning-coach-cover.webp',
+    alt: 'Ilustracja przedstawiająca naukę programowania z AI jako trenerem',
+  }
+category: 'programming'
+tags: ['ai', 'nauka', 'nestjs', 'claude-code']
+draft: false
+lang: 'pl'
+translationKey: 'ai-learning-coach'
+---
+
+Przez kilka miesięcy korzystałem z AI do nauki kodu. Czytałem wygenerowane rozwiązania, rozumiałem je (tak mi się wydawało) i szedłem dalej. A potem usiadłem do czegoś bez AI i okazało się, że nie potrafię napisać podstawowych rzeczy, które "znałem" od tygodni.
+
+## Iluzja nauki
+
+Potem trafiłem na filmik Marcina Czarkowskiego o iluzji nauki i dotarło do mnie, że robię dokładnie to, o czym mówi. Czytasz kod wygenerowany przez AI, czujesz że rozumiesz, ale tak naprawdę przetwarzasz go powierzchownie. Nie musisz się wysilać, więc się nie wysilasz. A bez wysiłku nie ma nauki.
+
+Rozpoznanie to jedno. Przyznanie przed sobą, że tak właśnie wygląda moja nauka od miesięcy - to bolało bardziej. Pisałem o tym w poście o [refaktoryzacji kodu AI](/blog/refaktoryzacja-kodu-ai/) - tam problemem było zlecanie agentom zbyt wielu rzeczy bez zrozumienia. Tu problem był głębszy. Nie chodziło o to, że agent źle pisał kod. Chodziło o to, że ja się z tego kodu nic nie uczyłem, mimo że byłem przekonany, że tak.
+
+## System zamiast silnej woli
+
+Mogłem sobie powiedzieć "od dziś piszę sam" i wytrzymać może tydzień. Zamiast tego zbudowałem system, który nie daje mi wyjścia. Uczę się NestJS i skonfigurowałem Claude Code jako trenera, który odmawia pisania kodu za mnie.
+
+Co może robić:
+
+- Tłumaczyć koncepcje, kiedy pytam
+- Robić code review tego co napisałem
+- Odpytywać mnie z materiału
+- Generować fiszki Anki z sesji
+
+Co nie może robić:
+
+- Pisać kodu implementacyjnego
+- Dawać gotowych rozwiązań
+- Podpowiadać jak coś zaimplementować (chyba że utknę na dłużej niż 15 minut)
+
+Brzmi prosto. W praktyce jest irytujące. Siedzisz nad czymś, wiesz że AI ma odpowiedź, a ono ci jej nie da. Mówi "a jakie są opcje?", "co mówi dokumentacja?", "dlaczego wybrałbyś takie podejście?". Chcesz gotowca, dostajesz pytania.
+
+## Jak wygląda sesja
+
+Każda sesja zaczyna się od quizu z materiału z poprzednich spotkań. Nie z ostatniego - z tych sprzed 3-5 sesji. Chodzi o to, żeby mózg zdążył trochę zapomnieć i musiał się wysilić, żeby sobie przypomnieć. Wtedy lepiej się utrwala.
+
+Potem planuję co buduję. Nie "zaczynam kodować" - najpierw dyskusja architektoniczna. Trener pyta dlaczego taka struktura, jakie zależności, co jeśli wymagania się zmienią. Dopiero kiedy mam plan, piszę kod.
+
+W trakcie kodowania trener się odzywa z losowymi pytaniami z poprzednich tematów. "Jaka jest różnica między middleware a guard w NestJS?" - 15 sekund na odpowiedź i wracam do kodu. Trochę to rozprasza, ale o to chodzi - żeby stary materiał nie odchodził w niepamięć.
+
+Na koniec sesji dwa obowiązkowe elementy. Pierwszy - muszę wyjaśnić co zbudowałem i dlaczego. Nie "zrobiłem CRUD" tylko szczegółowo - jakie decyzje podjąłem, dlaczego repozytorium zamiast bezpośredniego dostępu do bazy, skąd wzorzec. Trener ocenia w skali 1-5. Drugi element - pytanie w stylu rozmowy rekrutacyjnej. Jedno pytanie, odpowiadam jak na interview, dostaję ocenę i feedback.
+
+Z sesji generowane są fiszki Anki. Nie tylko standardowe pytanie-odpowiedź, ale też karty łączące koncepcje - "Jak Dependency Injection w NestJS ma się do zasady Dependency Inversion z SOLID?". Codziennie 5-10 minut powtórek poza sesjami.
+
+## Śledzenie między sesjami
+
+System zapisuje z czym miałem problem. Jeśli na quizie dostaję 2/5 z transakcji bazodanowych, to temat wraca przy następnej okazji. Nie w stylu "powtórzmy transakcje" - raczej dostanę zadanie, które wymaga użycia transakcji w kontekście czegoś nowego. Tematy, w których się potykam, nie znikają dopóki ich nie opanuję.
+
+Każda sesja kończy się logiem - co zrobiłem, jak mi poszło, z czym miałem problem, co następnym razem. Trener planuje kolejną sesję na podstawie tych logów, nie na podstawie sztywnego planu.
+
+## Co z tego wyniknęło
+
+Dwa tygodnie, wcześnie na jakiekolwiek twarde wnioski. Ale zbudowałem dwa pełne moduły NestJS od zera. Baza danych, relacje, obsługa błędów, repository pattern, DTOs. Rzeczy, które wcześniej "znałem" z czytania AI-owego kodu, teraz faktycznie umiem napisać i - co ważniejsze - wytłumaczyć każdą linijkę.
+
+Różnica jest taka: wcześniej otwierałem wygenerowany kod i myślałem "ok, rozumiem". Teraz piszę kod sam i wiem, gdzie nie rozumiem, bo się na tym potykam. Brak zrozumienia przestał być niewidoczny.
+
+## Nie rezygnuję z AI
+
+Nie chodzi o to, żeby nie używać AI. Wręcz odwrotnie. Kiedy faktycznie rozumiem co czytam, wyciągam z AI wielokrotnie więcej niż kiedykolwiek wcześniej. Mogę ocenić czy wygenerowany kod ma sens. Mogę go poprawić. Mogę zadać dobre pytanie zamiast akceptować pierwszą odpowiedź.
+
+Cały system - prompty, skille, logi sesji, roadmapa - jest otwarty na [GitHubie](https://github.com/jaqubowsky/iron-log). Jeśli próbujesz czegoś podobnego albo masz pomysł jak to ulepszyć, daj znać.

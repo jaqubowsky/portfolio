@@ -129,51 +129,6 @@ Server env vars are imported from `astro:env/server`, client vars from `astro:en
 3. If the post introduces new locale-specific tags (e.g. PL `biznes` / EN `business`), add a category pathname pair to `PATHNAMES` as well (e.g. `'/category/business': { pl: '/category/biznes', en: '/category/business' }`)
 4. Run `npm run build` to validate translations (mismatched structure/fields are warned)
 
-## Writing Style for Blog Posts & UI Content
+## Writing Style
 
-Jakub's writing voice is direct, honest, and never corporate. Two audiences, one voice - just different depth levels.
-
-### Jakub's voice - extracted from how he actually communicates
-
-- **Gets to the point immediately** - no intros, no "in this article we will discuss". Start with the thing. "Pytanie ile kosztuje strona to jedno z najczęściej wpisywanych w Google." Done, we're in.
-- **Thinks out loud** - shares reasoning, not just conclusions. "Z tym SEO u mnie to ciężko bo mało o nim wiem" - this honesty IS the brand. Don't hide limitations, frame them.
-- **Uses rhetorical questions** - "Jak to możliwe?", "Czy będzie szybka?", "Co jeśli coś się zepsuje?" - pulls the reader in
-- **Breaks complex things into "a co z tym?"** - tables, bullet lists, comparisons. Never a wall of text explaining 5 things at once
-- **Ends with clear action** - not "contact us for more information" but "Napisz, powiedz czego potrzebujesz - dostaniesz konkretną wycenę"
-- **Honest about tradeoffs** - "Tania strona, która nie przynosi klientów, to nie oszczędność - to strata pieniędzy." Doesn't pretend everything is great
-
-### Audience: Business owners ("Janusze")
-
-Posts on `/uslugi`, FAQ, service descriptions, business-oriented blog posts.
-
-- **Zero jargon** - translate EVERYTHING to human language:
-  - ~~CMS~~ → "panel administracyjny"
-  - ~~SSL~~ → "kłódka przy adresie"
-  - ~~SEO~~ → "żeby Google Cię znalazł"
-  - ~~deploy~~ → "strona ląduje w sieci"
-  - ~~responsywna~~ → "działa na telefonie tak samo dobrze jak na komputerze"
-- **Problem → solution** - start from what Janusz FEELS, not what you do. "Tracisz klientów bo Cię nie ma w Google" not "oferuję optymalizację SEO"
-- **Comparisons he understands** - "taniej niż w agencji", "gotowa w 2-3 tygodnie", "bez czekania na zespół"
-- **Colloquial PL** - "od razu lecimy do roboty", "ogarniam wszystko od A do Z", "bez zbędnych formalności"
-- **Never corporate** - no "w ramach", "w zakresie", "oferujemy Państwu", "skontaktuj się w celu omówienia"
-
-Example good CTA: "Napisz, powiedz czego potrzebujesz"
-Example bad CTA: "Skontaktuj się w celu omówienia szczegółów współpracy"
-
-### Audience: Recruiters & developers
-
-Technical blog posts, programming tutorials, career content.
-
-- **Jargon is fine** - readers know what Next.js, SSR, TypeScript are
-- **Still direct** - no academic tone. "Miałem dość ręcznego przeglądania ofert pracy. Zbudowałem platformę." not "The motivation behind this project was to streamline..."
-- **Show don't tell** - code snippets, screenshots, concrete numbers ("3500 zamówień miesięcznie", "w mniej niż 15 minut")
-- **Personal angle** - "zbudowałem bo potrzebowałem", "napotkałem problem i postanowiłem go rozwiązać" - not generic tutorials
-
-### Both audiences
-
-- Use `-` (hyphen) not `—` (em dash) in all content
-- Short sentences. One thought = one sentence. Break up paragraphs
-- Tables and lists over prose when comparing things
-- Honest > impressive. Don't promise what you can't deliver
-- PL version is more casual, EN version slightly more professional but still approachable
-- Never translate Polish idioms literally to English - adapt the vibe, not the words
+Writing voice and style guide for blog posts and UI content lives in the `blog-writer` skill (`.claude/skills/blog-writer/SKILL.md`). Use that skill when writing any content.

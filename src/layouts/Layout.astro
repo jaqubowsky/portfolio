@@ -19,6 +19,7 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   publishedDate?: Date;
+  modifiedDate?: Date;
   alternateHref?: string;
   noindex?: boolean;
   breadcrumbs?: BreadcrumbItem[];
@@ -32,6 +33,7 @@ const {
   description,
   type = "website",
   publishedDate,
+  modifiedDate,
   noindex = false,
   breadcrumbs,
   faqItems,
@@ -88,6 +90,9 @@ const faqJsonLd = faqItems ? getFaqJsonLd(faqItems) : null;
 
     {publishedDate && (
       <meta property="article:published_time" content={publishedDate.toISOString()} />
+    )}
+    {(modifiedDate ?? publishedDate) && type === "article" && (
+      <meta property="article:modified_time" content={(modifiedDate ?? publishedDate)!.toISOString()} />
     )}
 
     <meta name="twitter:card" content="summary_large_image" />

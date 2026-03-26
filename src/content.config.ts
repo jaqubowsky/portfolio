@@ -9,6 +9,7 @@ const postsCollection = defineCollection({
     z.object({
       title: z.string(),
       pubDate: z.date(),
+      updatedDate: z.date().optional(),
       description: z.string(),
       author: z.string(),
       category: z.enum(["blog", "news", "tutorial", "programming"]),

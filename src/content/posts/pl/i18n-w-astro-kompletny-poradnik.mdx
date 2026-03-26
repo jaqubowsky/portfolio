@@ -1,7 +1,7 @@
 ---
-title: 'Jak dodac i18n do Astro 5 bez bibliotek (krok po kroku)'
+title: 'i18n w Astro 5 - wielojęzyczna strona bez bibliotek'
 pubDate: 2026-03-11
-description: 'Zbuduj wielojezyczna strone w Astro 5 od zera - routing, tlumaczenia, SEO hreflang, sitemap, kolekcje tresci i przelacznik jezyka. Bez next-intl, bez pluginow.'
+description: 'Kompletny poradnik dodawania i18n do Astro 5 od zera. Routing, tłumaczenia, hreflang, sitemap, kolekcje treści - bez next-intl, bez pluginów.'
 author: 'Jakub Nalewajk'
 image: { url: '../../../assets/images/blog/i18n-in-astro-guide-cover.webp', alt: 'i18n w Astro 5' }
 category: 'tutorial'
@@ -732,3 +732,5 @@ Wzorzec sprowadza się do kilku zasad:
 Jeden plik konfiguracyjny definiuje wszystkie obsługiwane języki. Parametry rest `[...locale]` obsługują routing - `undefined` dla domyślnego, kod języka dla pozostałych. Pliki tłumaczeń to zwykłe obiekty TypeScript z `as const` dla bezpieczeństwa typów. Kolekcje treści używają pola `lang` do filtrowania i `translationKey` do łączenia tłumaczeń. Linki hreflang w `<head>` służą podwójnie - SEO i nawigacja przełącznika języka. Detekcja przeglądarki uruchamia się raz i respektuje preferencję ciasteczka użytkownika. `PATHNAMES` to jedyne źródło prawdy dla zlokalizowanych URLi - nawigacja, hreflang i sitemap wyprowadzają dane z niego.
 
 Cały system to około 200 linii kodu narzędziowego, w pełni type-safe, bez zewnętrznych bibliotek i18n.
+
+Jeśli szukasz sposobu na self-hosting strony Astro po skonfigurowaniu i18n, sprawdź mój poradnik o [wdrażaniu Astro 5 na Dokploy](/blog/wdrazanie-astro-na-dokploy/) - ta sama strona, na której działa ten system i18n.
