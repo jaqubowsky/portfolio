@@ -116,9 +116,8 @@ export default {
       'You work directly with me - no middlemen, no unnecessary meetings. A simple business website? Ready in 2–3 weeks. No waiting on a team - we gather requirements and I get straight to work.',
     steps: [
       {
-        title: 'Let\'s Talk',
-        description:
-          'Drop me a message - tell me what you need. Initial consultations are free.',
+        title: "Let's Talk",
+        description: 'Drop me a message - tell me what you need. Initial consultations are free.',
       },
       {
         title: 'Quote & Plan',
@@ -133,7 +132,7 @@ export default {
       {
         title: 'Site Ready',
         description:
-          'Your site goes live - fast, Google-ready, and working on every device. After launch I don\'t disappear - I stay in touch.',
+          "Your site goes live - fast, Google-ready, and working on every device. After launch I don't disappear - I stay in touch.",
       },
     ],
     cta: "Let's discuss your project",
@@ -227,8 +226,8 @@ export default {
       'custom websites, web development Poland, freelance fullstack developer, business website, web applications, booking system, SEO optimization, React developer, Next.js developer, Node.js developer, affordable website, professional website, website for small business',
     heroTitle: 'A Professional Website for Your Business',
     heroDescription:
-      'Need a website that attracts customers? Tell me what you need - I\'ll build it. Fast, no jargon, exactly the way you want it.',
-    heroCta: 'Let\'s talk - it\'s free',
+      "Need a website that attracts customers? Tell me what you need - I'll build it. Fast, no jargon, exactly the way you want it.",
+    heroCta: "Let's talk - it's free",
     contactDescription:
       "Need a website for your business? Have an idea for an online system? Drop me a message - I'll respond within 24 hours. Initial consultations are free.",
     contactSource: 'Inquiry from services page',
@@ -240,13 +239,17 @@ export default {
       items: [
         {
           icon: 'mdi:briefcase-search-outline',
-          problem: 'I was browsing job offers across multiple portals at once - wasting time searching manually.',
-          solution: 'I built an app that collects offers from many portals and shows the ones that best match my profile.',
+          problem:
+            'I was browsing job offers across multiple portals at once - wasting time searching manually.',
+          solution:
+            'I built an app that collects offers from many portals and shows the ones that best match my profile.',
         },
         {
           icon: 'mdi:credit-card-outline',
-          problem: "I lost track of my subscriptions - had no idea how much I was paying monthly for various services.",
-          solution: "I built an app to track subscriptions - I see how much I spend, when things renew, and can cancel quickly.",
+          problem:
+            'I lost track of my subscriptions - had no idea how much I was paying monthly for various services.',
+          solution:
+            'I built an app to track subscriptions - I see how much I spend, when things renew, and can cancel quickly.',
         },
       ],
       cta: "Let's discuss your idea",
@@ -262,7 +265,10 @@ export default {
           question: 'How much does a website cost?',
           answer:
             "Every project is different, so there's no one-size-fits-all price. One thing I can guarantee - working directly with me, you'll pay less and get your site faster than with an agency. No unnecessary formalities - we get straight to work. Reach out, tell me what you need - you'll get a clear quote with no hidden costs.",
-          link: { href: '/en/blog/how-much-does-website-cost', text: 'See what websites cost in 2026 →' },
+          link: {
+            href: '/en/blog/how-much-does-website-cost',
+            text: 'See what websites cost in 2026 →',
+          },
         },
         {
           question: 'Can I edit the content myself afterwards?',
@@ -280,9 +286,9 @@ export default {
             'No - I take care of everything. Domain, hosting, setup, the padlock next to your address - I handle it all from A to Z. Domain and hosting costs are on you, but I help pick the best option and configure everything.',
         },
         {
-          question: "What happens after launch? Am I on my own?",
+          question: 'What happens after launch? Am I on my own?',
           answer:
-            "No. After your site goes live, I provide technical support and stay in touch. If something needs to be changed, fixed, or added - just reach out.",
+            'No. After your site goes live, I provide technical support and stay in touch. If something needs to be changed, fixed, or added - just reach out.',
         },
       ],
     },
