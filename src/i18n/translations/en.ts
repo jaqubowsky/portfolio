@@ -41,6 +41,7 @@ export default {
     jobs: [
       {
         company: 'CodeYourBrand',
+        url: 'https://www.codeyourbrand.com/',
         role: 'Frontend Developer',
         tech: 'Next.js, Strapi, Nx, Turborepo',
         period: 'Oct 2025 – Present',
@@ -52,7 +53,8 @@ export default {
         ],
       },
       {
-        company: 'Instago Inc.',
+        company: 'Haergi',
+        url: 'https://haergi.pl/',
         role: 'Fullstack Developer',
         tech: 'Next.js, Express',
         period: 'Aug 2023 – Oct 2025',
