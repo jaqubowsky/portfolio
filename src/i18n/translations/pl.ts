@@ -2,7 +2,7 @@ export default {
   meta: {
     title: 'Jakub Nalewajk - Fullstack & Next.js Developer',
     description:
-      'Fullstack developer z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js - od bazy danych po wdrożenie. 4+ lata doświadczenia. Napisz do mnie.',
+      'Fullstack developer z Pułtuska. Tworzę strony internetowe i aplikacje webowe na zamówienie w React i Next.js - od bazy danych po wdrożenie. 3+ lata doświadczenia. Napisz do mnie.',
     keywords:
       'Jakub Nalewajk, Jakub Nalewajk programista, Strona na Miarę, programista, programista fullstack, fullstack developer, programista Pułtusk, programista w okolicy Pułtuska, programista mazowieckie, programista w okolicy, strona internetowa na zamówienie, strona na zlecenie, strona na zlecenie Pułtusk, tworzenie stron internetowych, tworzenie stron Pułtusk, aplikacje webowe na zamówienie, strona na zamówienie, strona internetowa na zlecenie, pozycjonowanie SEO, React, Next.js, Next.js developer, programista Next.js, TypeScript, Node.js, Express, PostgreSQL, portfolio, fullstack developer Next.js, tworzenie aplikacji webowych, programista Warszawa, web developer Pułtusk, strony internetowe na zlecenie, freelancer programista',
     blogTitle: 'Blog - Jakub Nalewajk',
@@ -25,7 +25,7 @@ export default {
   hero: {
     jobTitle: 'Fullstack Developer',
     description:
-      'Fullstack i Next.js developer z ponad 4-letnim doświadczeniem. Buduję szybkie aplikacje webowe i strony internetowe na zamówienie - od projektowania bazy danych po wdrożenie. Dostępny jako freelancer i jako developer w zespole.',
+      'Fullstack i Next.js developer z ponad 3-letnim doświadczeniem. Buduję szybkie aplikacje webowe i strony internetowe na zamówienie - od projektowania bazy danych po wdrożenie. Dostępny jako freelancer i jako developer w zespole.',
     cta: 'Napisz do mnie',
     downloadCv: 'Pobierz CV',
   },

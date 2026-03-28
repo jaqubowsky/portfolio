@@ -2,7 +2,7 @@ export default {
   meta: {
     title: 'Jakub Nalewajk - Fullstack & Next.js Developer for Hire',
     description:
-      'Fullstack & Next.js developer from Poland. I build fast web apps and custom websites - from database design to deployment. 4+ years of experience. Get in touch.',
+      'Fullstack & Next.js developer from Poland. I build fast web apps and custom websites - from database design to deployment. 3+ years of experience. Get in touch.',
     keywords:
       'Jakub Nalewajk, Fullstack Developer, Next.js developer, React developer, hire fullstack developer, hire Next.js developer, freelance fullstack developer, freelance Next.js developer, freelance React developer, TypeScript developer, portfolio, web developer, web developer Poland, custom websites, web applications, SEO optimization, freelance developer Poland, fullstack developer for hire, Next.js developer for hire, React developer for hire, web developer for hire',
     blogTitle: 'Blog - Jakub Nalewajk',
@@ -25,7 +25,7 @@ export default {
   hero: {
     jobTitle: 'Fullstack Developer',
     description:
-      'Fullstack & Next.js Developer with 4+ years of experience. I build fast web applications and custom websites - from database design to deployment. Available as a freelancer or as a developer on your team.',
+      'Fullstack & Next.js Developer with 3+ years of experience. I build fast web applications and custom websites - from database design to deployment. Available as a freelancer or as a developer on your team.',
     cta: 'Get in Touch',
     downloadCv: 'Download CV',
   },
