@@ -21,46 +21,48 @@ const strings = t(locale);
 
 const projects = [
   {
-    number: "01",
     title: "PillPilot",
     description: strings.projects.items[0].description,
-    tech: ["Next.js 16", "Vercel AI SDK", "Drizzle ORM", "PWA", "web-push"],
+    tech: [
+      "Next.js 16",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Vercel AI SDK",
+      "Vitest",
+      "Playwright",
+      "Docker",
+    ],
     github: "https://github.com/jaqubowsky/pill-pilot",
     live: "https://pill.jnalewajk.me",
     image: pillPilotImg,
     featured: true as const,
   },
   {
-    number: "02",
     title: "jobZ",
     description: strings.projects.items[1].description,
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
     github: "https://github.com/jaqubowsky/jobZ",
-    live: "https://jobzzz.jnalewajk.me",
     image: jobzImg,
     featured: false as const,
   },
   {
-    number: "03",
     title: "SubStatZ",
     description: strings.projects.items[2].description,
     tech: ["Next.js 16", "Prisma", "Stripe", "Sentry", "Docker"],
     github: "https://github.com/jaqubowsky/substatz",
-    live: "https://substatz.jnalewajk.me",
     image: substatzImg,
     featured: false as const,
   },
 ];
 ---
 
-<Section class="gap-10" id="projects">
+<Section class="gap-10 max-w-7xl" id="projects">
   <SectionHeader
-    badge={strings.projects.badge}
     title={strings.projects.title}
     description={strings.projects.description}
   />
 
-  <Flex class="flex-col gap-6 w-full">
+  <Flex class="flex-col items-stretch gap-6 w-full">
     {
       projects.map((project, i) => (
         <div class={`animate-on-scroll stagger-${i + 1}`}>
@@ -81,9 +83,6 @@ const projects = [
               <Flex class="flex-col gap-3 p-6 sm:p-8 flex-1 items-start">
                 <Flex class="items-start justify-between w-full">
                   <Flex class="gap-3 items-center justify-start">
-                    <span class="text-3xl font-bold text-gradient opacity-80 font-mono hidden sm:inline">
-                      {project.number}
-                    </span>
                     <Heading level={3} class="text-2xl">
                       {project.title}
                     </Heading>

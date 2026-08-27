@@ -17,49 +17,96 @@ const strings = t(locale);
 
 const skills = [
   {
-    type: strings.skills.categories.frontend,
-    icon: "mdi:language-javascript",
-    items: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "React Query",
-      "Nx",
-      "Turborepo",
-      "Storybook",
-    ],
+    type: strings.skills.categories.languages,
+    icon: "mdi:code-tags",
+    items: ["TypeScript", "JavaScript", "HTML", "CSS", "SQL"],
   },
   {
     type: strings.skills.categories.backend,
     icon: "mdi:server",
-    items: ["Node.js", "Prisma", "Supabase", "PostgreSQL"],
+    items: ["Node.js", "NestJS", "Express", "REST API", "OpenAPI", "Strapi"],
   },
   {
-    type: strings.skills.categories.devops,
+    type: strings.skills.categories.data,
+    icon: "mdi:database-outline",
+    items: [
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "BullMQ",
+      "Prisma",
+      "Drizzle ORM",
+      "Supabase",
+    ],
+  },
+  {
+    type: strings.skills.categories.frontend,
+    icon: "mdi:language-javascript",
+    items: [
+      "React",
+      "Next.js",
+      "Astro",
+      "TanStack Query",
+      "Zustand",
+      "React Hook Form",
+      "Zod",
+      "nuqs",
+    ],
+  },
+  {
+    type: strings.skills.categories.styling,
+    icon: "mdi:palette-outline",
+    items: [
+      "Tailwind CSS",
+      "Sass",
+      "Radix",
+      "Ark UI",
+      "Shadcn UI",
+      "Storybook",
+    ],
+  },
+  {
+    type: strings.skills.categories.testing,
+    icon: "mdi:test-tube",
+    items: ["Vitest", "Testing Library", "Playwright"],
+  },
+  {
+    type: strings.skills.categories.architecture,
     icon: "mdi:cloud-outline",
-    items: ["Docker", "Git", "CI/CD", "GitHub Actions"],
+    items: [
+      "Nx",
+      "Turborepo",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "AWS",
+      "Azure DevOps",
+    ],
+  },
+  {
+    type: strings.skills.categories.ai,
+    icon: "mdi:robot-outline",
+    items: ["Vercel AI SDK", "Claude Code", "Cursor", "Codex"],
   },
   {
     type: strings.skills.categories.other,
     icon: "mdi:tools",
-    items: ["Zod", "Sentry", "Cursor", "Strapi", "Figma", "Claude Code"],
+    items: ["Accessibility", "Internationalization", "Figma"],
   },
 ] as const;
 ---
 
 <NoiseBackground class="w-full section-fade">
-  <Section class="gap-10" id="skills">
+  <Section class="gap-10 max-w-7xl" id="skills">
     <SectionHeader
-      badge={strings.skills.badge}
       title={strings.skills.title}
       description={strings.skills.description}
     />
 
-    <Grid class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+    <Grid class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
       {
         skills.map((category, i) => (
-          <div class={`animate-on-scroll stagger-${i + 1}`}>
+          <div class={`animate-on-scroll stagger-${(i % 3) + 1}`}>
             <GlowCard class="p-6 h-full">
               <Flex class="flex-col gap-4 items-start">
                 <Flex class="gap-3 items-start">

@@ -2,7 +2,7 @@
 import { Badge, Flex, Heading, Paragraph } from "@components/atoms";
 
 interface Props {
-  badge: string;
+  badge?: string;
   title: string;
   description?: string;
 }
@@ -10,8 +10,8 @@ interface Props {
 const { badge, title, description } = Astro.props;
 ---
 
-<Flex class="text-center flex-col gap-3 animate-on-scroll">
-  <Badge variant="secondary">{badge}</Badge>
-  <Heading level={2} class="text-3xl sm:text-4xl">{title}</Heading>
+<Flex class="text-center flex-col gap-2 animate-on-scroll">
+  {badge && <Badge variant="secondary">{badge}</Badge>}
+  <Heading level={2} class="text-2xl sm:text-3xl">{title}</Heading>
   {description && <Paragraph class="max-w-xl text-center">{description}</Paragraph>}
 </Flex>

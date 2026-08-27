@@ -12,6 +12,7 @@ export {
   buildHreflangMap,
   formatDate,
   getAlternateLocales,
+  getAlternatePathname,
   getAlternateRoute,
   getLocale,
   getLocaleParam,

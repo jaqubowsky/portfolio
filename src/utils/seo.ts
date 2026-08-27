@@ -1,5 +1,5 @@
-import { getAlternateLocales, getLocale, stripLocaleFromPath, t } from "@i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { getAlternateLocales, getLocale, stripLocaleFromPath, t } from "@i18n";
 import {
   LOCALE_HTML_LANG,
   LOCALE_OG,
@@ -12,20 +12,50 @@ export const AUTHOR = {
   givenName: "Jakub",
   familyName: "Nalewajk",
   image: "/og-image.png",
-  telephone: "+48-XXX-XXX-XXX",
-  employer: "CodeYourBrand",
+  telephone: "+48-797-634-248",
+  employer: "autoMEE",
   university: "WSB Merito University",
   techSkills: [
-    "Next.js",
-    "React",
     "TypeScript",
+    "JavaScript",
+    "SQL",
     "Node.js",
+    "NestJS",
+    "Express",
+    "REST API",
+    "OpenAPI",
+    "Strapi",
     "PostgreSQL",
+    "MongoDB",
+    "Redis",
+    "BullMQ",
     "Prisma",
-    "Drizzle",
+    "Drizzle ORM",
+    "Supabase",
+    "React",
+    "Next.js",
+    "Astro",
+    "TanStack Query",
+    "Zustand",
+    "React Hook Form",
+    "Zod",
     "TailwindCSS",
+    "Sass",
+    "Radix",
+    "Ark UI",
+    "Shadcn UI",
+    "Storybook",
+    "Vitest",
+    "Testing Library",
+    "Playwright",
     "Nx",
     "Turborepo",
+    "Docker",
+    "GitHub Actions",
+    "AWS",
+    "Azure DevOps",
+    "Vercel AI SDK",
+    "Accessibility",
   ],
   socials: [
     "https://github.com/jaqubowsky",
@@ -33,13 +63,19 @@ export const AUTHOR = {
     "https://share.google/AucDHNnwoLu5qzpS8",
   ],
   address: {
-    locality: "Pułtusk",
+    locality: "Warszawa",
     region: "mazowieckie",
     country: "PL",
-    geo: {
-      latitude: 52.4057,
-      longitude: 21.0983,
-    },
+  },
+} as const;
+
+export const SERVICE_AREA = {
+  locality: "Pułtusk",
+  region: "mazowieckie",
+  country: "PL",
+  geo: {
+    latitude: 52.4057,
+    longitude: 21.0983,
   },
 } as const;
 
@@ -53,6 +89,7 @@ type SeoInput = {
   publishedDate?: Date;
   modifiedDate?: Date;
   alternateHref?: string;
+  localService?: boolean;
 };
 
 export function getSeoData(input: SeoInput) {
@@ -66,6 +103,7 @@ export function getSeoData(input: SeoInput) {
     publishedDate,
     modifiedDate,
     alternateHref,
+    localService = false,
   } = input;
 
   const locale = getLocale(url);
@@ -93,6 +131,7 @@ export function getSeoData(input: SeoInput) {
     canonicalUrl: canonicalURL,
     publishedDate,
     modifiedDate,
+    localService,
   });
 
   return {
@@ -119,6 +158,7 @@ type JsonLdOptions = {
   canonicalUrl: string;
   publishedDate?: Date;
   modifiedDate?: Date;
+  localService: boolean;
 };
 
 function getJsonLd(options: JsonLdOptions) {
@@ -132,6 +172,7 @@ function getJsonLd(options: JsonLdOptions) {
     canonicalUrl,
     publishedDate,
     modifiedDate,
+    localService,
   } = options;
   const lang = LOCALE_HTML_LANG[locale];
   const strings = t(locale);
@@ -173,49 +214,53 @@ function getJsonLd(options: JsonLdOptions) {
           },
           nationality: { "@type": "Country", name: "Poland" },
         },
-        {
-          "@type": "ProfessionalService",
-          "@id": `${siteUrl}#service`,
-          name: seo.serviceName,
-          alternateName: "Strona na Miarę – Jakub Nalewajk",
-          url: siteUrl,
-          image: new URL(AUTHOR.image, siteUrl).toString(),
-          telephone: AUTHOR.telephone,
-          priceRange: "$$",
-          provider: { "@id": `${siteUrl}#person` },
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: AUTHOR.address.locality,
-            addressRegion: AUTHOR.address.region,
-            addressCountry: AUTHOR.address.country,
-          },
-          areaServed: [
-            { "@type": "City", name: AUTHOR.address.locality },
-            { "@type": "City", name: "Warszawa" },
-            { "@type": "City", name: "Ciechanów" },
-            { "@type": "AdministrativeArea", name: AUTHOR.address.region },
-            { "@type": "Country", name: seo.countryName },
-          ],
-          geo: {
-            "@type": "GeoCoordinates",
-            latitude: AUTHOR.address.geo.latitude,
-            longitude: AUTHOR.address.geo.longitude,
-          },
-          serviceType: seo.serviceType,
-          description: seo.serviceDescription,
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: seo.offerCatalogName,
-            itemListElement: seo.offers.map((offer) => ({
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: offer.name,
-                description: offer.description,
+        ...(localService
+          ? [
+              {
+                "@type": "ProfessionalService",
+                "@id": `${siteUrl}#service`,
+                name: seo.serviceName,
+                alternateName: "Strona na Miarę – Jakub Nalewajk",
+                url: siteUrl,
+                image: new URL(AUTHOR.image, siteUrl).toString(),
+                telephone: AUTHOR.telephone,
+                priceRange: "$$",
+                provider: { "@id": `${siteUrl}#person` },
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: SERVICE_AREA.locality,
+                  addressRegion: SERVICE_AREA.region,
+                  addressCountry: SERVICE_AREA.country,
+                },
+                areaServed: [
+                  { "@type": "City", name: SERVICE_AREA.locality },
+                  { "@type": "City", name: "Warszawa" },
+                  { "@type": "City", name: "Ciechanów" },
+                  { "@type": "AdministrativeArea", name: SERVICE_AREA.region },
+                  { "@type": "Country", name: seo.countryName },
+                ],
+                geo: {
+                  "@type": "GeoCoordinates",
+                  latitude: SERVICE_AREA.geo.latitude,
+                  longitude: SERVICE_AREA.geo.longitude,
+                },
+                serviceType: seo.serviceType,
+                description: seo.serviceDescription,
+                hasOfferCatalog: {
+                  "@type": "OfferCatalog",
+                  name: seo.offerCatalogName,
+                  itemListElement: seo.offers.map((offer) => ({
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: offer.name,
+                      description: offer.description,
+                    },
+                  })),
+                },
               },
-            })),
-          },
-        },
+            ]
+          : []),
       ],
     };
   }

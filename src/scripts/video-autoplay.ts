@@ -1,4 +1,9 @@
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 function initVideoAutoplay() {
+  if (prefersReducedMotion()) return;
+
   document
     .querySelectorAll<HTMLVideoElement>("[data-autoplay-video]")
     .forEach((video) => {

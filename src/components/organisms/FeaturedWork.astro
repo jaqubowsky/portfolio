@@ -1,0 +1,81 @@
+---
+import { Flex, GlowCard, Heading, Paragraph, Section } from "@components/atoms";
+import { SectionHeader } from "@components/molecules";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import dubajEstateLogo from "@images/companies/dubaj-estate.png";
+import { t, getLocale } from "@i18n";
+
+const locale = getLocale(Astro.currentLocale);
+const strings = t(locale);
+const { featuredWork } = strings;
+const { project } = featuredWork;
+---
+
+<Section class="gap-10" id="featured-work">
+  <SectionHeader
+    title={featuredWork.title}
+    description={featuredWork.description}
+  />
+
+  <div class="w-full animate-on-scroll">
+    <GlowCard class="p-6 sm:p-8">
+      <Flex class="flex-col gap-6 items-start">
+        <Flex class="flex-col gap-1 items-start">
+          <Flex class="items-center gap-2.5">
+            <Image
+              src={dubajEstateLogo}
+              alt="dubaj.estate logo"
+              width={28}
+              height={28}
+              class="rounded-md"
+            />
+            <Heading level={3} class="text-2xl">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 hover:text-primary transition-colors"
+                data-umami-event="featured-work-live"
+              >
+                {project.name}
+                <Icon name="mdi:open-in-new" size={16} class="opacity-60" />
+              </a>
+            </Heading>
+          </Flex>
+          <Paragraph class="text-sm text-primary font-semibold">
+            {project.subtitle}
+          </Paragraph>
+          <Paragraph class="text-xs font-mono text-muted-foreground">
+            {project.tech.join(" · ")}
+          </Paragraph>
+        </Flex>
+
+        <Flex class="flex-col gap-2 items-start">
+          <span class="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+            {featuredWork.problemLabel}
+          </span>
+          <Paragraph class="text-sm leading-relaxed">{project.problem}</Paragraph>
+        </Flex>
+
+        <Flex class="flex-col gap-3 items-start w-full">
+          <span class="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+            {featuredWork.decisionsLabel}
+          </span>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0 w-full">
+            {project.decisions.map((decision) => (
+              <li class="flex gap-3 items-start">
+                <Icon
+                  name="mdi:chevron-right"
+                  size={18}
+                  class="text-primary shrink-0 mt-0.5"
+                />
+                <span class="text-sm leading-relaxed">{decision}</span>
+              </li>
+            ))}
+          </ul>
+        </Flex>
+      </Flex>
+    </GlowCard>
+  </div>
+</Section>

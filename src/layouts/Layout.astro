@@ -25,6 +25,7 @@ interface Props {
   breadcrumbs?: BreadcrumbItem[];
   faqItems?: readonly FaqItem[];
   keywords?: string;
+  localService?: boolean;
 }
 
 const seo = getSeoData({ url: Astro.url, site: Astro.site, ...Astro.props });
@@ -124,8 +125,9 @@ const faqJsonLd = faqItems ? getFaqJsonLd(faqItems) : null;
     <ClientRouter />
   </head>
   <body class="bg-background text-foreground min-h-svh flex flex-col">
+    <a href="#main" class="skip-link">{seo.strings.nav.skipToContent}</a>
     <Header />
-    <main class="flex flex-col">
+    <main id="main" class="flex flex-col">
       <slot />
     </main>
     <Footer />

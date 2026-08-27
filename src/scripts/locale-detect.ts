@@ -13,6 +13,6 @@ if (!hasCookie && window.location.pathname === "/") {
   if (match && match !== DEFAULT_LOCALE) {
     const secure = location.protocol === "https:" ? ";secure" : "";
     document.cookie = `${COOKIE_NAME}=${match};path=/;max-age=31536000;samesite=lax${secure}`;
-    window.location.replace(`/${match}`);
+    window.location.replace(`/${match}/`);
   }
 }

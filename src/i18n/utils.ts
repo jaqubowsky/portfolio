@@ -31,8 +31,15 @@ export function getLocaleParam(locale: Locale): Locale | undefined {
 
 export function getLocalizedPathname(path: string, locale: Locale): string {
   const cleanPath = path.startsWith('/') ? path : `/${path}`
-  if (locale === DEFAULT_LOCALE) return cleanPath
-  return `/${locale}${cleanPath}`
+  const prefixed = locale === DEFAULT_LOCALE ? cleanPath : `/${locale}${cleanPath}`
+  return withTrailingSlash(prefixed)
+}
+
+function withTrailingSlash(path: string): string {
+  const [pathname, hash] = path.split('#')
+  const suffix = hash === undefined ? '' : `#${hash}`
+  if (pathname.endsWith('/')) return `${pathname}${suffix}`
+  return `${pathname}/${suffix}`
 }
 
 const localePrefixRegex = new RegExp(
@@ -67,17 +74,17 @@ export function buildHreflangMap(siteUrl: string): Map<string, { url: string; la
 
     const links = [
       ...LOCALES.map((l) => ({
-        url: `${siteUrl}${paths[l]}/`,
+        url: `${siteUrl}${paths[l]}`,
         lang: LOCALE_BCP47[l],
       })),
       {
-        url: `${siteUrl}${paths[DEFAULT_LOCALE]}/`,
+        url: `${siteUrl}${paths[DEFAULT_LOCALE]}`,
         lang: 'x-default',
       },
     ]
 
     for (const l of LOCALES) {
-      map.set(`${siteUrl}${paths[l]}/`, links)
+      map.set(`${siteUrl}${paths[l]}`, links)
     }
   }
 
@@ -99,6 +106,20 @@ export function buildLastmodMap(siteUrl: string, postsDir: string): Map<string, 
     }
   }
   return map
+}
+
+export function getAlternatePathname(pathname: string, locale: Locale): string {
+  const [altLocale] = LOCALES.filter((l) => l !== locale)
+  const basePath = withTrailingSlash(stripLocaleFromPath(pathname))
+
+  for (const entry of Object.values(PATHNAMES)) {
+    if (typeof entry === 'string') continue
+    if (withTrailingSlash(entry[locale]) === basePath) {
+      return getLocalizedPathname(entry[altLocale], altLocale)
+    }
+  }
+
+  return getLocalizedPathname(basePath, altLocale)
 }
 
 export function getAlternateCategoryPath(tag: string, locale: Locale): string | undefined {

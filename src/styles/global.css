@@ -51,6 +51,13 @@
     U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
@@ -58,6 +65,42 @@ html {
 
 body {
   font-family: "Outfit", system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0.5rem;
+  z-index: 100;
+  transform: translate(-50%, -200%);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  transform: translate(-50%, 0);
 }
 
 .grecaptcha-badge {
@@ -197,7 +240,7 @@ body {
 }
 
 .hero-fade {
-  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fade-up 0.5s var(--ease-out) both;
 }
 
 .animate-on-scroll {
@@ -205,7 +248,7 @@ body {
 }
 
 .animate-on-scroll.is-visible {
-  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fade-up 0.7s var(--ease-out) forwards;
 }
 
 .animate-slide-left {
@@ -213,7 +256,7 @@ body {
 }
 
 .animate-slide-left.is-visible {
-  animation: slide-in-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slide-in-left 0.7s var(--ease-out) forwards;
 }
 
 .animate-slide-right {
@@ -221,7 +264,7 @@ body {
 }
 
 .animate-slide-right.is-visible {
-  animation: slide-in-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slide-in-right 0.7s var(--ease-out) forwards;
 }
 
 .stagger-1 {
@@ -271,4 +314,30 @@ body {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   padding-block: 0.1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-fade,
+  .animate-on-scroll,
+  .animate-on-scroll.is-visible,
+  .animate-slide-left,
+  .animate-slide-left.is-visible,
+  .animate-slide-right,
+  .animate-slide-right.is-visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

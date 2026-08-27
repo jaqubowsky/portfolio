@@ -1,18 +1,16 @@
 ---
 import {
   getAlternateLocales,
+  getAlternatePathname,
   getLocale,
-  stripLocaleFromPath,
   LOCALE_LABELS,
 } from "@i18n";
 import { LOCALE_BCP47 } from "@i18n/config";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = getLocale(Astro.currentLocale);
 
 const [targetLocale] = getAlternateLocales(locale);
-const basePath = stripLocaleFromPath(Astro.url.pathname);
-const href = getRelativeLocaleUrl(targetLocale, basePath);
+const href = getAlternatePathname(Astro.url.pathname, locale);
 const targetHreflang = LOCALE_BCP47[targetLocale];
 ---
 

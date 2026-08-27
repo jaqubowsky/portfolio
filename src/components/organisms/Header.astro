@@ -33,6 +33,19 @@ const links = [
   },
   { href: getRelativeLocaleUrl(locale, "/blog"), text: strings.nav.blog },
 ] as const;
+
+const socials = [
+  {
+    href: "https://github.com/jaqubowsky",
+    icon: "mdi:github",
+    label: "GitHub",
+  },
+  {
+    href: "https://www.linkedin.com/in/jakub-nalewajk/",
+    icon: "mdi:linkedin",
+    label: "LinkedIn",
+  },
+] as const;
 ---
 
 <header
@@ -48,6 +61,21 @@ const links = [
     <nav class="hidden lg:flex gap-1 items-center">
       <Navigation links={links} />
     </nav>
+    <Flex class="hidden sm:flex items-center gap-1">
+      {socials.map((social) => (
+        <a
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={social.label}
+          class="p-2 text-muted-foreground hover:text-foreground transition-colors"
+          data-umami-event="header-social"
+          data-umami-event-network={social.label}
+        >
+          <Icon name={social.icon} size={20} />
+        </a>
+      ))}
+    </Flex>
     <LanguageSwitcher />
     <ThemeToggler />
   </Flex>

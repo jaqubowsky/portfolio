@@ -13,7 +13,7 @@ const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 ---
 
-<Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 relative max-w-5xl" id="home">
+<Section class="pt-28 pb-24 sm:pt-36 sm:pb-32 gap-0 relative" id="home">
   <Flex class="relative z-10 flex-col md:flex-row md:items-center gap-6 md:gap-8 w-full">
     <Flex class="flex-col items-center md:items-start gap-6 flex-1">
       <Flex class="flex-col gap-2 items-center md:items-start hero-fade">
@@ -30,13 +30,9 @@ const strings = t(locale);
       </Paragraph>
 
       <Flex class="justify-start gap-3 hero-fade w-full sm:w-auto flex-col sm:flex-row" style="animation-delay: 0.15s">
-        <ButtonLink href="#contact" data-umami-event="hero-contact">
-          <Icon name="mdi:email-outline" size={18} />
-          {strings.hero.cta}
-        </ButtonLink>
         <ButtonLink
-          href="/0-jakub-nalewajk-cv.pdf"
-          variant="secondary"
+          href="/jakub-nalewajk-cv.pdf"
+          download
           target="_blank"
           rel="noopener noreferrer"
           data-umami-event="download-cv"
@@ -44,6 +40,21 @@ const strings = t(locale);
           <Icon name="mdi:download" size={18} />
           {strings.hero.downloadCv}
         </ButtonLink>
+        <ButtonLink href="#contact" variant="ghost" data-umami-event="hero-contact">
+          <Icon name="mdi:email-outline" size={18} />
+          {strings.hero.cta}
+        </ButtonLink>
+      </Flex>
+
+      <Flex class="flex-col items-center md:items-start gap-3 hero-fade" style="animation-delay: 0.22s">
+        <ul class="flex flex-wrap justify-center md:justify-start gap-2 list-none p-0 m-0">
+          {strings.hero.availability.map((fact) => (
+            <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-border bg-card/60 text-xs text-muted-foreground">
+              <Icon name={fact.icon} size={14} class="text-primary/70 shrink-0" />
+              {fact.text}
+            </li>
+          ))}
+        </ul>
       </Flex>
     </Flex>
 

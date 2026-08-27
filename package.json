@@ -12,34 +12,37 @@
     "format": "biome format --write ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.7",
-    "@astrojs/mdx": "^5.0.0",
-    "@astrojs/node": "^10.0.0",
-    "@astrojs/react": "^5.0.0",
-    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/mdx": "^7.0.7",
+    "@astrojs/node": "^11.1.4",
+    "@astrojs/react": "^6.0.4",
+    "@astrojs/sitemap": "^3.7.3",
     "@iconify/react": "^6.0.2",
-    "@react-email/components": "1.0.8",
-    "@react-email/render": "2.0.4",
-    "@tailwindcss/postcss": "^4.2.1",
-    "@tailwindcss/vite": "^4.2.1",
+    "@react-email/components": "1.0.12",
+    "@react-email/render": "2.1.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/grecaptcha": "^3.0.9",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "astro": "^6.0.1",
-    "astro-icon": "^1.1.5",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "astro": "^7.2.4",
+    "astro-icon": "^1.2.0",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "resend": "^6.9.3",
-    "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "resend": "^6.20.0",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.6",
+    "@biomejs/biome": "^2.5.9",
     "@iconify-json/mdi": "^1.2.3",
-    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/typography": "^0.5.20",
     "@types/canvas-confetti": "^1.9.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.3"
   }
 }

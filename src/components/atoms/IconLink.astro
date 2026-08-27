@@ -15,7 +15,10 @@ const { class: className, size, name, href, ...rest } = Astro.props;
 
 <Link
   aria-label={name}
-  class={cn("cursor-pointer", className)}
+  class={cn(
+    "cursor-pointer inline-flex text-muted-foreground transition-[color,transform] duration-200 ease-out hover:text-primary hover:-translate-y-0.5 focus-visible:text-primary",
+    className,
+  )}
   href={href}
   {...rest}
 >

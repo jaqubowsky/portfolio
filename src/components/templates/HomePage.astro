@@ -4,10 +4,10 @@ import { Recaptcha } from "@components/molecules";
 import {
   Contact,
   Experience,
+  FeaturedWork,
   Home,
   Projects,
   Skills,
-  Stats,
 } from "@components/organisms";
 import Layout from "@layouts/Layout.astro";
 import { t } from "@i18n";
@@ -29,8 +29,8 @@ const strings = t(locale);
 
   <Flex class="flex-col w-full">
     <Home />
-    <Stats />
     <Experience />
+    <FeaturedWork />
     <Projects />
     <Skills />
     <Contact />

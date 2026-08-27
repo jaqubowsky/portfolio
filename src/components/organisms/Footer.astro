@@ -25,15 +25,6 @@ const currentYear = new Date().getFullYear();
       {`© ${currentYear} ${strings.footer.copyright}`}
     </Paragraph>
     <Flex class="items-center gap-4">
-      <a
-        href="https://status.jnalewajk.me"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
-        data-umami-event="status-page"
-      >
-        {strings.footer.status}
-      </a>
       <SocialMedia links={links} />
     </Flex>
   </Flex>

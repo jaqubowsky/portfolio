@@ -6,6 +6,8 @@ let scrollObserver: IntersectionObserver | null = null;
 function initScrollAnimations() {
   scrollObserver?.disconnect();
 
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
   scrollObserver = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
