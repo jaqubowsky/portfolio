@@ -1,28 +1,79 @@
-import mdx from '@astrojs/mdx'
-import node from '@astrojs/node'
-import react from '@astrojs/react'
-import sitemap from '@astrojs/sitemap'
-import tailwindcss from '@tailwindcss/vite'
-import { defineConfig, envField } from 'astro/config'
-import icon from 'astro-icon'
-import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES } from './src/i18n/config'
-import { buildHreflangMap, buildLastmodMap } from './src/i18n/utils'
+import mdx from "@astrojs/mdx";
+import node from "@astrojs/node";
+import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField } from "astro/config";
+import icon from "astro-icon";
+import { DEFAULT_LOCALE, LOCALE_BCP47, LOCALES } from "./src/i18n/config";
+import { buildHreflangMap, buildLastmodMap } from "./src/i18n/utils";
 
-const SITE = 'https://jnalewajk.me'
+const SITE = "https://jnalewajk.me";
 
 const legacyRedirects = {
-  '/blog/deploying-astro-on-dokploy/': '/en/blog/deploying-astro-on-dokploy/',
-  '/blog/my-programming-journey/': '/en/blog/my-programming-journey/',
-  '/en/category/programowanie/': '/en/category/programming/',
-}
+  "/blog/deploying-astro-on-dokploy/": "/en/blog/deploying-astro-on-dokploy/",
+  "/blog/my-programming-journey/": "/en/blog/my-programming-journey/",
+  "/en/category/programowanie/": "/en/category/programming/",
+};
 
-const hreflangMap = buildHreflangMap(SITE)
-const lastmodMap = buildLastmodMap(SITE, './src/content/posts')
+const hreflangMap = buildHreflangMap(SITE);
+const lastmodMap = buildLastmodMap(SITE, "./src/content/posts");
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    icon(),
+    icon({
+      include: {
+        mdi: [
+          "account-clock-outline",
+          "arrow-down",
+          "arrow-left",
+          "arrow-right",
+          "arrow-up",
+          "autorenew",
+          "briefcase-outline",
+          "calendar-clock",
+          "cellphone-cog",
+          "check",
+          "check-bold",
+          "chevron-down",
+          "chevron-right",
+          "clock-outline",
+          "close",
+          "cloud-outline",
+          "code-tags",
+          "content-copy",
+          "database-outline",
+          "download",
+          "email",
+          "email-outline",
+          "emoticon-sad-outline",
+          "facebook",
+          "github",
+          "language-javascript",
+          "lightbulb-outline",
+          "linkedin",
+          "map-marker-outline",
+          "moon-and-stars",
+          "open-in-new",
+          "palette-outline",
+          "pinterest",
+          "receipt-text-outline",
+          "robot-outline",
+          "school-outline",
+          "server",
+          "shield-check-outline",
+          "telegram",
+          "test-tube",
+          "tools",
+          "translate",
+          "twitter",
+          "web",
+          "whatsapp",
+          "white-balance-sunny",
+        ],
+      },
+    }),
     react({
       experimentalReactChildren: true,
     }),
@@ -35,13 +86,13 @@ export default defineConfig({
         locales: LOCALE_BCP47,
       },
       serialize(item) {
-        const links = hreflangMap.get(item.url)
-        if (links) item.links = links
+        const links = hreflangMap.get(item.url);
+        if (links) item.links = links;
 
-        const lastmod = lastmodMap.get(item.url)
-        if (lastmod) item.lastmod = lastmod
+        const lastmod = lastmodMap.get(item.url);
+        if (lastmod) item.lastmod = lastmod;
 
-        return item
+        return item;
       },
     }),
   ],
@@ -55,41 +106,44 @@ export default defineConfig({
   },
 
   redirects: Object.fromEntries(
-    Object.entries(legacyRedirects).map(([from, to]) => [from, { status: 301, destination: to }])
+    Object.entries(legacyRedirects).map(([from, to]) => [
+      from,
+      { status: 301, destination: to },
+    ]),
   ),
 
   adapter: node({
-    mode: 'standalone',
+    mode: "standalone",
   }),
 
   security: {
     checkOrigin: false,
   },
 
-  trailingSlash: 'always',
+  trailingSlash: "always",
   compressHTML: true,
 
   env: {
     schema: {
       PUBLIC_RECAPTCHA_KEY: envField.string({
-        context: 'client',
-        access: 'public',
+        context: "client",
+        access: "public",
       }),
       RECAPTCHA_KEY: envField.string({
-        context: 'server',
-        access: 'secret',
+        context: "server",
+        access: "secret",
       }),
       RESEND_API_KEY: envField.string({
-        context: 'server',
-        access: 'secret',
+        context: "server",
+        access: "secret",
       }),
       RESEND_FROM_EMAIL: envField.string({
-        context: 'server',
-        access: 'secret',
+        context: "server",
+        access: "secret",
       }),
       CONTACT_EMAIL: envField.string({
-        context: 'server',
-        access: 'secret',
+        context: "server",
+        access: "secret",
       }),
     },
     validateSecrets: false,
@@ -100,4 +154,4 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-})
+});
