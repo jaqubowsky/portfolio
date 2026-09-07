@@ -2,9 +2,9 @@ export default {
   meta: {
     title: "Jakub Nalewajk - Fullstack Developer (Node.js, NestJS, Next.js)",
     description:
-      "Fullstack developer based in Warsaw with 3 years of commercial experience. Node.js, NestJS, Next.js. I build domain logic, API integrations and the data layer in a finance and accounting SaaS.",
+      "Fullstack developer based in Warsaw with 3 years of commercial experience. Node.js, NestJS, Next.js. I build domain logic, API integrations and the data layer, and set up how teams work with AI agents in their codebase.",
     keywords:
-      "Jakub Nalewajk, fullstack developer, fullstack developer Warsaw, Node.js developer, NestJS developer, Next.js developer, React developer, TypeScript, PostgreSQL, Redis, BullMQ, Prisma, Drizzle ORM, Nx, Turborepo, Playwright, Vitest, Testing Library, AWS, Strapi, open banking, developer portfolio, fullstack jobs Warsaw, remote developer",
+      "Jakub Nalewajk, fullstack developer, fullstack developer Warsaw, Node.js developer, NestJS developer, Next.js developer, React developer, TypeScript, PostgreSQL, Redis, BullMQ, Prisma, Drizzle ORM, Nx, Turborepo, Playwright, Vitest, Testing Library, AWS, Strapi, AI-assisted development, Claude Code, Vercel AI SDK, developer portfolio, fullstack jobs Warsaw, remote developer",
     blogTitle: "Blog - Jakub Nalewajk",
     blogDescription:
       "Practical articles about Next.js, React, TypeScript and web development. Guides, problem solutions and lessons from real projects.",
@@ -26,7 +26,7 @@ export default {
   hero: {
     jobTitle: "Fullstack Developer · Node.js, NestJS, Next.js",
     description:
-      "Three years of commercial experience. Today I work on a finance and accounting SaaS: frontend and backend features, API integrations, the data layer. In parallel I run dubaj.estate as its only developer, from architecture to the release process.",
+      "Three years of commercial experience. I ship frontend and backend features, third-party API integrations and the data layer. In parallel I run dubaj.estate on my own, from architecture to the release process, and I set up how the team works with AI agents in that repository.",
     cta: "Get in Touch",
     downloadCv: "Download CV",
     availability: [
@@ -49,29 +49,29 @@ export default {
         period: "Jul 2026 – Present",
         location: "Full-time, remote",
         bullets: [
-          "Developing a finance and accounting SaaS: frontend and backend features plus API integrations.",
-          "Working on document handling, settlements, currencies and accounting processes.",
-          "Integrations with banking services and open banking, including transaction import.",
-          "Diagnosing and fixing production bugs, regressions and data issues.",
-          "Contributing to feature rollouts for international markets.",
+          "Shipping frontend and backend features in a 6-person team: document handling, PLN/EUR settlements and accounting workflows.",
+          "Built third-party integrations with Kontomatik and Tink, enabling automated transaction import.",
+          "Rolled out features to the Polish and UK markets, with market-specific configuration and compliance rules.",
         ],
       },
       {
         company: "CodeYourBrand",
         url: "https://www.codeyourbrand.com/",
-        role: "Frontend Developer → Project Lead",
+        role: "Mid Frontend → Mid Fullstack Developer",
         tech: "Next.js, NestJS, Nx, Strapi",
         period: "Oct 2025 – Present",
         location: "Part-time since Jul 2026",
         bullets: [
-          "Project Lead since January 2026. Sole developer on dubaj.estate, a Dubai real estate platform: architecture, release process, stakeholder communication.",
+          "I own dubaj.estate end to end, a Dubai real estate platform: architecture, release process and stakeholder communication.",
+          "Set up the team's AI coding workflow in the repo: shared Claude Code configuration, custom commands, conventions and the documentation it operates against.",
           "Designed the platform as 5 vertical domain modules over four layers. Dependencies point one way, down, so no module reaches into another's internals (Nx, Next.js, Strapi CMS).",
-          "Wrote the unit, integration and e2e suites for dubaj.estate, Parkingowo and Maspex (Vitest, Testing Library, Playwright).",
-          "Set up visual regression testing in CI. Every PR diffs rendered screenshots against a baseline, so a layout break fails the build instead of reaching the client. Lighthouse runs in the same pipeline, and Renovate with automerge keeps dependencies current.",
+          "Wrote 490+ unit, integration and e2e tests for dubaj.estate (Vitest, Testing Library, Playwright).",
+          "Shipped new features for Parkingowo (Next.js, NestJS) across API endpoints, the data layer and the UI.",
+          "Set up visual regression testing in CI. Every PR diffs rendered screenshots against a baseline, which caught 3 layout regressions last month before they reached the client.",
+          "Lighthouse audits 7 paths in the same pipeline, holding 94 performance, 96 accessibility and 100 SEO. Renovate with automerge keeps dependencies current.",
           "Set up tagged releases with generated changelogs, branch protection and rulesets enforcing review before merge.",
           "Configured production hosting: AWS Amplify for the Next.js app, Strapi CMS with environment configuration per stage. I debug production issues from CloudWatch logs.",
-          "Set up the team's AI coding workflow in the repo: shared configuration, custom commands, conventions and the documentation it operates against.",
-          "Earlier, as Mid Frontend Developer, I rebuilt and tested Maspex Photo Service and its admin panel for a major FMCG company, as the only frontend developer on the project. Bundle size down ~30%. Both three-month milestones landed ahead of schedule, which led to promotion to Project Lead within 3 months.",
+          "Earlier, as Mid Frontend Developer, I rebuilt and tested Maspex Photo Service and its admin panel for a major FMCG company, as the only frontend developer on the project. Bundle size down ~30%. Both three-month milestones landed ahead of schedule, and I took dubaj.estate end to end within 3 months.",
         ],
       },
       {
@@ -100,7 +100,7 @@ export default {
     project: {
       name: "dubaj.estate",
       url: "https://dubaj.estate/",
-      subtitle: "Dubai real estate platform · Project Lead",
+      subtitle: "Dubai real estate platform · architecture to release",
       problem:
         "The platform had to keep growing into new business areas, and the team is one person. In that setup every shortcut in the code structure comes back a month later as hours of debugging.",
       decisions: [
