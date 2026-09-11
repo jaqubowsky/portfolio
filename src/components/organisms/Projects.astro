@@ -19,7 +19,30 @@ import { t, getLocale } from "@i18n";
 const locale = getLocale(Astro.currentLocale);
 const strings = t(locale);
 
-const projects = [
+type ProjectLink = {
+  href: string;
+  icon: string;
+  label: string;
+  umamiEvent: string;
+};
+
+type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+  links: ProjectLink[];
+  image: ImageMetadata;
+  featured: boolean;
+};
+
+const repositoryLink = (href: string): ProjectLink => ({
+  href,
+  icon: "mdi:github",
+  label: "GitHub",
+  umamiEvent: "project-github",
+});
+
+const projects: Project[] = [
   {
     title: "PillPilot",
     description: strings.projects.items[0].description,
@@ -32,26 +55,25 @@ const projects = [
       "Playwright",
       "Docker",
     ],
-    github: "https://github.com/jaqubowsky/pill-pilot",
-    live: "https://pill.jnalewajk.me",
+    links: [repositoryLink("https://github.com/jaqubowsky/pill-pilot")],
     image: pillPilotImg,
-    featured: true as const,
+    featured: true,
   },
   {
     title: "jobZ",
     description: strings.projects.items[1].description,
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
-    github: "https://github.com/jaqubowsky/jobZ",
+    links: [repositoryLink("https://github.com/jaqubowsky/jobZ")],
     image: jobzImg,
-    featured: false as const,
+    featured: false,
   },
   {
     title: "SubStatZ",
     description: strings.projects.items[2].description,
     tech: ["Next.js 16", "Prisma", "Stripe", "Sentry", "Docker"],
-    github: "https://github.com/jaqubowsky/substatz",
+    links: [repositoryLink("https://github.com/jaqubowsky/substatz")],
     image: substatzImg,
-    featured: false as const,
+    featured: false,
   },
 ];
 ---
@@ -87,32 +109,23 @@ const projects = [
                       {project.title}
                     </Heading>
                   </Flex>
-                  <Flex class="gap-2 shrink-0">
-                    <Link
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="p-1"
-                      aria-label={`${project.title} GitHub`}
-                      data-umami-event="project-github"
-                      data-umami-event-project={project.title}
-                    >
-                      <Icon name="mdi:github" size={20} />
-                    </Link>
-                    {project.live && (
-                      <Link
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="p-1"
-                        aria-label={`${project.title} live demo`}
-                        data-umami-event="project-live"
-                        data-umami-event-project={project.title}
-                      >
-                        <Icon name="mdi:open-in-new" size={20} />
-                      </Link>
-                    )}
-                  </Flex>
+                  {project.links.length > 0 && (
+                    <Flex class="gap-2 shrink-0">
+                      {project.links.map((link) => (
+                        <Link
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="p-1"
+                          aria-label={`${project.title} ${link.label}`}
+                          data-umami-event={link.umamiEvent}
+                          data-umami-event-project={project.title}
+                        >
+                          <Icon name={link.icon} size={20} />
+                        </Link>
+                      ))}
+                    </Flex>
+                  )}
                 </Flex>
 
                 <Paragraph class="text-sm leading-relaxed">
