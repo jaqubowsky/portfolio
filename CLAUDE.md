@@ -118,8 +118,7 @@ Server env vars are imported from `astro:env/server`, client vars from `astro:en
 
 ### Deployment
 
-- Node.js adapter (standalone) with Dokploy/Traefik on VPS
-- Docker multi-stage build
+- Vercel via the `@astrojs/vercel` adapter
 - Site URL: `https://jnalewajk.me`
 
 ### Adding a New Blog Post

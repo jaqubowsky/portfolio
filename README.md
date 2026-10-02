@@ -1,6 +1,6 @@
 # Portfolio - Jakub Nalewajk
 
-> Multilingual frontend developer portfolio with an MDX blog, i18n (Polish + English), reCAPTCHA-protected contact form, and React 19 islands. Static-first with Astro 5, self-hosted on VPS with Dokploy.
+> Multilingual frontend developer portfolio with an MDX blog, i18n (Polish + English), reCAPTCHA-protected contact form, and React 19 islands. Static-first with Astro 5, deployed on Vercel.
 
 **[Live Demo](https://jnalewajk.me)** | **[Status Page](https://status.jnalewajk.me)**
 
@@ -74,7 +74,7 @@ Components follow **Atomic Design** - atoms are primitive UI elements, molecules
 | Email      | React Email + Resend                               |
 | Security   | Google reCAPTCHA v3                                |
 | Linting    | Biome                                              |
-| Deployment | Node.js standalone, Docker, Dokploy/Traefik on VPS |
+| Deployment | Vercel (`@astrojs/vercel` adapter)                  |
 
 ## Getting started
 
