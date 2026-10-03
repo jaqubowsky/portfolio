@@ -144,15 +144,15 @@ export default {
       },
       {
         description:
+          "Every attempt to meet up with friends got stuck in chat messages that never settled on a day. Built a poll you drop into the group as one link: friends type a name, tap or drag the hours they're free, and the best time shows up on its own. Nobody creates an account, the link preview in the chat shows how many people already answered, and the agreed time goes to the calendar as an .ics file. Server actions, SQLite with Drizzle, e2e tests on Chromium and WebKit.",
+      },
+      {
+        description:
           "While treating gut issues with a clinical dietitian, I was juggling 20+ supplements and antibiotics across multiple protocols. Built a fullstack PWA where AI parses doctor protocols (PDF, Excel, images), links them to my inventory, and builds a daily plan - with stock forecasting, push notifications, and one-tap check-off. Schema across 8+ tables, repository pattern, Drizzle migrations, unit, integration and e2e tests.",
       },
       {
         description:
           "Got tired of manually browsing job offers across multiple boards. Built a fullstack platform with a Turborepo monorepo - scrapes Polish job portals, generates vector embeddings with Transformers.js, and re-ranks offers against my profile. Supabase with pgvector for similarity search, all AI inference runs locally in TypeScript.",
-      },
-      {
-        description:
-          "Lost track of my subscriptions - had no idea how much I was paying monthly. Built a fullstack app with MySQL + Prisma, Stripe payments for premium, currency exchange rate syncing, and spending analytics with Recharts. Tiered server actions with auth, rate limiting, and Sentry.",
       },
     ],
   },

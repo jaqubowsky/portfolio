@@ -12,9 +12,9 @@ import {
 import { SectionHeader } from "@components/molecules";
 import { Icon } from "astro-icon/components";
 import fleetImg from "@images/projects/fleet.webp";
+import wpasujImg from "@images/projects/wpasuj.webp";
 import pillPilotImg from "@images/projects/pill-pilot.webp";
 import jobzImg from "@images/projects/jobz.webp";
-import substatzImg from "@images/projects/substatz.webp";
 import { t, getLocale } from "@i18n";
 
 const locale = getLocale(Astro.currentLocale);
@@ -43,6 +43,13 @@ const repositoryLink = (href: string): ProjectLink => ({
   umamiEvent: "project-github",
 });
 
+const liveLink = (href: string): ProjectLink => ({
+  href,
+  icon: "mdi:open-in-new",
+  label: "Live",
+  umamiEvent: "project-live",
+});
+
 const projects: Project[] = [
   {
     title: "fleet",
@@ -53,8 +60,26 @@ const projects: Project[] = [
     featured: true,
   },
   {
-    title: "PillPilot",
+    title: "Wpasuj",
     description: strings.projects.items[1].description,
+    tech: [
+      "Next.js 16",
+      "SQLite",
+      "Drizzle ORM",
+      "TanStack Query",
+      "Tailwind CSS",
+      "Playwright",
+    ],
+    links: [
+      liveLink("https://wpasuj.pl"),
+      repositoryLink("https://github.com/jaqubowsky/wpasuj"),
+    ],
+    image: wpasujImg,
+    featured: false,
+  },
+  {
+    title: "PillPilot",
+    description: strings.projects.items[2].description,
     tech: [
       "Next.js 16",
       "PostgreSQL",
@@ -70,18 +95,10 @@ const projects: Project[] = [
   },
   {
     title: "jobZ",
-    description: strings.projects.items[2].description,
+    description: strings.projects.items[3].description,
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
     links: [repositoryLink("https://github.com/jaqubowsky/jobZ")],
     image: jobzImg,
-    featured: false,
-  },
-  {
-    title: "SubStatZ",
-    description: strings.projects.items[3].description,
-    tech: ["Next.js 16", "Prisma", "Stripe", "Sentry", "Docker"],
-    links: [repositoryLink("https://github.com/jaqubowsky/substatz")],
-    image: substatzImg,
     featured: false,
   },
 ];

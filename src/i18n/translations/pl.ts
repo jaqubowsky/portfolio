@@ -146,15 +146,15 @@ export default {
       },
       {
         description:
+          "Każda próba umówienia się ze znajomymi grzęzła w wiadomościach, z których nigdy nie wychodził konkretny dzień. Zbudowałem ankietę, którą wrzuca się na grupę jako jeden link: znajomi wpisują imię, klikają albo przeciągają wolne godziny, a najlepszy termin wyskakuje sam. Nikt nie zakłada konta, podgląd linku w czacie pokazuje, ile osób już odpowiedziało, a ustalony termin trafia do kalendarza jako plik .ics. Server actions, SQLite z Drizzle, testy e2e w Chromium i WebKit.",
+      },
+      {
+        description:
           "Lecząc jelita z dietetykiem klinicznym, brałem 20+ suplementów i antybiotyków z kilku protokołów - totalny chaos. Zbudowałem fullstackową PWA, gdzie AI parsuje protokoły od lekarza (PDF, Excel, zdjęcia), łączy je z moim inwentarzem i tworzy dzienny plan - z prognozą zapasów, powiadomieniami push i odhaczaniem jednym tapnięciem. Schemat na 8+ tabelach, repository pattern, migracje Drizzle, testy jednostkowe, integracyjne i e2e.",
       },
       {
         description:
           "Miałem dość ręcznego przeglądania ofert pracy na kilku portalach. Zbudowałem fullstackową platformę w monorepo Turborepo - scrapuje polskie portale, generuje embeddingi wektorowe przez Transformers.js i re-rankinguje oferty. Supabase z pgvector do wyszukiwania podobieństwa, cała inferencja AI działa lokalnie w TypeScript.",
-      },
-      {
-        description:
-          "Straciłem kontrolę nad subskrypcjami - nie wiedziałem ile płacę miesięcznie. Zbudowałem fullstackową apkę z MySQL + Prisma, płatnościami Stripe za premium, synchronizacją kursów walut i analityką wydatków w Recharts. Warstwowe server actions z auth, rate limitingiem i Sentry.",
       },
     ],
   },
