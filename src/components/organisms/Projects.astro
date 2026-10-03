@@ -11,6 +11,7 @@ import {
 } from "@components/atoms";
 import { SectionHeader } from "@components/molecules";
 import { Icon } from "astro-icon/components";
+import fleetImg from "@images/projects/fleet.webp";
 import pillPilotImg from "@images/projects/pill-pilot.webp";
 import jobzImg from "@images/projects/jobz.webp";
 import substatzImg from "@images/projects/substatz.webp";
@@ -44,8 +45,16 @@ const repositoryLink = (href: string): ProjectLink => ({
 
 const projects: Project[] = [
   {
-    title: "PillPilot",
+    title: "fleet",
     description: strings.projects.items[0].description,
+    tech: ["TypeScript", "Node.js", "Docker Sandboxes", "Claude Code", "pi"],
+    links: [repositoryLink("https://github.com/jaqubowsky/fleet")],
+    image: fleetImg,
+    featured: true,
+  },
+  {
+    title: "PillPilot",
+    description: strings.projects.items[1].description,
     tech: [
       "Next.js 16",
       "PostgreSQL",
@@ -61,7 +70,7 @@ const projects: Project[] = [
   },
   {
     title: "jobZ",
-    description: strings.projects.items[1].description,
+    description: strings.projects.items[2].description,
     tech: ["Next.js 16", "Supabase", "Transformers.js", "Turborepo"],
     links: [repositoryLink("https://github.com/jaqubowsky/jobZ")],
     image: jobzImg,
@@ -69,7 +78,7 @@ const projects: Project[] = [
   },
   {
     title: "SubStatZ",
-    description: strings.projects.items[2].description,
+    description: strings.projects.items[3].description,
     tech: ["Next.js 16", "Prisma", "Stripe", "Sentry", "Docker"],
     links: [repositoryLink("https://github.com/jaqubowsky/substatz")],
     image: substatzImg,

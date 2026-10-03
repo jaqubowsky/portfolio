@@ -26,7 +26,7 @@ export default {
   hero: {
     jobTitle: "Fullstack Developer · Node.js, NestJS, Next.js",
     description:
-      "Three years of commercial experience. I ship frontend and backend features, third-party API integrations and the data layer. In parallel I run dubaj.estate on my own, from architecture to the release process, and I set up how the team works with AI agents in that repository.",
+      "Three years of commercial experience. I ship frontend and backend features, third-party API integrations and the data layer. In parallel I run dubaj.estate on my own, from architecture to the release process, and I set up how the team works with AI agents in that repository. After hours I build fleet, an open-source tool that runs coding agents in parallel sandboxes.",
     cta: "Get in Touch",
     downloadCv: "Download CV",
     availability: [
@@ -49,9 +49,9 @@ export default {
         period: "Jul 2026 – Present",
         location: "Full-time, remote",
         bullets: [
-          "Shipping frontend and backend features in a 6-person team: document handling, PLN/EUR settlements and accounting workflows.",
-          "Built third-party integrations with Kontomatik and Tink, enabling automated transaction import.",
-          "Rolled out features to the Polish and UK markets, with market-specific configuration and compliance rules.",
+          "Building frontend and backend features for flowMEE, an AI accounting platform that books documents and reconciles them with bank statements.",
+          "Working on the document approval workflow and bank statement reconciliation.",
+          "Working on integrations with KSeF, the Polish national e-invoicing system, and with ERP accounting systems.",
         ],
       },
       {
@@ -67,11 +67,9 @@ export default {
           "Designed the platform as 5 vertical domain modules over four layers. Dependencies point one way, down, so no module reaches into another's internals (Nx, Next.js, Strapi CMS).",
           "Wrote 490+ unit, integration and e2e tests for dubaj.estate (Vitest, Testing Library, Playwright).",
           "Shipped new features for Parkingowo (Next.js, NestJS) across API endpoints, the data layer and the UI.",
-          "Set up visual regression testing in CI. Every PR diffs rendered screenshots against a baseline, which caught 3 layout regressions last month before they reached the client.",
-          "Lighthouse audits 7 paths in the same pipeline, holding 94 performance, 96 accessibility and 100 SEO. Renovate with automerge keeps dependencies current.",
-          "Set up tagged releases with generated changelogs, branch protection and rulesets enforcing review before merge.",
+          "Set up visual regression testing in CI. Every PR diffs rendered screenshots against a baseline, which has caught 3+ layout regressions before they reached the client. Lighthouse checks 7 paths in the same pipeline, holding 94+ performance and accessibility.",
           "Configured production hosting: AWS Amplify for the Next.js app, Strapi CMS with environment configuration per stage. I debug production issues from CloudWatch logs.",
-          "Earlier, as Mid Frontend Developer, I rebuilt and tested Maspex Photo Service and its admin panel for a major FMCG company, as the only frontend developer on the project. Bundle size down ~30%. Both three-month milestones landed ahead of schedule, and I took dubaj.estate end to end within 3 months.",
+          "Earlier, as Mid Frontend Developer, I rebuilt and tested Maspex Photo Service and its admin panel for a major FMCG company, as the only frontend developer on the project. Bundle size down ~30%.",
         ],
       },
       {
@@ -86,7 +84,7 @@ export default {
           "Created InstagoAI from scratch, an AI website builder for small businesses (Next.js, Express, MongoDB, TypeScript). Owned the full stack: auth, backend, frontend, database modeling, AI workflows.",
           "Developed a B2B e-commerce platform for Mezze Foods (Warsaw restaurant) on top of InstagoAI, integrated with LeadMe AI for orders, invoicing and client messaging. 3,500+ orders per month.",
           "Wrote an i18n tool for CI/CD that generated translations for 15+ languages across ~1,500 keys. It removed manual translation work from every company project.",
-          "Started as a frontend developer: 3 landing pages for startup products scoring 90+ on Lighthouse (performance and accessibility). Promoted to fullstack after 12 months.",
+          "Started as a frontend developer and was promoted to fullstack after 12 months.",
         ],
       },
     ],
@@ -124,6 +122,10 @@ export default {
     description:
       "Projects I run from the database schema to deployment on my own server. Each one started because I hit a real problem and wanted it gone.",
     items: [
+      {
+        description:
+          "I was running several coding agents at once and spent the day switching between terminals, each one waiting on me. Built a CLI where one host agent gives each issue its own Docker sandbox with Claude Code or pi, watches them all and brings back tested, reviewed pull requests. Every agent tool call passes a policy guard first, permissions are set per repository, and a self-audit scores agent transcripts against the rules. 140+ tasks run through it so far, covered by 570+ tests.",
+      },
       {
         description:
           "While treating gut issues with a clinical dietitian, I was juggling 20+ supplements and antibiotics across multiple protocols. Built a fullstack PWA where AI parses doctor protocols (PDF, Excel, images), links them to my inventory, and builds a daily plan - with stock forecasting, push notifications, and one-tap check-off. Schema across 8+ tables, repository pattern, Drizzle migrations, unit, integration and e2e tests.",
@@ -232,7 +234,7 @@ export default {
       styling: "Styling & UI",
       testing: "Testing",
       architecture: "Architecture & Tooling",
-      ai: "AI Tools",
+      ai: "AI & Agents",
       other: "Other",
     },
   },

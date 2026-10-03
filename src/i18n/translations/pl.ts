@@ -26,7 +26,7 @@ export default {
   hero: {
     jobTitle: "Fullstack Developer · Node.js, NestJS, Next.js",
     description:
-      "Trzy lata komercyjnego doświadczenia. Buduję funkcje frontendowe i backendowe, integracje z zewnętrznymi API i warstwę danych. Równolegle prowadzę dubaj.estate w pojedynkę, od architektury po proces releasowy, i ustawiam w tym repo pracę zespołu z agentami AI.",
+      "Trzy lata komercyjnego doświadczenia. Buduję funkcje frontendowe i backendowe, integracje z zewnętrznymi API i warstwę danych. Równolegle prowadzę dubaj.estate w pojedynkę, od architektury po proces releasowy, i ustawiam w tym repo pracę zespołu z agentami AI. Po godzinach rozwijam fleet, open-source'owe narzędzie, które uruchamia agentów kodujących równolegle w sandboxach.",
     cta: "Napisz do mnie",
     downloadCv: "Pobierz CV",
     availability: [
@@ -49,9 +49,9 @@ export default {
         period: "Lip 2026 – Obecnie",
         location: "Pełen etat, zdalnie",
         bullets: [
-          "Rozwijam funkcje frontendowe i backendowe w 6-osobowym zespole: obsługa dokumentów, rozliczenia PLN/EUR i procesy księgowe.",
-          "Zbudowałem integracje z Kontomatik i Tink, które automatyzują import transakcji.",
-          "Wdrażałem funkcje na rynek polski i brytyjski, z konfiguracją i regułami zgodności per rynek.",
+          "Rozwijam funkcje frontendowe i backendowe we flowMEE, platformie księgowej AI, która księguje dokumenty i rozlicza je z wyciągami bankowymi.",
+          "Pracuję nad obiegiem i akceptacją dokumentów oraz rozliczaniem wyciągów bankowych.",
+          "Pracuję nad integracjami z KSeF, Krajowym Systemem e-Faktur, i z systemami księgowymi ERP.",
         ],
       },
       {
@@ -67,11 +67,9 @@ export default {
           "Zaprojektowałem platformę jako 5 pionowych modułów domenowych na czterech warstwach. Zależności idą w jedną stronę, w dół, więc żaden moduł nie sięga do wnętrza innego (Nx, Next.js, Strapi CMS).",
           "Napisałem 490+ testów jednostkowych, integracyjnych i e2e dla dubaj.estate (Vitest, Testing Library, Playwright).",
           "Dowoziłem nowe funkcje w Parkingowo (Next.js, NestJS): endpointy API, warstwa danych i UI.",
-          "Postawiłem visual regression testing w CI. Każdy PR porównuje zrzuty ekranu z baseline'em, co w zeszłym miesiącu złapało 3 rozjechane layouty, zanim trafiły do klienta.",
-          "Lighthouse audytuje 7 ścieżek w tym samym pipelinie i trzyma 94 wydajność, 96 dostępność i 100 SEO. Renovate z automerge pilnuje aktualności zależności.",
-          "Ustawiłem tagowane releasy z generowanym changelogiem, branch protection i rulesety wymuszające review przed mergem.",
+          "Postawiłem visual regression testing w CI. Każdy PR porównuje zrzuty ekranu z baseline'em, co złapało już 3+ rozjechane layouty, zanim trafiły do klienta. Lighthouse sprawdza 7 ścieżek w tym samym pipelinie i trzyma 94+ w wydajności i dostępności.",
           "Skonfigurowałem hosting produkcyjny: AWS Amplify dla aplikacji Next.js, Strapi CMS z osobną konfiguracją per środowisko. Problemy produkcyjne debuguję z logów CloudWatch.",
-          "Wcześniej jako Mid Frontend Developer przebudowałem i otestowałem Maspex Photo Service z panelem administracyjnym dla dużej firmy FMCG, jako jedyny frontend na projekcie. Bundle mniejszy o ~30%. Oba trzymiesięczne milestone'y przed terminem, a potem przejąłem dubaj.estate w całości w 3 miesiące.",
+          "Wcześniej jako Mid Frontend Developer przebudowałem i otestowałem Maspex Photo Service z panelem administracyjnym dla dużej firmy FMCG, jako jedyny frontend na projekcie. Bundle mniejszy o ~30%.",
         ],
       },
       {
@@ -86,7 +84,7 @@ export default {
           "Stworzyłem InstagoAI od zera - kreator stron AI dla małych firm (Next.js, Express, MongoDB, TypeScript). Odpowiadałem za cały stack: auth, backend, frontend, modelowanie bazy danych, workflow AI.",
           "Zbudowałem platformę e-commerce B2B dla Mezze Foods (warszawska restauracja) na bazie InstagoAI, zintegrowaną z LeadMe AI do zamówień, fakturowania i komunikacji z klientami. 3500+ zamówień miesięcznie.",
           "Napisałem narzędzie i18n do CI/CD, które generowało tłumaczenia dla 15+ języków w ~1500 kluczach. Zdjęło ręczne tłumaczenia ze wszystkich projektów firmy.",
-          "Zaczynałem jako frontend developer: 3 landing page'y produktów startupowych z wynikiem 90+ w Lighthouse (wydajność i dostępność). Po 12 miesiącach awans na fullstacka.",
+          "Zaczynałem jako frontend developer, po 12 miesiącach awans na fullstacka.",
         ],
       },
     ],
@@ -124,6 +122,10 @@ export default {
     description:
       "Projekty prowadzone od schematu bazy po wdrożenie na własnym serwerze. Każdy powstał, bo napotkałem realny problem i chciałem go rozwiązać.",
     items: [
+      {
+        description:
+          "Odpalałem kilka agentów kodujących naraz i cały dzień przełączałem się między terminalami, a każdy czekał na mnie. Zbudowałem CLI, w którym jeden agent-host daje każdemu issue własny sandbox Docker z Claude Code albo pi, pilnuje wszystkich i oddaje przetestowane, zrecenzowane pull requesty. Każde wywołanie narzędzia przez agenta przechodzi najpierw przez guard, uprawnienia ustawia się per repozytorium, a self-audit ocenia transkrypty agentów względem reguł. Przeszło przez nie już 140+ zadań, pokrytych 570+ testami.",
+      },
       {
         description:
           "Lecząc jelita z dietetykiem klinicznym, brałem 20+ suplementów i antybiotyków z kilku protokołów - totalny chaos. Zbudowałem fullstackową PWA, gdzie AI parsuje protokoły od lekarza (PDF, Excel, zdjęcia), łączy je z moim inwentarzem i tworzy dzienny plan - z prognozą zapasów, powiadomieniami push i odhaczaniem jednym tapnięciem. Schemat na 8+ tabelach, repository pattern, migracje Drizzle, testy jednostkowe, integracyjne i e2e.",
@@ -233,7 +235,7 @@ export default {
       styling: "Style i UI",
       testing: "Testy",
       architecture: "Architektura i tooling",
-      ai: "Narzędzia AI",
+      ai: "AI i agenci",
       other: "Inne",
     },
   },
