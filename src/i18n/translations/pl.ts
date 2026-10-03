@@ -90,32 +90,50 @@ export default {
     ],
   },
   featuredWork: {
-    title: "Projekt, który prowadzę sam",
+    title: "Projekty, które prowadzę sam",
     description:
       "Jak wygląda praca, w której odpowiadam za wszystko od architektury po release.",
     problemLabel: "Problem",
     decisionsLabel: "Decyzje",
-    project: {
-      name: "dubaj.estate",
-      url: "https://dubaj.estate/",
-      subtitle: "Platforma nieruchomości w Dubaju · od architektury po release",
-      problem:
-        "Platforma miała rosnąć o kolejne obszary biznesowe, a zespół to jedna osoba. Przy takim układzie każdy skrót w strukturze kodu wraca po miesiącu jako godziny debugowania.",
-      decisions: [
-        "Pięć pionowych modułów domenowych na czterech warstwach. Zależności idą w jedną stronę, w dół, więc żaden moduł nie sięga do wnętrza innego.",
-        "Testy jednostkowe, integracyjne i e2e pisane razem z funkcjami, nie po nich (Vitest, Testing Library, Playwright).",
-        "Visual regression w CI. Każdy PR porównuje zrzuty ekranu z baseline'em, więc rozjechany layout wywala build zamiast trafiać do klienta.",
-        "Tagowane releasy z generowanym changelogiem, branch protection i rulesety wymuszające review. Renovate z automerge trzyma zależności aktualne.",
-      ],
-      tech: [
-        "Nx",
-        "Next.js",
-        "NestJS",
-        "Strapi CMS",
-        "Playwright",
-        "AWS Amplify",
-      ],
-    },
+    projects: [
+      {
+        name: "dubaj.estate",
+        url: "https://dubaj.estate/",
+        subtitle:
+          "Platforma nieruchomości w Dubaju · od architektury po release",
+        problem:
+          "Platforma miała rosnąć o kolejne obszary biznesowe, a zespół to jedna osoba. Przy takim układzie każdy skrót w strukturze kodu wraca po miesiącu jako godziny debugowania.",
+        decisions: [
+          "Pięć pionowych modułów domenowych na czterech warstwach. Zależności idą w jedną stronę, w dół, więc żaden moduł nie sięga do wnętrza innego.",
+          "Testy jednostkowe, integracyjne i e2e pisane razem z funkcjami, nie po nich (Vitest, Testing Library, Playwright).",
+          "Visual regression w CI. Każdy PR porównuje zrzuty ekranu z baseline'em, więc rozjechany layout wywala build zamiast trafiać do klienta.",
+          "Tagowane releasy z generowanym changelogiem, branch protection i rulesety wymuszające review. Renovate z automerge trzyma zależności aktualne.",
+        ],
+        tech: [
+          "Nx",
+          "Next.js",
+          "NestJS",
+          "Strapi CMS",
+          "Playwright",
+          "AWS Amplify",
+        ],
+      },
+      {
+        name: "Maspex Photo Service",
+        url: "https://foto.maspex.com/",
+        subtitle:
+          "Serwis zdjęć produktowych dla Maspeksu · aplikacja i panel admina",
+        problem:
+          "Klienci Maspeksu pobierają stąd zdjęcia, rendery i animacje produktów, a zespół marki wrzuca je przez panel admina. Oba fronty prowadzę sam, więc nikt nie złapie za mnie zepsutego pobierania.",
+        decisions: [
+          "Lokalne i testowe środowisko z tymi samymi danymi testowymi, więc każdą zmianę sprawdzam na prawdziwych produktach, zanim zobaczy ją klient.",
+          "Każdy release przechodzi QA w przeglądarce na desktopie i telefonie, ze zrzutem ekranu dla każdego kryterium akceptacji.",
+          "Pobieranie sprawdzane plik po pliku: to, co ściąga klient, musi się zgadzać z tym, co leży w storage.",
+          "Uprawnienia czytane z API, a nie z sesji, więc odebrana rola działa od razu, bez wylogowania.",
+        ],
+        tech: ["Next.js", "TypeScript", "Azure"],
+      },
+    ],
   },
   projects: {
     title: "Co zbudowałem po godzinach",
@@ -124,7 +142,7 @@ export default {
     items: [
       {
         description:
-          "Odpalałem kilka agentów kodujących naraz i cały dzień przełączałem się między terminalami, a każdy czekał na mnie. Zbudowałem CLI, w którym jeden agent-host daje każdemu issue własny sandbox Docker z Claude Code albo pi, pilnuje wszystkich i oddaje przetestowane, zrecenzowane pull requesty. Każde wywołanie narzędzia przez agenta przechodzi najpierw przez guard, uprawnienia ustawia się per repozytorium, a self-audit ocenia transkrypty agentów względem reguł. Przeszło przez nie już 140+ zadań, pokrytych 570+ testami.",
+          "Pracowałem z kilkoma agentami kodującymi naraz i cały dzień skakałem między terminalami, bo każdy na coś czekał. Zbudowałem CLI, które daje każdemu zadaniu osobny sandbox z agentem i oddaje gotowe pull requesty z testami i review. Rozmawiam z jednym agentem zamiast z pięcioma. Każde polecenie agenta przechodzi najpierw przez politykę uprawnień, więc nie zrobi force pusha ani nie przeczyta sekretów. Przeszło przez nie 140+ zadań.",
       },
       {
         description:

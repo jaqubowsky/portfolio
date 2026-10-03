@@ -90,32 +90,48 @@ export default {
     ],
   },
   featuredWork: {
-    title: "A project I run on my own",
+    title: "Projects I run on my own",
     description:
       "What the work looks like when I own everything from architecture to release.",
     problemLabel: "Problem",
     decisionsLabel: "Decisions",
-    project: {
-      name: "dubaj.estate",
-      url: "https://dubaj.estate/",
-      subtitle: "Dubai real estate platform · architecture to release",
-      problem:
-        "The platform had to keep growing into new business areas, and the team is one person. In that setup every shortcut in the code structure comes back a month later as hours of debugging.",
-      decisions: [
-        "Five vertical domain modules over four layers. Dependencies point one way, down, so no module reaches into another's internals.",
-        "Unit, integration and e2e tests written alongside features, not after them (Vitest, Testing Library, Playwright).",
-        "Visual regression in CI. Every PR diffs rendered screenshots against a baseline, so a layout break fails the build instead of reaching the client.",
-        "Tagged releases with generated changelogs, branch protection and rulesets enforcing review. Renovate with automerge keeps dependencies current.",
-      ],
-      tech: [
-        "Nx",
-        "Next.js",
-        "NestJS",
-        "Strapi CMS",
-        "Playwright",
-        "AWS Amplify",
-      ],
-    },
+    projects: [
+      {
+        name: "dubaj.estate",
+        url: "https://dubaj.estate/",
+        subtitle: "Dubai real estate platform · architecture to release",
+        problem:
+          "The platform had to keep growing into new business areas, and the team is one person. In that setup every shortcut in the code structure comes back a month later as hours of debugging.",
+        decisions: [
+          "Five vertical domain modules over four layers. Dependencies point one way, down, so no module reaches into another's internals.",
+          "Unit, integration and e2e tests written alongside features, not after them (Vitest, Testing Library, Playwright).",
+          "Visual regression in CI. Every PR diffs rendered screenshots against a baseline, so a layout break fails the build instead of reaching the client.",
+          "Tagged releases with generated changelogs, branch protection and rulesets enforcing review. Renovate with automerge keeps dependencies current.",
+        ],
+        tech: [
+          "Nx",
+          "Next.js",
+          "NestJS",
+          "Strapi CMS",
+          "Playwright",
+          "AWS Amplify",
+        ],
+      },
+      {
+        name: "Maspex Photo Service",
+        url: "https://foto.maspex.com/",
+        subtitle: "Product photo service for Maspex · app and admin panel",
+        problem:
+          "Maspex's clients download product photos, renders and animations here, and the brand team uploads them through the admin panel. I run both frontends on my own, so nobody else will catch a broken download for me.",
+        decisions: [
+          "Local and test environments seeded with the same test data, so I check every change on real products before a client sees it.",
+          "Every release goes through browser QA on desktop and phone, with a screenshot for each acceptance criterion.",
+          "Downloads checked file by file: what the client gets must match what sits in storage.",
+          "Permissions read from the API, not the session, so a revoked role applies at once, without signing out.",
+        ],
+        tech: ["Next.js", "TypeScript", "Azure"],
+      },
+    ],
   },
   projects: {
     title: "What I built after hours",
@@ -124,7 +140,7 @@ export default {
     items: [
       {
         description:
-          "I was running several coding agents at once and spent the day switching between terminals, each one waiting on me. Built a CLI where one host agent gives each issue its own Docker sandbox with Claude Code or pi, watches them all and brings back tested, reviewed pull requests. Every agent tool call passes a policy guard first, permissions are set per repository, and a self-audit scores agent transcripts against the rules. 140+ tasks run through it so far, covered by 570+ tests.",
+          "I worked with several coding agents at once and spent the day jumping between terminals, because each one was waiting on something. Built a CLI that gives every task its own sandbox with an agent and brings back finished pull requests with tests and review. I talk to one agent instead of five. Every agent command passes a permission policy first, so it can't force push or read secrets. 140+ tasks have gone through it.",
       },
       {
         description:
